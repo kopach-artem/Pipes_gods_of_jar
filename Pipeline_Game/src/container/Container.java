@@ -8,7 +8,7 @@ public class Container {
 	
 	
 	public boolean seeifNeighbors(Container neighbor, Container c) {
-		return false;
+		return true;
 	}
 	
 	public boolean steppable() {
