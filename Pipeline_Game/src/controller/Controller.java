@@ -8,17 +8,22 @@
 //  @ Author : 
 //
 //
-
-
 package controller;
-
+import container.*;
 public class Controller {
 	public Pump getRandomUndamagedPump(ArrayList<Pump> pumps) {
 	}
 	
-	public void damagePump() {
+	public void damagePump(ArrayList<Pump> p)
+	{
+	 	for(Pump pumps:p)
+		{
+
+		}
 	}
 	
-	public void waterFlow() {
+	public void waterFlow()
+	{
+
 	}
 }
