@@ -13,13 +13,13 @@ public class Player {
 	
 	public void adjustPump(Pump pu, Pipe pi, Type t) {
 		if (t.Input.equals(t)){
-			pu.getNegighbors();
+			pu.getNeighbors();
 			pu.getInput();
 			pi.getWaterFlowing();
 			pu.setInput(pi);
 		}
 		else if (t.Output.equals(t)){
-			pu.getNegighbors();
+			pu.getNeighbors();
 			pu.setOutput(pi);
 		}
 	}
