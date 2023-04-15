@@ -116,7 +116,7 @@ public class DispatcherSkeleton {
                     Player p1 = new Player();
                     Container c = new Container();
                     Pipe pip = new Pipe();
-                    p1.move(pi);
+                    p1.Move(pi);
                     pip.seeifNeighbors(c); //false
                     System.out.println("PlayerMovesOnPipeFail has finished");
                     break;
@@ -143,7 +143,7 @@ public class DispatcherSkeleton {
                     Player pla2 = new Player();
                     MountainSpring mo = new MountainSpring();
                     Pump pu3 = new Pump(2);
-                    pla2.move(pu3);
+                    pla2.Move(pu3);
                     mo.steppable(); //false
                     System.out.println("Player moves to MountainSpring has finished");
                     break;
