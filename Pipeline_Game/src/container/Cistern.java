@@ -11,10 +11,15 @@ public class Cistern extends Container {
 	private ArrayList<Pipe> madePipes;
 	
 	
-	public void increaseCollectedWater() {
+	public void increaseCollectedWater()
+	{
+		collectedWater++;
 	}
 	
-	public void createPipe() {
+	public void createPipe()
+	{
+		if(turnCount%3==0)
+			madePipes.add(new Pipe());
 	}
 	
 	public void eval() {
