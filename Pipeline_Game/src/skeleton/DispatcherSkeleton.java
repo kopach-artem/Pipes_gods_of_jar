@@ -16,5 +16,9 @@ public class DispatcherSkeleton {
         System.out.println("10. Player moves to pipe succefully");
         System.out.println("11. Player moves to pipe fail");
         System.out.println("12. Player moves to pump");
+        System.out.println("13. Player moves to cistern");
+        System.out.println("14. Player moves to mountain spring");
+        System.out.println("15. Random pump breaking");
+        System.out.println("16. Collecting water in cistern");
     }
 }
