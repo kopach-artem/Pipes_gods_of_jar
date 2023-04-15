@@ -36,8 +36,9 @@ public class DispatcherSkeleton {
         System.out.println("0. Kilépés");
 
         Scanner scanner = new Scanner(System.in);
-        Mechanic m = new Mechanic();
-        Saboteur s = new Saboteur();
+        Container c = new Container();
+        Mechanic m = new Mechanic(c);
+        Saboteur s = new Saboteur(c);
         Pump pu = new Pump(2);
         Pipe pi = new Pipe();
         while(scanner.nextInt() != 0) {
@@ -95,7 +96,7 @@ public class DispatcherSkeleton {
                     break;
                 case 9:
                     System.out.println("AdjustPump has started");
-                    Player p = new Player();
+                    Player p = new Player(c);
                     Pipe pipe = new Pipe();
                     Type t = new Type();
                     Pump pum = new Pump(2);
@@ -104,7 +105,7 @@ public class DispatcherSkeleton {
                     break;
                 case 10:
                     System.out.println("PlayerMovesOnPipeSuc has started");
-                    Player pl = new Player();
+                    Player pl = new Player(c);
                     Container co = new Container();
                     Pipe pipe1 = new Pipe();
                     pipe1.seeifNeighbors(co); //true
@@ -113,16 +114,16 @@ public class DispatcherSkeleton {
                     break;
                 case 11:
                     System.out.println("PlayerMovesOnPipeFail has started");
-                    Player p1 = new Player();
-                    Container c = new Container();
+                    Player p1 = new Player(c);
+                    Container cc = new Container();
                     Pipe pip = new Pipe();
                     p1.Move(pi);
-                    pip.seeifNeighbors(c); //false
+                    pip.seeifNeighbors(cc); //false
                     System.out.println("PlayerMovesOnPipeFail has finished");
                     break;
                 case 12:
                     System.out.println("Player moves to pump has started");
-                    Player pla = new Player();
+                    Player pla = new Player(c);
                     Container co1 = new Container();
                     Pump pu1 = new Pump(2);
                     pu1.seeifNeighbors(co1); //true
@@ -131,7 +132,7 @@ public class DispatcherSkeleton {
                     break;
                 case 13:
                     System.out.println("Player moves to cistern has started");
-                    Player pla1 = new Player();
+                    Player pla1 = new Player(c);
                     Container co2 = new Container();
                     Cistern cis = new Cistern(new Pipe(), new Pump(2), 1000);
                     cis.seeifNeighbors(co2); //true
@@ -140,7 +141,7 @@ public class DispatcherSkeleton {
                     break;
                 case 14:
                     System.out.println("Player moves to MountainSpring has started");
-                    Player pla2 = new Player();
+                    Player pla2 = new Player(c);
                     MountainSpring mo = new MountainSpring();
                     Pump pu3 = new Pump(2);
                     pla2.Move(pu3);
