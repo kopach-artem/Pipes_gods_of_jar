@@ -19,7 +19,7 @@ public class Player {
 			pu.setInput(pi);
 		}
 		else if (t.Output.equals(t)){
-			pu.getNegighbors();
+			pu.getNeighbors();
 			pu.setOutput(pi);
 		}
 	}
