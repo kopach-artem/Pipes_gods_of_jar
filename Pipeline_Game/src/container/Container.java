@@ -1,6 +1,8 @@
 package container;
 
 import java.util.ArrayList;
+
+import exception.MyException;
 import player.*;
 
 public class Container {
@@ -10,7 +12,7 @@ public class Container {
 	
     	public Container() {
         	this.neighbors = new ArrayList<>();
-        	this.InputState = new boolean[2]; // default to false for both inputs
+        	this.inputState = new boolean[2]; // default to false for both inputs
     	}
 	
 	public boolean seeifNeighbors(Container neighbor){
@@ -22,7 +24,7 @@ public class Container {
 
 	}
 
-	public void insertPump(Player player){
+	public void insertPump(Player player) throws MyException {
 
 	}
 	

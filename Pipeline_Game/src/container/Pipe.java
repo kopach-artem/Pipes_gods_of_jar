@@ -1,6 +1,7 @@
 package container;
 
 import player.Player;
+import exception.*;
 
 public class Pipe extends Container {
 	private boolean isLeaked;
@@ -16,7 +17,7 @@ public class Pipe extends Container {
 
 	}
 
-	public void insertPump(Player player){
+	public void insertPump(Player player) throws MyException{
 
 		//Create new Pipe for the attachement
 		Pipe split1 = new Pipe();
@@ -41,20 +42,20 @@ public class Pipe extends Container {
 
 	}
 
-	public void addPump(Pump pu, int index) throws Exception {
+	public void addPump(Pump pu, int index) throws MyException {
 
 		if(!(this.neighbors.size() == 2))
 			this.neighbors.add(index, pu);
 		else
-			throw new Exception();
+			throw new MyException("Add pump failed");
 	}
 
-	public void removePump(int index) throws Exception {
+	public void removePump(int index) throws MyException {
 
 		if(!(this.neighbors.isEmpty()))
 			this.neighbors.remove(index);
 		else
-			throw new Exception();
+			throw new MyException("Remove Pump failed");
 	}
 
 	public void eval() {

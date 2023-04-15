@@ -8,9 +8,9 @@ import exception.*;
 
 public class Player {
 
-	private Container position;
-	private ArrayList<Pipe> carriedPipes;
-	private Pump carriedPump;
+	protected Container position;
+	protected ArrayList<Pipe> carriedPipes;
+	protected Pump carriedPump;
 
 	public Player(Container position)
 	{
@@ -43,13 +43,13 @@ public class Player {
 
 	}
 	
-	public void attachPipe(Pipe pi)
+	public void attachPipe(Pipe pi) throws MyException
 	{
 		Pump pos= (Pump) position;
 		if(!pos.isAllConnected())
 		{
 			pos.addPipe(pi);
-			pi.addPump(pos);
+			pi.addPump(pos,0);
 			carriedPipes.remove(pi);
 		}
 	}
@@ -57,7 +57,7 @@ public class Player {
 	public void takePipe(Pipe pi) {
 	}
 	
-	public void attachPump() {
+	public void attachPump() throws MyException {
 
 		position.insertPump(this);
 
@@ -66,11 +66,11 @@ public class Player {
 	public void takePump(Pump pu) {
 	}
 	
-	public void detachPipe(Pipe pi) {
+	public void detachPipe(Pipe pi) throws MyException {
 		Pump tmp = (Pump) position;
 		if(position.seeifNeighbors(pi)){
 			if(pi.isLooseEnd()){
-				pi.removePump(tmp);
+				pi.removePump(0);
 				tmp.removePipe(pi);
 				carriedPipes.add(pi);
 			}

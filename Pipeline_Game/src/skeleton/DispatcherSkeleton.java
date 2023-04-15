@@ -15,7 +15,7 @@ import player.Type;
 import java.util.Scanner;
 
 public class DispatcherSkeleton {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MyException {
         System.out.println("Üdvözli önt a Gods of jar csapat skeleton programja!");
         System.out.println("Válassza ki a kívánt szekvenciát!");
         System.out.println("1. Mehcanic repairs pump");
@@ -101,7 +101,8 @@ public class DispatcherSkeleton {
                 case 6:
                     System.out.println("Player attaches pump has started");
                     Pump pumpToAttach = new Pump(1);
-                    m.attachPump(pumpToAttach);
+                    m.setCarriedPump(pumpToAttach);
+                    m.attachPump();
                     System.out.println("Player attaches pump has finished");
                     break;
                 //Player detach pipe
