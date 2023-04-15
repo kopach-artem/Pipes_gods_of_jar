@@ -14,7 +14,6 @@ public class Pipe extends Container {
 			return true;
 		} else
 			return false;
-
 	}
 
 	public void insertPump(Player player) throws MyException{
