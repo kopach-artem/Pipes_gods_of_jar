@@ -43,6 +43,7 @@ public class DispatcherSkeleton {
         Pump pu = new Pump(2);
         Pipe pi = new Pipe();
         int n;
+
         while((n = scanner.nextInt()) != 0) {
             switch(n){
                 //Mechanic repairs pump
