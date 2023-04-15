@@ -10,15 +10,19 @@
 //
 package controller;
 import container.*;
+import java.util.ArrayList;
 public class Controller {
 	public Pump getRandomUndamagedPump(ArrayList<Pump> pumps) {
 	}
 	
-	public void damagePump(ArrayList<Pump> p)
+	public void damagePump(ArrayList<Pump> pumps)
 	{
-	 	for(Pump pumps:p)
+	 	for(Pump p:pumps)
 		{
-
+			if(turnCount==p.getRandomDamageValue())
+			{
+				p.setisDamaged(true);
+			}
 		}
 	}
 	
