@@ -133,7 +133,7 @@ public class DispatcherSkeleton {
                     System.out.println("Player moves to cistern has started");
                     Player pla1 = new Player();
                     Container co2 = new Container();
-                    Cistern cis = new Cistern();
+                    Cistern cis = new Cistern(new Pipe(), new Pump(2), 1000);
                     cis.seeifNeighbors(co2); //true
                     pla1.setPosition(cis);
                     System.out.println("Player moves to cistern has finished");
@@ -159,7 +159,7 @@ public class DispatcherSkeleton {
                     Pipe input = new Pipe();
                     Pipe output = new Pipe();
                     Pump pu4 = new Pump(2);
-                    Cistern ci = new Cistern();
+                    Cistern ci = new Cistern(input, pu4, 1000);
                     cont.waterFlow(input, pu4, output);
                     input.eval();
                     ci.setInputState();
