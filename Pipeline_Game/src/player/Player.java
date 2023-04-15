@@ -4,13 +4,20 @@ package player;
 import java.util.ArrayList;
 
 import container.*;
+import exception.*;
 
 public class Player {
 
 	private Container position;
 	private ArrayList<Pipe> carriedPipes;
 	private Pump carriedPump;
-	
+
+	public Player(Container position)
+	{
+		this.position=position;
+		carriedPump=null;
+		carriedPipes=null;
+	}
 	public void adjustPump(Pump pu, Pipe pi, Type t) {
 		if (t.Input.equals(t)){
 			pu.getNeighbors();
@@ -23,18 +30,15 @@ public class Player {
 			pu.setOutput(pi);
 		}
 	}
-	
-	public void Move(Container c) throws Exception {
-		if(this.position.seeifNeighbors(c)){
-			if(c.steppable()){
+	public void Move(Container c) throws MyException {
+		if (this.position.seeifNeighbors(c)) {
+			if (c.steppable()) {
 				this.setPosition(c);
+			} else {
+				throw new MyException("The container is clearly not steppable");
 			}
-			else{
-				throw new Exception("The container is clearly not steppable");
-			}
-		}
-		else{
-			throw new Exception("Not even next to it");
+		} else {
+			throw new MyException("Not even next to it");
 		}
 
 	}
@@ -84,7 +88,7 @@ public class Player {
 		this.position = position;
 	}
 
-	public static Pump getCarriedPump() {
+	public Pump getCarriedPump() {
 		return carriedPump;
 	}
 
