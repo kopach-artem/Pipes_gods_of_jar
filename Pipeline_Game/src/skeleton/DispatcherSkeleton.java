@@ -1,5 +1,11 @@
 package skeleton;
 
+import container.Pipe;
+import container.Pump;
+import player.Mechanic;
+import player.Saboteur;
+import player.Type;
+
 import java.util.Scanner;
 
 public class DispatcherSkeleton {
@@ -25,32 +31,62 @@ public class DispatcherSkeleton {
         System.out.println("0. Kilépés");
 
         Scanner scanner = new Scanner(System.in);
+        Mechanic m = new Mechanic();
+        Saboteur s = new Saboteur();
+        Pump pu = new Pump(2);
+        Pipe pi = new Pipe();
         while(scanner.nextInt() != 0) {
             int n = scanner.nextInt();
             switch(n){
+                //Mechanic repairs pump
                 case 1:
-                    //
+                    System.out.println("Mechanic repairs pump has started");
+                    m.RepairPump(pu);
+                    System.out.println("Mechanic repairs pump has finished");
                     break;
+                //Mechanic repairs pipe
                 case 2:
-                    //
+                    System.out.println("Mechanic repairs pipe has started");
+                    m.RepairPipe(pi);
+                    System.out.println("Mechanic reapairs pipe has finished");
                     break;
+                //Saboteur leaks pipe
                 case 3:
-                    //
+                    System.out.println("Saboteur leaks pipe has started");
+                    s.LeakPipe(pi);
+                    System.out.println("Saboteur leaks pipe has finished");
                     break;
+                //Player attach pipe succeful
                 case 4:
-                    //
+                    System.out.println("Player attach pipe succeful has started");
+                    m.attachPipe(pi);
+                    System.out.println("Player attach pipe succeful has finished");
                     break;
+                //Player attach pipe Fail
                 case 5:
-                    //
+                    System.out.println("Player attach pipe fail has started");
+                    Pipe failPipe = new Pipe();
+                    m.attachPipe(failPipe);
+                    System.out.println("Player attach pipe fail has finished");
                     break;
+                //Player attaches pump
                 case 6:
-                    //
+                    System.out.println("Player attaches pump has started");
+                    Pump pumpToAttach = new Pump(1);
+                    m.attachPump(pumpToAttach);
+                    System.out.println("Player attaches pump has finished");
                     break;
+                //Player detach pipe
                 case 7:
-                    //
+                    System.out.println("Player detach pipe has started");
+                    m.detachPipe(pi);
+                    System.out.println("Player detach pipe has finished");
                     break;
+                //Player adjust pump Input
                 case 8:
-                    //
+                    System.out.println("Player adjust pump Input has started");
+                    m.adjustPump(pu, pi, new Type());
+                    System.out.println("Player adjust pump Input has finished");
                     break;
                 case 9:
                     //
