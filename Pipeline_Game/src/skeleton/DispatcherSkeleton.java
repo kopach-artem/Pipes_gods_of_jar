@@ -2,6 +2,7 @@ package skeleton;
 
 import container.*;
 import controller.Controller;
+import exception.UnsteppableContainerException;
 import player.Mechanic;
 import player.Saboteur;
 import player.Type;
@@ -117,7 +118,11 @@ public class DispatcherSkeleton {
                     Player p1 = new Player(c);
                     Container cc = new Container();
                     Pipe pip = new Pipe();
-                    p1.Move(pi);
+                    try {
+                        p1.Move(pi);
+                    } catch (UnsteppableContainerException e) {
+                        throw new RuntimeException(e);
+                    }
                     pip.seeifNeighbors(cc); //false
                     System.out.println("PlayerMovesOnPipeFail has finished");
                     break;
@@ -144,7 +149,11 @@ public class DispatcherSkeleton {
                     Player pla2 = new Player(c);
                     MountainSpring mo = new MountainSpring();
                     Pump pu3 = new Pump(2);
-                    pla2.Move(pu3);
+                    try {
+                        pla2.Move(pu3);
+                    } catch (UnsteppableContainerException e) {
+                        throw new RuntimeException(e);
+                    }
                     mo.steppable(); //false
                     System.out.println("Player moves to MountainSpring has finished");
                     break;
