@@ -12,6 +12,7 @@ import container.Pump;
 import player.Player;
 import player.Type;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DispatcherSkeleton {
@@ -99,16 +100,30 @@ public class DispatcherSkeleton {
                     System.out.println(pi.isLeaked());
                     System.out.println("Saboteur leaks pipe has finished");
                     break;
-                //Player attach pipe succeful
+                //Player attach pipe successful
                 case 4:
-                    System.out.println("Player attach pipe succesful has started");
+                    System.out.println("Player attach pipe successful has started");
+                    System.out.println("attachPipe is called");
                     m.attachPipe();
-                    System.out.println("Player attach pipe succesful has finished");
+                    System.out.println("attachPipe has returned");
+                    if (m.getCarriedPipes().isEmpty()) {
+                        System.out.println("Player attach pipe successful was successful :)");
+                    } else {
+                        System.out.println("Player attach pipe successful has failed :(");
+                    }
+                    System.out.println("Player attach pipe successful has finished");
                     break;
                 //Player attach pipe Fail
                 case 5:
                     System.out.println("Player attach pipe fail has started");
+                    System.out.println("attachPipe is called");
                     m.attachPipe();
+                    System.out.println("attachPipe has returned");
+                    if (!m.getCarriedPipes().isEmpty()) {
+                        System.out.println("Player attach pipe fail was successful :)");
+                    } else {
+                        System.out.println("Player attach pipe fail has failed :(");
+                    }
                     System.out.println("Player attach pipe fail has finished");
                     break;
                 //Player attaches pump
@@ -116,19 +131,40 @@ public class DispatcherSkeleton {
                     System.out.println("Player attaches pump has started");
                     Pump pumpToAttach = new Pump(1);
                     m.setCarriedPump(pumpToAttach);
+                    System.out.println("attachPump is called");
                     m.attachPump();
+                    System.out.println("attachPump has returned");
+                    if (m.getCarriedPump() == null) {
+                        System.out.println("Player attached pump successfully :)");
+                    } else {
+                        System.out.println("Player failed to attach pump :(");
+                    }
                     System.out.println("Player attaches pump has finished");
                     break;
                 //Player detach pipe
                 case 7:
                     System.out.println("Player detach pipe has started");
+                    System.out.println("detachPipe is called");
                     m.detachPipe(pi);
+                    System.out.println("detachPipe has returned");
+                    if (m.getCarriedPipes().contains(pi)) {
+                        System.out.println("Player has detached pipe successfully :)");
+                    } else {
+                        System.out.println("Player failed to take pipe :(");
+                    }
                     System.out.println("Player detach pipe has finished");
                     break;
                 //Player adjust pump Input
                 case 8:
                     System.out.println("Player adjust pump Input has started");
+                    System.out.println("adjustPump is called");
                     m.adjustPump(pu, pi, new Type());
+                    System.out.println("adjustPump has returned");
+                    if (pu.getInput().equals(pi)) {
+                        System.out.println("Input adjustment successful :)");
+                    } else {
+                        System.out.println("Input adjustment failed :(");
+                    }
                     System.out.println("Player adjust pump Input has finished");
                     break;
                 case 9:
