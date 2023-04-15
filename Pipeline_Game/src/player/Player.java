@@ -27,7 +27,15 @@ public class Player {
 	public void move(Container c) {
 	}
 	
-	public void attachPipe(Pipe pi) {
+	public void attachPipe(Pipe pi)
+	{
+		Pump pos= (Pump) position;
+		if(!pos.isAllConnected())
+		{
+			pos.addPipe(pi);
+			pi.addPump(pos);
+			carriedPipes.remove(pi);
+		}
 	}
 	
 	public void takePipe(Pipe pi) {
@@ -41,7 +49,7 @@ public class Player {
 	
 	public void detachPipe(Pipe pi) {
 		Pump tmp = (Pump) position;
-		if(position.seeifNeighbors(pi, position)){
+		if(position.seeifNeighbors(pi)){
 			if(pi.isLooseEnd()){
 				pi.removePump(tmp);
 				tmp.removePipe(pi);

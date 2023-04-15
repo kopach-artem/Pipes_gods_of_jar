@@ -1,5 +1,7 @@
 package skeleton;
 
+import java.util.Scanner;
+
 public class DispatcherSkeleton {
     public static void main(String[] args) {
         System.out.println("Üdvözli önt a Gods of jar csapat skeleton programja!");
@@ -20,5 +22,65 @@ public class DispatcherSkeleton {
         System.out.println("14. Player moves to mountain spring");
         System.out.println("15. Random pump breaking");
         System.out.println("16. Collecting water in cistern");
+        System.out.println("0. Kilépés");
+
+        Scanner scanner = new Scanner(System.in);
+        while(scanner.nextInt() != 0) {
+            int n = scanner.nextInt();
+            switch(n){
+                case 1:
+                    //
+                    break;
+                case 2:
+                    //
+                    break;
+                case 3:
+                    //
+                    break;
+                case 4:
+                    //
+                    break;
+                case 5:
+                    //
+                    break;
+                case 6:
+                    //
+                    break;
+                case 7:
+                    //
+                    break;
+                case 8:
+                    //
+                    break;
+                case 9:
+                    //
+                    break;
+                case 10:
+                    //
+                    break;
+                case 11:
+                    //
+                    break;
+                case 12:
+                    //
+                    break;
+                case 13:
+                    //
+                    break;
+                case 14:
+                    //
+                    break;
+                case 15:
+                    //
+                    break;
+                case 16:
+                    //
+                    break;
+                case 17:
+                    //
+                    break;
+            }
+
+        }
     }
 }
