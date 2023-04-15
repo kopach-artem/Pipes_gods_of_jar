@@ -9,6 +9,8 @@ public class Saboteur extends Player {
 		super(position);
 	}
 
-	public void LeakPipe(Pipe p) {
+	public void LeakPipe(Pipe p)
+	{
+		p.setisLeaked(true);
 	}
 }
