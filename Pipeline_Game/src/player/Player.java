@@ -43,15 +43,9 @@ public class Player {
 		}
 	}
 	
-	public void attachPipe(Pipe pi)
+	public void attachPipe() throws MyException
 	{
-		Pump pos = new Pump(position);
-		if(!pos.isAllConnected())
-		{
-			pos.addPipe(pi);
-			pi.addPump(pos);
-			carriedPipes.remove(pi);
-		}
+		this.position.insertPipe(this);
 	}
 	
 	public void takePipe(Pipe pi) {
@@ -66,18 +60,10 @@ public class Player {
 	public void takePump(Pump pu) {
 	}
 	
-	public void detachPipe(Pipe pi) {
-		Pump tmp = (Pump) position;
-		if(position.seeifNeighbors(pi)){
-			if(pi.isLooseEnd()){
-				pi.removePump(tmp);
-				tmp.removePipe(pi);
-				carriedPipes.add(pi);
-			}
-		}
-	}
-	
-	public void setPostion(Container c) {
+	public void detachPipe(Pipe pi) throws MyException {
+
+		position.extractPipe(this, pi);
+
 	}
 
 	public Container getPosition() {

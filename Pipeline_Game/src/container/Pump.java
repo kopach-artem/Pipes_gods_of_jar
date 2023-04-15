@@ -1,31 +1,50 @@
 package container;
+import exception.MyException;
 import map.Map;
+import player.Player;
 
 import java.util.Random;
 
 public class Pump extends Container {
-	
+
 	private Pipe input;
 	private Pipe output;
 	private boolean isDamaged;
 	private int randomDamageValue;
 	private int maxPipeAmount;
 
-	public Pump(int maxPipeAmount)
-	{
+	public Pump(int maxPipeAmount) {
 		this.maxPipeAmount=maxPipeAmount;
 		Random rand=new Random();
 		randomDamageValue=rand.nextInt(11) + 10;
 		isDamaged=false;
 	}
 
-	public Pump(Container pos)
-	{
+	public Pump(Container pos) {
 		super();
 	}
 
-	public void insertPipe(Player player){
+	public void insertPipe(Player player) throws MyException{
 
+		Pipe atPipe = player.getCarriedPipes().get(player.getCarriedPipes().size());
+
+		if(!isAllConnected()){
+			this.addPipe(atPipe);
+			atPipe.addPump(this, 0);
+			player.getCarriedPipes().remove(atPipe);
+		}
+
+	}
+
+	public void extractPipe(Player player, Pipe pi) throws MyException {
+
+		if(this.seeifNeighbors(pi)){
+			if(pi.isLooseEnd()){
+				pi.removePump(this);
+				this.removePipe(pi);
+				player.getCarriedPipes().add(pi);
+			}
+		}
 	}
 
 	public boolean steppable() {
@@ -37,32 +56,29 @@ public class Pump extends Container {
 			this.isDamaged = true;
 		}
 	}
-	
+
 	public void addPipe(Pipe pi) {
 
 		this.neighbors.add(pi);
 
 	}
-	
+
 	public void removePipe(Pipe pi) {
 
 		if(!this.neighbors.isEmpty())
 			this.neighbors.remove(pi);
 
 	}
-	
-	public void eval()
-	{
+
+	public void eval() {
 
 	}
-	
-	public void setInputState()
-	{
+
+	public void setInputState() {
 
 	}
-	
-	public boolean isAllConnected()
-	{
+
+	public boolean isAllConnected() {
 		return false;
 	}
 
@@ -102,13 +118,11 @@ public class Pump extends Container {
 		this.input = input;
 	}
 
-    public void setisDamaged(boolean b)
-	{
+    public void setisDamaged(boolean b) {
 		isDamaged=b;
     }
 
-	public boolean getisDamaged()
-	{
+	public boolean getisDamaged() {
 		return isDamaged;
 	}
 }

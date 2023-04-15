@@ -58,6 +58,14 @@ public class Pipe extends Container {
 			throw new MyException("Remove Pump failed");
 	}
 
+	public void removePump(Pump pu) throws MyException {
+
+		if(!(this.neighbors.isEmpty()))
+			this.neighbors.remove(pu);
+		else
+			throw new MyException("Remove Pump failed");
+	}
+
 	public void eval() {
 	}
 

@@ -28,7 +28,11 @@ public class Container {
 
 	}
 
-	public void insertPipe(Player player){
+	public void extractPipe(Player player, Pipe pi) throws MyException {
+
+	}
+
+	public void insertPipe(Player player) throws MyException {
 
 	}
 	
