@@ -66,4 +66,14 @@ public class Pump extends Container {
 	public void setInput(Pipe input) {
 		this.input = input;
 	}
+
+    public void setisDamaged(boolean b)
+	{
+		isDamaged=b;
+    }
+
+	public boolean getisDamaged()
+	{
+		return isDamaged;
+	}
 }
