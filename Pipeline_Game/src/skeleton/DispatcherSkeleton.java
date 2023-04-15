@@ -1,9 +1,14 @@
 package skeleton;
 
-import container.Pipe;
-import container.Pump;
+import container.*;
+import controller.Controller;
 import player.Mechanic;
 import player.Saboteur;
+import player.Type;
+
+import container.Pipe;
+import container.Pump;
+import player.Player;
 import player.Type;
 
 import java.util.Scanner;
@@ -89,31 +94,79 @@ public class DispatcherSkeleton {
                     System.out.println("Player adjust pump Input has finished");
                     break;
                 case 9:
-                    //
+                    System.out.println("AdjustPump has started");
+                    Player p = new Player();
+                    Pipe pipe = new Pipe();
+                    Type t = new Type();
+                    Pump pum = new Pump(2);
+                    p.adjustPump(pu, pipe, t);
+                    System.out.println("AdjustPump has finished");
                     break;
                 case 10:
-                    //
+                    System.out.println("PlayerMovesOnPipeSuc has started");
+                    Player pl = new Player();
+                    Container co = new Container();
+                    Pipe pipe1 = new Pipe();
+                    pipe1.seeifNeighbors(co); //true
+                    pl.setPosition(pipe1);
+                    System.out.println("PlayerMovesOnPipeSuc has finished");
                     break;
                 case 11:
-                    //
+                    System.out.println("PlayerMovesOnPipeFail has started");
+                    Player p1 = new Player();
+                    Container c = new Container();
+                    Pipe pip = new Pipe();
+                    p1.move(pi);
+                    pip.seeifNeighbors(c); //false
+                    System.out.println("PlayerMovesOnPipeFail has finished");
                     break;
                 case 12:
-                    //
+                    System.out.println("Player moves to pump has started");
+                    Player pla = new Player();
+                    Container co1 = new Container();
+                    Pump pu1 = new Pump(2);
+                    pu1.seeifNeighbors(co1); //true
+                    pla.setPosition(pu1);
+                    System.out.println("Player moves to pump has finished");
                     break;
                 case 13:
-                    //
+                    System.out.println("Player moves to cistern has started");
+                    Player pla1 = new Player();
+                    Container co2 = new Container();
+                    Cistern cis = new Cistern();
+                    cis.seeifNeighbors(co2); //true
+                    pla1.setPosition(cis);
+                    System.out.println("Player moves to cistern has finished");
                     break;
                 case 14:
-                    //
+                    System.out.println("Player moves to MountainSpring has started");
+                    Player pla2 = new Player();
+                    MountainSpring mo = new MountainSpring();
+                    Pump pu3 = new Pump(2);
+                    pla2.move(pu3);
+                    mo.steppable(); //false
+                    System.out.println("Player moves to MountainSpring has finished");
                     break;
                 case 15:
-                    //
+                    System.out.println("Evaluation has started");
+                    Pump pump1 = new Pump(2);
+                    pump1.setisDamaged(true);
+                    System.out.println("Evaluation has started");
                     break;
                 case 16:
-                    //
-                    break;
-                case 17:
-                    //
+                    System.out.println("CollectingWater has started");
+                    Controller cont = new Controller();
+                    Pipe input = new Pipe();
+                    Pipe output = new Pipe();
+                    Pump pu4 = new Pump(2);
+                    Cistern ci = new Cistern();
+                    cont.waterFlow(input, pu4, output);
+                    input.eval();
+                    ci.setInputState();
+                    ci.eval();
+                    input.makeHistory();
+                    ci.makeHistory();
+                    System.out.println("CollectingWater has finished");
                     break;
             }
 
