@@ -48,19 +48,40 @@ public class DispatcherSkeleton {
                 //Mechanic repairs pump
                 case 1:
                     System.out.println("Mechanic repairs pump has started");
+                    pu.setisDamaged(true);
+                    System.out.print("Pump isDamaged before repair: ");
+                    System.out.println(pu.getisDamaged());
+                    System.out.println("RepairPump is called");
                     m.RepairPump(pu);
+                    System.out.println("RepairPump has returned");
+                    System.out.print("Pump isDamaged after repair: ");
+                    System.out.println(pu.getisDamaged());
                     System.out.println("Mechanic repairs pump has finished");
                     break;
                 //Mechanic repairs pipe
                 case 2:
                     System.out.println("Mechanic repairs pipe has started");
+                    pi.setisLeaked(true);
+                    System.out.print("Pipe isLeaked before repair: ");
+                    System.out.println(pi.isLeaked());
+                    System.out.println("RepairPipe is called");
                     m.RepairPipe(pi);
-                    System.out.println("Mechanic reapairs pipe has finished");
+                    System.out.println("RepairPipe has returned");
+                    System.out.print("Pipe isLeaked after repair: ");
+                    System.out.println(pi.isLeaked());
+                    System.out.println("Mechanic repairs pump has finished");
                     break;
                 //Saboteur leaks pipe
                 case 3:
                     System.out.println("Saboteur leaks pipe has started");
+                    pi.setisLeaked(false);
+                    System.out.print("Pipe isleaked before sabotage: ");
+                    System.out.println(pi.isLeaked());
+                    System.out.println("LeakPipe is called");
                     s.LeakPipe(pi);
+                    System.out.println("LeakPipe has returned");
+                    System.out.print("Pipe isleaked afrer sabotage: ");
+                    System.out.println(pi.isLeaked());
                     System.out.println("Saboteur leaks pipe has finished");
                     break;
                 //Player attach pipe succeful
