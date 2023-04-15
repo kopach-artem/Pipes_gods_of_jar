@@ -2,7 +2,7 @@ package skeleton;
 
 import container.*;
 import controller.Controller;
-import exception.UnsteppableContainerException;
+import exception.MyException;
 import player.Mechanic;
 import player.Saboteur;
 import player.Type;
@@ -120,7 +120,7 @@ public class DispatcherSkeleton {
                     Pipe pip = new Pipe();
                     try {
                         p1.Move(pi);
-                    } catch (UnsteppableContainerException e) {
+                    } catch (MyException e) {
                         throw new RuntimeException(e);
                     }
                     pip.seeifNeighbors(cc); //false
@@ -151,7 +151,7 @@ public class DispatcherSkeleton {
                     Pump pu3 = new Pump(2);
                     try {
                         pla2.Move(pu3);
-                    } catch (UnsteppableContainerException e) {
+                    } catch (MyException e) {
                         throw new RuntimeException(e);
                     }
                     mo.steppable(); //false

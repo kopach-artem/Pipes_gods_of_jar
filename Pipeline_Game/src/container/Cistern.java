@@ -2,6 +2,7 @@ package container;
 
 import java.util.ArrayList;
 import java.util.Random;
+import map.Map;
 
 public class Cistern extends Container {
 	
@@ -25,7 +26,7 @@ public class Cistern extends Container {
 	
 	public void createPipe()
 	{
-		if(turnCount%3==0)
+		if(Map.getTurnCount()%3==0)
 			madePipes.add(new Pipe());
 	}
 

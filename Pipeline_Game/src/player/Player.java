@@ -31,15 +31,15 @@ public class Player {
 		}
 	}
 
-	public void Move(Container c) throws UnsteppableContainerException {
+	public void Move(Container c) throws MyException {
 		if (this.position.seeifNeighbors(c)) {
 			if (c.steppable()) {
 				this.setPosition(c);
 			} else {
-				throw new UnsteppableContainerException("The container is clearly not steppable");
+				throw new MyException("The container is clearly not steppable");
 			}
 		} else {
-			throw new UnsteppableContainerException("Not even next to it");
+			throw new MyException("Not even next to it");
 		}
 	}
 	

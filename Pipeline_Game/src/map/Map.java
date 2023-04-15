@@ -8,11 +8,11 @@ import container.*;
 
 public class Map {
 	private int leakedWater;
-	private int turnCount;
+	private static int turnCount;
 	
 	private ArrayList<Player> players;
 	
-	private ArrayList<Container> containers;
+	private static ArrayList<Container> containers;
 
 	public static int getTurnCount(){
 		return turnCount;
