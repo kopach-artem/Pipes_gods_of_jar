@@ -12,7 +12,6 @@ public class Pipe extends Container {
 		}
 		else
 			return false;
-
 	}
 	
 	public void addPump(Pump pu) {

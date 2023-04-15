@@ -60,13 +60,31 @@ public class Player {
 		}
 	}
 	
-	public void takePipe(Pipe pi) {
+	public void takePipe(Cistern c)
+	{
+		if(position==c)
+		{
+			if(!c.getMadePipes().isEmpty())
+			{
+				carriedPipes.add(c.getMadePipes().get(0));
+				c.getMadePipes().remove(0);
+			}
+		}
 	}
 	
 	public void attachPump(Pump pu) {
 	}
 	
-	public void takePump(Pump pu) {
+	public void takePump(Cistern c)
+	{
+		if(position==c)
+		{
+			if(c.getFreePump()!=null)
+			{
+				carriedPump=c.getFreePump();
+				c.setFreePump(null);
+			}
+		}
 	}
 	
 	public void detachPipe(Pipe pi) {
