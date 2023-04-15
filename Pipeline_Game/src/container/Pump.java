@@ -1,4 +1,5 @@
 package container;
+import java.util.Random;
 
 public class Pump extends Container {
 	
@@ -7,8 +8,15 @@ public class Pump extends Container {
 	private boolean isDamaged;
 	private int randomDamageValue;
 	private int maxPipeAmount;
-	
-	
+
+	public Pump(int maxPipeAmount)
+	{
+		this.maxPipeAmount=maxPipeAmount;
+		Random rand=new Random();
+		randomDamageValue=rand.nextInt(11) + 10;
+		isDamaged=false;
+	}
+
 	public boolean steppable() {
 		
 		return true;
@@ -18,13 +26,19 @@ public class Pump extends Container {
 	public void addPipe(Pipe pi) {
 	}
 	
-	public void removePipe(Pipe pi) {
+	public void removePipe(Pipe pi)
+	{
+
 	}
 	
-	public void eval() {
+	public void eval()
+	{
+
 	}
 	
-	public void setInputState() {
+	public void setInputState()
+	{
+
 	}
 	
 	public boolean isAllConnected() {

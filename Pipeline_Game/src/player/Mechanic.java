@@ -6,12 +6,11 @@ public class Mechanic extends Player {
 	
 	public void RepairPipe(Pipe p)
 	{
-		if(p.getisDamaged())
+		if(p.isLeaked())
 		{
-			p.setisDamaged(false);
+			p.setisLeaked(false);
 		}
 	}
-
 	void RepairPump(Pump pu)
 	{
 		if(pu.getisDamaged())
