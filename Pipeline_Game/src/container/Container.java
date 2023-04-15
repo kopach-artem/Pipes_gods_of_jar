@@ -3,12 +3,13 @@ package container;
 import java.util.ArrayList;
 
 public class Container {
-	private ArrayList<Container> negighbors;
+	private ArrayList<Container> neighbors;
 	private boolean[] InputState;
 	
 	
-	public boolean seeifNeighbors(Container neighbor, Container c) {
-		return true;
+	public boolean seeifNeighbors(Container neighbor){
+
+		return this.neighbors.contains(neighbor);
 	}
 	
 	public boolean steppable() {
@@ -24,12 +25,12 @@ public class Container {
 	public void makeHistory() {
 	}
 
-	public ArrayList<Container> getNegighbors() {
-		return negighbors;
+	public ArrayList<Container> getNeighbors() {
+		return neighbors;
 	}
 
-	public void setNegighbors(ArrayList<Container> negighbors) {
-		this.negighbors = negighbors;
+	public void setNeighbors(ArrayList<Container> neighbors) {
+		this.neighbors = neighbors;
 	}
 
 
