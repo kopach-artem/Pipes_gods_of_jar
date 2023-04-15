@@ -45,12 +45,18 @@ public class Player {
 	
 	public void attachPipe(Pipe pi)
 	{
-		Pump pos= (Pump) position;
+		Pump pos = new Pump(position);
 		if(!pos.isAllConnected())
 		{
 			pos.addPipe(pi);
 			pi.addPump(pos);
-			carriedPipes.remove(pi);
+			try
+			{
+				carriedPipes.remove(pi);
+			}
+			catch(Exception e){
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 	
