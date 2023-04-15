@@ -7,6 +7,11 @@ public class Container {
 	private boolean[] InputState;
 	
 	
+    	public Container() {
+        	this.neighbors = new ArrayList<>();
+        	this.inputState = new boolean[2]; // default to false for both inputs
+    	}
+	
 	public boolean seeifNeighbors(Container neighbor){
 
 		return this.neighbors.contains(neighbor);
