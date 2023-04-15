@@ -2,14 +2,17 @@ package container;
 
 import java.util.ArrayList;
 
+import exception.MyException;
+import player.*;
+
 public class Container {
-	private ArrayList<Container> neighbors;
-	private boolean[] InputState;
+	protected ArrayList<Container> neighbors;
+	private boolean[] inputState;
 	
 	
     	public Container() {
         	this.neighbors = new ArrayList<>();
-        	this.InputState = new boolean[2]; // default to false for both inputs
+        	this.inputState = new boolean[2]; // default to false for both inputs
     	}
 	
 	public boolean seeifNeighbors(Container neighbor){
@@ -18,6 +21,18 @@ public class Container {
 	}
 
 	public void lifeCycle(){
+
+	}
+
+	public void insertPump(Player player) throws MyException {
+
+	}
+
+	public void extractPipe(Player player, Pipe pi) throws MyException {
+
+	}
+
+	public void insertPipe(Player player) throws MyException {
 
 	}
 	

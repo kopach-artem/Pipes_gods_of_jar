@@ -1,3 +1,3 @@
- module pipeline_Game {
-//     requires rt;
+module pipeline_Game {
+    requires rt;
 }

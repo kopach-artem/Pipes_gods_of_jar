@@ -8,9 +8,9 @@ import exception.*;
 
 public class Player {
 
-	private Container position;
-	private ArrayList<Pipe> carriedPipes;
-	private Pump carriedPump;
+	protected Container position;
+	protected ArrayList<Pipe> carriedPipes;
+	protected Pump carriedPump;
 
 	public Player(Container position)
 	{
@@ -43,59 +43,27 @@ public class Player {
 		}
 	}
 	
-	public void attachPipe(Pipe pi)
+	public void attachPipe() throws MyException
 	{
-		Pump pos = new Pump(position);
-		if(!pos.isAllConnected())
-		{
-			pos.addPipe(pi);
-			pi.addPump(pos);
-			try
-			{
-				carriedPipes.remove(pi);
-			}
-			catch(Exception e){
-				System.out.println(e.getMessage());
-			}
-		}
+		this.position.insertPipe(this);
 	}
 	
-	public void takePipe(Cistern c)
-	{
-		if(position==c)
-		{
-			if(!c.getMadePipes().isEmpty())
-			{
-				carriedPipes.add(c.getMadePipes().get(0));
-				c.getMadePipes().remove(0);
-			}
-		}
+	public void takePipe(Pipe pi) {
 	}
 	
-	public void attachPump(Pump pu) {
+	public void attachPump() throws MyException {
+
+		position.insertPump(this);
+
 	}
 	
-	public void takePump(Cistern c)
-	{
-		if(position==c)
-		{
-			if(c.getFreePump()!=null)
-			{
-				carriedPump=c.getFreePump();
-				c.setFreePump(null);
-			}
-		}
+	public void takePump(Pump pu) {
 	}
 	
-	public void detachPipe(Pipe pi) {
-		Pump tmp = (Pump) position;
-		if(position.seeifNeighbors(pi)){
-			if(pi.isLooseEnd()){
-				pi.removePump(tmp);
-				tmp.removePipe(pi);
-				carriedPipes.add(pi);
-			}
-		}
+	public void detachPipe(Pipe pi) throws MyException {
+
+		position.extractPipe(this, pi);
+
 	}
 
 	public Container getPosition() {
