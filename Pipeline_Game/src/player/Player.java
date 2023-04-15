@@ -15,11 +15,17 @@ public class Player {
 	}
 	
 	public void Move(Container c) {
-		if(player.moves)
-
 	}
 	
-	public void attachPipe(Pipe pi) {
+	public void attachPipe(Pipe pi)
+	{
+		Pump pos= (Pump) position;
+		if(!pos.isAllConnected())
+		{
+			pos.addPipe(pi);
+			pi.addPump(pos);
+			carriedPipes.remove(pi);
+		}
 	}
 	
 	public void takePipe(Pipe pi) {
