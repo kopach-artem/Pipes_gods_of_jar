@@ -101,15 +101,14 @@ public class DispatcherSkeleton {
                     break;
                 //Player attach pipe succeful
                 case 4:
-                    System.out.println("Player attach pipe succeful has started");
-                    m.attachPipe(pi);
-                    System.out.println("Player attach pipe succeful has finished");
+                    System.out.println("Player attach pipe succesful has started");
+                    m.attachPipe();
+                    System.out.println("Player attach pipe succesful has finished");
                     break;
                 //Player attach pipe Fail
                 case 5:
                     System.out.println("Player attach pipe fail has started");
-                    Pipe failPipe = new Pipe();
-                    m.attachPipe(failPipe);
+                    m.attachPipe();
                     System.out.println("Player attach pipe fail has finished");
                     break;
                 //Player attaches pump
