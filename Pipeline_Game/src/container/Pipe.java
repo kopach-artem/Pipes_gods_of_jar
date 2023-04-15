@@ -51,12 +51,9 @@ public class Pipe extends Container {
 		this.waterFlowing = waterFlowing;
 	}
 
-    public boolean getisDamaged()
-	{
-		return isLeaked;
-    }
 
-	public void setisDamaged(boolean b)
+
+	public void setisLeaked(boolean b)
 	{
 		isLeaked=b;
 	}
