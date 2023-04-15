@@ -5,12 +5,10 @@
 TODO:
 5.3.5
 5.3.8
-5.3.9
-5.3.11
-Also CONSTRUCTORS FOR ALL CLASEES
-Tests for menu with some input/output
-Run in cloud.bme
-Word file
+Also CONSTRUCTORS FOR ALL CLASEES (Double check), 
+Tests for menu with some input/output( in progress), 
+Run in cloud.bme(holnap), 
+Word file(holnap)
 
 CHECK LIST:
 Menu with switch-case
