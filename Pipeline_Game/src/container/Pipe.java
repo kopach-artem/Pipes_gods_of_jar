@@ -28,8 +28,11 @@ public class Pipe extends Container {
 	}
 	
 	public boolean isLooseEnd() {
-		return false;
 
+		if(getNeighbors().size()==1)
+			return true;
+		else
+			return false;
 	}
 
 	public boolean isLeaked() {
