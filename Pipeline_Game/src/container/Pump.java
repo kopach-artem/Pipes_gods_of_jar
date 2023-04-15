@@ -19,6 +19,11 @@ public class Pump extends Container {
 		isDamaged=false;
 	}
 
+	public Pump(Container pos)
+	{
+		super();
+	}
+
 	public void insertPipe(Player player){
 
 	}

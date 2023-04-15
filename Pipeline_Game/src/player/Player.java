@@ -30,6 +30,7 @@ public class Player {
 			pu.setOutput(pi);
 		}
 	}
+
 	public void Move(Container c) throws MyException {
 		if (this.position.seeifNeighbors(c)) {
 			if (c.steppable()) {
@@ -40,16 +41,15 @@ public class Player {
 		} else {
 			throw new MyException("Not even next to it");
 		}
-
 	}
 	
-	public void attachPipe(Pipe pi) throws MyException
+	public void attachPipe(Pipe pi)
 	{
-		Pump pos= (Pump) position;
+		Pump pos = new Pump(position);
 		if(!pos.isAllConnected())
 		{
 			pos.addPipe(pi);
-			pi.addPump(pos,0);
+			pi.addPump(pos);
 			carriedPipes.remove(pi);
 		}
 	}
@@ -66,11 +66,11 @@ public class Player {
 	public void takePump(Pump pu) {
 	}
 	
-	public void detachPipe(Pipe pi) throws MyException {
+	public void detachPipe(Pipe pi) {
 		Pump tmp = (Pump) position;
 		if(position.seeifNeighbors(pi)){
 			if(pi.isLooseEnd()){
-				pi.removePump(0);
+				pi.removePump(tmp);
 				tmp.removePipe(pi);
 				carriedPipes.add(pi);
 			}
