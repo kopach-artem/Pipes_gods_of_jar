@@ -14,7 +14,9 @@ public class Pipe extends Container {
 			return false;
 	}
 	
-	public void addPump(Pump pu) {
+	public void addPump(Pump pu)
+	{
+
 	}
 	
 	public void removePump(Pump pu) {
