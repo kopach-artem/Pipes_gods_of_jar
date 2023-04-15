@@ -12,22 +12,20 @@ package controller;
 import container.*;
 import java.util.ArrayList;
 public class Controller {
-	public Pump getRandomUndamagedPump(ArrayList<Pump> pumps) {
-	}
-	
-	public void damagePump(ArrayList<Pump> pumps)
-	{
-	 	for(Pump p:pumps)
-		{
-			if(turnCount==p.getRandomDamageValue())
-			{
+
+	public void damagePump(ArrayList<Pump> pumps) {
+		for(Pump p:pumps) {
+			if(turnCount==p.getRandomDamageValue() && !p.isDamaged()) {
 				p.setisDamaged(true);
 			}
 		}
 	}
-	
-	public void waterFlow()
-	{
 
+	public void waterFlow(Pipe p1, Pump pu, Pipe p2)
+	{
+		p1.eval();
+		p2.eval();
+		p1.makeHistory();
+		p2.makeHistory();
 	}
 }
