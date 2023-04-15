@@ -11,11 +11,15 @@ public class Container {
 
 		return this.neighbors.contains(neighbor);
 	}
+
+	public void lifeCycle(){
+
+	}
 	
 	public boolean steppable() {
 		return false;
 	}
-	
+
 	public void eval() {
 	}
 	

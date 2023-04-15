@@ -1,6 +1,7 @@
 package map;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import player.*;
 import container.*;
@@ -11,7 +12,11 @@ public class Map {
 	private ArrayList<Player> players;
 	
 	private ArrayList<Container> containers;
-	
+
+	public ArrayList<Pump> getPumps(){
+
+	}
+
 	public void checkLeakage() {
 	}
 	
@@ -24,12 +29,8 @@ public class Map {
 	public void addElement(Container c) {
 	}
 
-	public ArrayList<Container> getContainers() {
+	public static ArrayList<Container> getContainers() {
 		return containers;
-	}
-
-	public void setContainers(ArrayList<Container> containers) {
-		this.containers = containers;
 	}
 
 	public ArrayList<Player> getPlayers() {

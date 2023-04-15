@@ -10,20 +10,17 @@
 //
 package controller;
 import container.*;
-public class Controller {
-	public Pump getRandomUndamagedPump(ArrayList<Pump> pumps) {
-	}
-	
-	public void damagePump(ArrayList<Pump> p)
-	{
-	 	for(Pump pumps:p)
-		{
+import map.Map;
 
+public class Controller {
+
+	public void damagePump() {
+		for(Container c : Map.getContainers()){
+			c.lifeCycle();
 		}
 	}
-	
-	public void waterFlow()
-	{
+
+	public void waterFlow() {
 
 	}
 }

@@ -22,6 +22,12 @@ public class Pump extends Container {
 		return true;
 		
 	}
+
+	public void lifeCycle(){
+		if(turnCount == this.randomDamageValue && !this.isDamaged){
+			this.isDamaged = true;
+		}
+	}
 	
 	public void addPipe(Pipe pi) {
 	}
