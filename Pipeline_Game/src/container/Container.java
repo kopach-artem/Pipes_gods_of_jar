@@ -31,4 +31,6 @@ public class Container {
 	public void setNegighbors(ArrayList<Container> negighbors) {
 		this.negighbors = negighbors;
 	}
+
+
 }
