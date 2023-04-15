@@ -15,7 +15,17 @@ public class Player {
 	}
 	
 	public void Move(Container c) {
-		if(player.moves)
+		if(this.position.seeifNeighbors(c)){
+			if(c.steppable()){
+				this.setPosition(c);
+			}
+			else{
+				throw new Exception("The container is clearly not steppable");
+			}
+		}
+		else{
+			throw new Exception("Not even next to it");
+		}
 
 	}
 	
