@@ -9,6 +9,8 @@ TODO:
 5.3.11
 Also CONSTRUCTORS FOR ALL CLASEES
 Tests for menu with some input/output
+Run in cloud.bme
+Word file
 
 CHECK LIST:
 Menu with switch-case
