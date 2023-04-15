@@ -16,7 +16,7 @@ public class Container {
 
 	}
 	
-	public boolean steppable() {
+	public boolean steppable(){
 		return false;
 	}
 

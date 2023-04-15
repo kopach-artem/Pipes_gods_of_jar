@@ -1,4 +1,6 @@
 package container;
+import map.Map;
+
 import java.util.Random;
 
 public class Pump extends Container {
@@ -18,13 +20,11 @@ public class Pump extends Container {
 	}
 
 	public boolean steppable() {
-		
 		return true;
-		
 	}
 
 	public void lifeCycle(){
-		if(turnCount == this.randomDamageValue && !this.isDamaged){
+		if(Map.getTurnCount() == this.randomDamageValue && !this.isDamaged){
 			this.isDamaged = true;
 		}
 	}

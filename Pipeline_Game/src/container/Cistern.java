@@ -25,6 +25,10 @@ public class Cistern extends Container {
 	
 	public void createPipe() {
 	}
+
+	public boolean steppable(){
+		return true;
+	}
 	
 	public void eval() {
 	}

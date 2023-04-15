@@ -7,7 +7,11 @@ public class MountainSpring extends Container {
 	
 	public void flowStart() {
 	}
-	
+
+	public boolean steppable(){
+		return false;
+	}
+
 	public void decreaseWaterAm() {
 	}
 	

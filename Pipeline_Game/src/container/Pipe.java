@@ -6,7 +6,12 @@ public class Pipe extends Container {
 	private boolean waterFlowing;
 	
 	public boolean steppable() {
-		return false;
+
+		if(!isOccupied){
+			return true;
+		}
+		else
+			return false;
 
 	}
 	
