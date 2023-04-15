@@ -19,6 +19,10 @@ public class Pump extends Container {
 		isDamaged=false;
 	}
 
+	public void insertPipe(Player player){
+
+	}
+
 	public boolean steppable() {
 		return true;
 	}

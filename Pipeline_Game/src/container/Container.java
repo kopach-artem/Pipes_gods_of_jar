@@ -27,6 +27,10 @@ public class Container {
 	public void insertPump(Player player) throws MyException {
 
 	}
+
+	public void insertPipe(Player player){
+
+	}
 	
 	public boolean steppable(){
 		return false;
