@@ -42,8 +42,8 @@ public class DispatcherSkeleton {
         Saboteur s = new Saboteur(c);
         Pump pu = new Pump(2);
         Pipe pi = new Pipe();
-        while(scanner.nextInt() != 0) {
-            int n = scanner.nextInt();
+        int n;
+        while((n = scanner.nextInt()) != 0) {
             switch(n){
                 //Mechanic repairs pump
                 case 1:
@@ -177,6 +177,8 @@ public class DispatcherSkeleton {
                     input.makeHistory();
                     ci.makeHistory();
                     System.out.println("CollectingWater has finished");
+                    break;
+                default:
                     break;
             }
 
