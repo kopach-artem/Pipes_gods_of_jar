@@ -10,7 +10,13 @@ public class Player {
 	private Container position;
 	private ArrayList<Pipe> carriedPipes;
 	private Pump carriedPump;
-	
+
+	public Player(Container position)
+	{
+		this.position=position;
+		carriedPump=null;
+		carriedPipes=null;
+	}
 	public void adjustPump(Pump pu, Pipe pi, Type t) {
 		if (t.Input.equals(t)){
 			pu.getNeighbors();

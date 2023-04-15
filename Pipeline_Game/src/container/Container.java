@@ -9,7 +9,7 @@ public class Container {
 	
     	public Container() {
         	this.neighbors = new ArrayList<>();
-        	this.inputState = new boolean[2]; // default to false for both inputs
+        	this.InputState = new boolean[2]; // default to false for both inputs
     	}
 	
 	public boolean seeifNeighbors(Container neighbor){
