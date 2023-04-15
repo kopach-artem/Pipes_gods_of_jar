@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import container.*;
 
 public class Player {
+
 	private Container position;
 	private ArrayList<Pipe> carriedPipes;
 	private Pump carriedPump;
@@ -29,6 +30,14 @@ public class Player {
 	}
 	
 	public void detachPipe(Pipe pi) {
+		Pump tmp = (Pump) position;
+		if(position.seeifNeighbors(pi, position)){
+			if(pi.isLooseEnd()){
+				pi.removePump(tmp);
+				tmp.removePipe(pi);
+				carriedPipes.add(pi);
+			}
+		}
 	}
 	
 	public void setPostion(Container c) {
