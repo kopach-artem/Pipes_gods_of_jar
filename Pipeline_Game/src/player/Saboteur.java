@@ -7,7 +7,7 @@ public class Saboteur extends Player {
 	
 	public void LeakPipe(Pipe p)
 	{
-		if(p.isLeaked()==false)
+		if(!p.isLeaked())
 		{
 			p.setisLeaked(true);
 		}
