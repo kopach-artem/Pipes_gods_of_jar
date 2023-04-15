@@ -20,10 +20,6 @@ public class Pump extends Container {
 		isDamaged=false;
 	}
 
-	public Pump(Container pos) {
-		super();
-	}
-
 	public void insertPipe(Player player) throws MyException{
 
 		Pipe atPipe = player.getCarriedPipes().get(player.getCarriedPipes().size());
@@ -79,7 +75,10 @@ public class Pump extends Container {
 	}
 
 	public boolean isAllConnected() {
-		return false;
+		if(getMaxPipeAmount()==4)
+			return true;
+		else
+			return false;
 	}
 
 	public int getRandomDamageValue() {
