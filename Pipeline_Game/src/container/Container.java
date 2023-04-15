@@ -1,10 +1,11 @@
 package container;
 
 import java.util.ArrayList;
+import player.*;
 
 public class Container {
-	private ArrayList<Container> neighbors;
-	private boolean[] InputState;
+	protected ArrayList<Container> neighbors;
+	private boolean[] inputState;
 	
 	
     	public Container() {
@@ -18,6 +19,10 @@ public class Container {
 	}
 
 	public void lifeCycle(){
+
+	}
+
+	public void insertPump(Player player){
 
 	}
 	

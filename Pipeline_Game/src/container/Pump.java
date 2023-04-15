@@ -30,10 +30,15 @@ public class Pump extends Container {
 	}
 	
 	public void addPipe(Pipe pi) {
+
+		this.neighbors.add(pi);
+
 	}
 	
-	public void removePipe(Pipe pi)
-	{
+	public void removePipe(Pipe pi) {
+
+		if(!this.neighbors.isEmpty())
+			this.neighbors.remove(pi);
 
 	}
 	

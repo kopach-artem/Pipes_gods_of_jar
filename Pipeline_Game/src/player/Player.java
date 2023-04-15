@@ -24,7 +24,7 @@ public class Player {
 		}
 	}
 	
-	public void Move(Container c) {
+	public void Move(Container c) throws Exception {
 		if(this.position.seeifNeighbors(c)){
 			if(c.steppable()){
 				this.setPosition(c);
@@ -53,7 +53,10 @@ public class Player {
 	public void takePipe(Pipe pi) {
 	}
 	
-	public void attachPump(Pump pu) {
+	public void attachPump() {
+
+		position.insertPump(this);
+
 	}
 	
 	public void takePump(Pump pu) {
@@ -81,7 +84,7 @@ public class Player {
 		this.position = position;
 	}
 
-	public Pump getCarriedPump() {
+	public static Pump getCarriedPump() {
 		return carriedPump;
 	}
 
