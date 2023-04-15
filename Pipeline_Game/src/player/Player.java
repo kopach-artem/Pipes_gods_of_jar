@@ -11,10 +11,20 @@ public class Player {
 	private ArrayList<Pipe> carriedPipes;
 	private Pump carriedPump;
 	
-	public void AdjustPump(Pump pu, Pipe pi, Type t) {
+	public void adjustPump(Pump pu, Pipe pi, Type t) {
+		if (t.Input.equals(t)){
+			pu.getNegighbors();
+			pu.getInput();
+			pi.getWaterFlowing();
+			pu.setInput(pi);
+		}
+		else if (t.Output.equals(t)){
+			pu.getNegighbors();
+			pu.setOutput(pi);
+		}
 	}
 	
-	public void Move(Container c) {
+	public void move(Container c) {
 	}
 	
 	public void attachPipe(Pipe pi) {

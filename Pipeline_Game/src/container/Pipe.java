@@ -51,7 +51,9 @@ public class Pipe extends Container {
 		this.waterFlowing = waterFlowing;
 	}
 
-
+	public boolean getWaterFlowing() {
+		return false;
+	}
 
 	public void setisLeaked(boolean b)
 	{
