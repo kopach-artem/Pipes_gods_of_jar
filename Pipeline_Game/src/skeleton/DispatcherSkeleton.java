@@ -54,6 +54,11 @@ public class DispatcherSkeleton {
                     System.out.println("RepairPump is called");
                     m.RepairPump(pu);
                     System.out.println("RepairPump has returned");
+                    if (pu.getisDamaged() == false) {
+                        System.out.println("Pump repair was succesful :)");
+                    } else {
+                        System.out.println("Pump repair failed :(");
+                    }
                     System.out.print("Pump isDamaged after repair: ");
                     System.out.println(pu.getisDamaged());
                     System.out.println("Mechanic repairs pump has finished");
@@ -67,6 +72,11 @@ public class DispatcherSkeleton {
                     System.out.println("RepairPipe is called");
                     m.RepairPipe(pi);
                     System.out.println("RepairPipe has returned");
+                    if (pi.isLeaked() == false) {
+                        System.out.println("Pipe repair was succesful :)");
+                    } else {
+                        System.out.println("Pipe repair failed :(");
+                    }
                     System.out.print("Pipe isLeaked after repair: ");
                     System.out.println(pi.isLeaked());
                     System.out.println("Mechanic repairs pump has finished");
@@ -80,7 +90,12 @@ public class DispatcherSkeleton {
                     System.out.println("LeakPipe is called");
                     s.LeakPipe(pi);
                     System.out.println("LeakPipe has returned");
-                    System.out.print("Pipe isleaked afrer sabotage: ");
+                    if (pi.isLeaked() == true) {
+                        System.out.println("Pipe sabotage was succesful :)");
+                    } else {
+                        System.out.println("Pipe sabotage failed :(");
+                    }
+                    System.out.print("Pipe isleaked after sabotage: ");
                     System.out.println(pi.isLeaked());
                     System.out.println("Saboteur leaks pipe has finished");
                     break;
