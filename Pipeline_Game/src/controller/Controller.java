@@ -13,6 +13,13 @@ import container.*;
 import map.Map;
 
 public class Controller {
+	public Pump getRandomUndamagedPump(ArrayList<Pump> pumps) {
+	}
+	
+	public void damagePump(ArrayList<Pump> p)
+	{
+	 	for(Pump pumps:p)
+		{
 
 	public void damagePump() {
 		for(Container c : Map.getContainers()){
@@ -20,7 +27,11 @@ public class Controller {
 		}
 	}
 
-	public void waterFlow() {
-
+	public void waterFlow(Pipe p1, Pump pu, Pipe p2)
+	{
+		p1.eval();
+		p2.eval();
+		p1.makeHistory();
+		p2.makeHistory();
 	}
 }

@@ -1,6 +1,7 @@
 package container;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Cistern extends Container {
 	
@@ -9,7 +10,15 @@ public class Cistern extends Container {
 	private Pump freePump;
 	private int randomPipeCreationTime;
 	private ArrayList<Pipe> madePipes;
-	
+
+	public Cistern(Pipe input, Pump freePump, int randomPipeCreationTime) {
+        this.input = input;
+        this.collectedWater = 0;
+        this.freePump = freePump;
+        Random rand = new Random();
+		randomPipeCreationTime = rand.nextInt(11) + 10;
+        this.madePipes = new ArrayList<Pipe>();
+    }
 	
 	public void increaseCollectedWater() {
 	}
