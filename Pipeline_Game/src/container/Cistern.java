@@ -15,8 +15,6 @@ public class Cistern extends Container {
         this.input = input;
         this.collectedWater = 0;
         this.freePump = freePump;
-        Random rand = new Random();
-	randomPipeCreationTime = rand.nextInt(11) + 10;
         this.madePipes = new ArrayList<Pipe>();
     }
 	
