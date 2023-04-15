@@ -97,9 +97,6 @@ public class Player {
 			}
 		}
 	}
-	
-	public void setPostion(Container c) {
-	}
 
 	public Container getPosition() {
 		return position;
