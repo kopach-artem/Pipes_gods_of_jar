@@ -49,6 +49,13 @@ public class Pump extends Container {
 		isDamaged=false;
 	}
 
+	public void mendPump() throws MyException {
+		if(this.isDamaged){
+			this.setDamaged(false);
+		}
+		else
+			throw new MyException("Wasn't even a scratch on it");
+	}
 
 	/**
 	 * Hozzácsatlakoztatja a paraméterük kapott Player áttal hordozott csövet a pumpához.

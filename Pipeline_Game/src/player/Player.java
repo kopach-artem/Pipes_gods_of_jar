@@ -38,9 +38,8 @@ public class Player {
 	
 	/**
 	 * A játékos átállítja a paraméterül kapott Pump be- vagy kimeneti csövét.
-	 * @param pu - Az átállítani kívánt pumpa
 	 * @param pi - Ezt a csövet szeretnénk beállítani
-	 * @param d - Ez alapján dönti el a metódus, hogy a be- vagy kimenetet szeretnénk átállítani
+	 * @param t - Ez alapján dönti el a metódus, hogy a be- vagy kimenetet szeretnénk átállítani
 	 */
 	public void adjustPump(Pipe pi, Type t) throws MyException {
 
@@ -58,9 +57,8 @@ public class Player {
 	public void Move(Container c) throws MyException {
 		if (this.position.seeifNeighbors(c)) {
 			if (c.steppable()) {
-				((Pipe) this.position).setOccupied(false);
+				this.position.movedFrom();
 				this.setPosition(c);
-				((Pipe) this.position).setOccupied(true);
 			} else {
 				throw new MyException("The container is clearly not steppable");
 			}
@@ -76,7 +74,7 @@ public class Player {
 	public void attachPipe() throws MyException
 	{
 		if (!getCarriedPipes().isEmpty())
-		this.position.insertPipe(this);
+			this.position.insertPipe(this);
 	}
 
 	/**

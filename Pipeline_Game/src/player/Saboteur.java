@@ -2,6 +2,7 @@
 package player;
 
 import container.*;
+import exception.MyException;
 
 /**
  * Ez a szabotőr játékos, a szabotőr lyukaszthatja ki a csöveket
@@ -14,17 +15,14 @@ public class Saboteur extends Player {
 	 * @param position - Ebben a pozícióban lesz létrehozva a Saboteur.
 	 */
 	public Saboteur(Container position) {
-
 		super(position);
 	}
 
 	
 	/**
-	 * Kilyukasztja a paraméterül kapott csövet.
-	 * @param p - A kilyukasztani kívánt cső
+	 * Kilyukasztja azon csövet amelyen éppen áll
 	 */
-	public void LeakPipe(Pipe p)
-	{
-		p.setLeaked(true);
+	public void LeakPipe() throws MyException {
+		this.getPosition().puncturePipe();
 	}
 }

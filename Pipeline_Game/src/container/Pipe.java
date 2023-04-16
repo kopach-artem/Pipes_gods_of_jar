@@ -1,7 +1,8 @@
 package container;
 
-import player.Player;
+import player.*;
 import exception.*;
+import player.Saboteur;
 
 /**
  * Ez a cső, ez felelős a víz szállításához, ennek segítségével szállítódhat a víz a ciszternába
@@ -32,9 +33,30 @@ public class Pipe extends Container {
 	public boolean steppable() {
 
 		if(!isOccupied){
+			this.setOccupied(true);
 			return true;
 		} else
 			return false;
+	}
+
+	public void movedFrom(){
+		setOccupied(true);
+	}
+
+	public void mendPipe() throws MyException {
+		if(this.isLeaked){
+			this.setLeaked(false);
+		}
+		else
+			throw new MyException("It wasn't damaged to begin with");
+	}
+
+	public void puncturePipe() throws MyException {
+		if(!this.isLeaked){
+			this.setLeaked(true);
+		}
+		else
+			throw new MyException("It was already damaged");
 	}
 
 	

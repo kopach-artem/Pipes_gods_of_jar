@@ -46,7 +46,23 @@ public abstract class Container {
 
 	}
 
+	public void movedFrom(){
+
+	}
+
 	public void alterPump(Player player, Pipe pi, Type t) throws MyException {
+
+	}
+
+	public void mendPipe() throws MyException {
+
+	}
+
+	public void mendPump() throws MyException {
+
+	}
+
+	public void puncturePipe() throws MyException {
 
 	}
 

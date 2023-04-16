@@ -54,16 +54,127 @@ public class DispatcherSkeleton {
         return map;
     }
 
-    public void playerMove() throws MyException {
+    Map map = initalizeTable();
 
-        Map map = initalizeTable();
+    public void playerMove() throws MyException {
 
 
         map.getPlayers().get(0).Move(map.getContainers().get(0));
 
     }
+    /**
+     * Mechanic repairs pump szekvencia
+     */
+    void MechanicRepairsPump()
+    {
 
 
+    }
+
+    /**
+     * Mechanic repairs pipe szekvencia
+     */
+    void MechanicRepairsPipe()
+    {
+
+    }
+
+    /**
+     * Saboteur leaks pipe szekvencia
+     */
+    void SaboteurLeaksPipe()
+    {
+
+    }
+
+    /**
+     * Player attaches pipe szekvencia
+     */
+    void PlayerAttachPipe() throws MyException
+    {
+
+    }
+
+    /**
+     * Player attaches pump szekvencia
+     */
+    void PlayerAttachPump() throws MyException
+    {
+
+    }
+
+    /**
+     * Player detach pipe szekvencia
+     */
+    void PlayerDetachPipe() throws MyException
+    {
+
+    }
+
+    /**
+     * Player adjust pump Input szekvencia
+     */
+    void PlayerAdjustPumpInput()
+    {
+
+    }
+
+    /**
+     * Player adjust pump Output szekvencia
+     */
+    void PlayerAdjustPumpOutput()
+    {
+
+    }
+
+    /**
+     * Player moves to Pipe szekvencia
+     */
+    void PlayerMovesToPipe() throws MyException
+    {
+
+    }
+
+    /**
+     * Player moves to Pump szekvencia
+     */
+    void PlayerMovesToPump() throws MyException
+    {
+
+    }
+
+    /**
+     * Player moves to Cistern szekvencia
+     */
+    void PlayerMovesToCistern() throws MyException
+    {
+
+    }
+
+
+    /**
+     * Player moves to MountainSpring szekvencia
+     */
+    void PlayerMovesToMountainSpring()
+    {
+
+    }
+
+    /**
+     * Pump breaks randomly szekvencia
+     */
+    void RandomPumpBreaking()
+    {
+
+    }
+
+    /**
+     * CollectingWater szekvencia
+     */
+    void CollectingWater()
+    {
+
+    }
 
     /**
      * @param args
