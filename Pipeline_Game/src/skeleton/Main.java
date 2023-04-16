@@ -9,7 +9,7 @@ public class Main
     static void printOperations()
     {
         System.out.println("\nVálassza ki a kívánt szekvenciát!");
-        System.out.println("[1]. Mehcanic repairs pump");
+        System.out.println("[1]. Mechanic repairs pump");
         System.out.println("[2]. Mechanic repairs pipe");
         System.out.println("[3]. Saboteur leaks pipe");
         System.out.println("[4]. Player attach pipe");
@@ -17,7 +17,7 @@ public class Main
         System.out.println("[6]. Player detach pipe");
         System.out.println("[7]. Player adjust pump Input");
         System.out.println("[8]. Player adjust pump Output");
-        System.out.println("[9]. Player moves to pipe succesfully");
+        System.out.println("[9]. Player moves to pipe successfully");
         System.out.println("[10]. Player moves to pipe fail");
         System.out.println("[11]. Player moves to pump");
         System.out.println("[12]. Player moves to cistern");
