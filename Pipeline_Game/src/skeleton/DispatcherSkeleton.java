@@ -303,9 +303,18 @@ public class DispatcherSkeleton {
                 case 12:
                     System.out.println("Player moves to pump has started");
                     Player pla = new Player(cpump);
-                    Pump pu1 = new Pump(2);
-                    pu1.seeifNeighbors(cpump); //true
-                    pla.setPosition(pu1);
+                    Pump pu12 = new Pump(2);
+                    ArrayList<Container> neighb12 = new ArrayList<Container>();
+                    neighb12.add(pu12);
+                    cpump.setNeighbors(neighb12);
+                    System.out.println("Move is called");
+                    pla.Move(pu12);
+                    System.out.println("Move has returned");
+                    if (pla.getPosition().equals(pu12)) {
+                        System.out.println("Move to Pump successful :)");
+                    } else {
+                        System.out.println("Move to Pump failed :(");
+                    }
                     System.out.println("Player moves to pump has finished");
                     break;
 
@@ -315,10 +324,18 @@ public class DispatcherSkeleton {
                 case 13:
                     System.out.println("Player moves to cistern has started");
                     Player pla1 = new Player(cpump);
-                    Pipe co2 = new Pipe();
+                    ArrayList<Container> neighb13 = new ArrayList<Container>();
                     Cistern cis = new Cistern(new Pipe(), new Pump(2), 1000);
-                    cis.seeifNeighbors(co2); //true
-                    pla1.setPosition(cis);
+                    neighb13.add(cis);
+                    cpump.setNeighbors(neighb13);
+                    System.out.println("Move is called");
+                    pla1.Move(cis);
+                    System.out.println("Move has returned");
+                    if (pla1.getPosition().equals(cis)) {
+                        System.out.println("Move to Cistern successful :)");
+                    } else {
+                        System.out.println("Move to Cistern failed :(");
+                    }
                     System.out.println("Player moves to cistern has finished");
                     break;
 
@@ -328,19 +345,27 @@ public class DispatcherSkeleton {
                 case 14:
                     System.out.println("Player moves to MountainSpring has started");
                     Player pla2 = new Player(cpump);
+                    ArrayList<Container> neighb14 = new ArrayList<Container>();
                     MountainSpring mo = new MountainSpring();
-                    Pump pu3 = new Pump(2);
+                    neighb14.add(mo);
+                    cpump.setNeighbors(neighb14);
                     try {
+                        System.out.println("Move is called");
                         pla2.Move(mo);
+                        System.out.println("Move has returned");
                     } catch (MyException e) {
                         throw new RuntimeException(e);
                     }
-                    mo.steppable(); //false
+                    if (pla2.getPosition().equals(mo)) {
+                        System.out.println("Move to MountainSpring successful :)");
+                    } else {
+                        System.out.println("Move to MountainSpring failed :(");
+                    }
                     System.out.println("Player moves to MountainSpring has finished");
                     break;
 
                 /**
-                 * Evalutaion szekvencia
+                 * Evaluation szekvencia
                  */
                 case 15:
                     System.out.println("Evaluation has started");
