@@ -381,7 +381,7 @@ public class DispatcherSkeleton {
                         pla2.Move(mo);
                         System.out.println("Move has returned");
                     } catch (MyException e) {
-                        throw new RuntimeException(e);
+                        //throw new RuntimeException(e);
                     }
                     if (pla2.getPosition().equals(mo)) {
                         System.out.println("Move to MountainSpring successful :)");
