@@ -8,6 +8,10 @@ public class Mechanic extends Player {
 		super(position);
 	}
 
+	
+	/** 
+	 * @param p
+	 */
 	public void RepairPipe(Pipe p)
 	{
 		if(p.isLeaked())

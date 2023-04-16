@@ -15,6 +15,11 @@ public abstract class Container {
         	this.inputState = new boolean[2]; // default to false for both inputs
     	}
 	
+	
+	/** 
+	 * @param neighbor
+	 * @return boolean
+	 */
 	public boolean seeifNeighbors(Container neighbor){
 
 		return this.neighbors.contains(neighbor);

@@ -18,6 +18,12 @@ public class Player {
 		carriedPump=null;
 		carriedPipes=null;
 	}
+	
+	/** 
+	 * @param pu
+	 * @param pi
+	 * @param t
+	 */
 	public void adjustPump(Pump pu, Pipe pi, Type t) {
 		if (t.Input.equals(t)){
 			pu.getNeighbors();

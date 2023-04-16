@@ -21,6 +21,11 @@ import java.util.Scanner;
  * melyeket beolvasva lefuttatja a kiválasztott szekvenciát
  */
 public class DispatcherSkeleton {
+    
+    /** 
+     * @param args
+     * @throws MyException
+     */
     public static void main(String[] args) throws MyException {
         System.out.println("Üdvözli önt a Gods of jar csapat skeleton programja!");
         System.out.println("Válassza ki a kívánt szekvenciát!");

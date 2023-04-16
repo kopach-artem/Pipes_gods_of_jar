@@ -30,6 +30,10 @@ public class Cistern extends Container {
 			madePipes.add(new Pipe());
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	public boolean steppable(){
 		return true;
 	}

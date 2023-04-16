@@ -14,6 +14,10 @@ public class Map {
 	
 	private static ArrayList<Container> containers;
 
+	
+	/** 
+	 * @return int
+	 */
 	public static int getTurnCount(){
 		return turnCount;
 	}

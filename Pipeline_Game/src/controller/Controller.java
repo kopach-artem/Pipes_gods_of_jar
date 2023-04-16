@@ -20,6 +20,12 @@ public class Controller {
 		}
 	}
 
+	
+	/** 
+	 * @param p1
+	 * @param pu
+	 * @param p2
+	 */
 	public void waterFlow(Pipe p1, Pump pu, Pipe p2)
 	{
 		p1.eval();

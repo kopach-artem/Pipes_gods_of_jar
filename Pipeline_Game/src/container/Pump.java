@@ -20,6 +20,11 @@ public class Pump extends Container {
 		isDamaged=false;
 	}
 
+	
+	/** 
+	 * @param player
+	 * @throws MyException
+	 */
 	public void insertPipe(Player player) throws MyException{
 
 		Pipe atPipe = player.getCarriedPipes().get(0);

@@ -8,6 +8,10 @@ public class MountainSpring extends Container {
 	public void flowStart() {
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	public boolean steppable(){
 		return false;
 	}

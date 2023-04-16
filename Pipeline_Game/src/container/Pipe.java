@@ -8,6 +8,10 @@ public class Pipe extends Container {
 	private boolean isOccupied;
 	private boolean waterFlowing;
 
+	
+	/** 
+	 * @return boolean
+	 */
 	public boolean steppable() {
 
 		if(!isOccupied){
