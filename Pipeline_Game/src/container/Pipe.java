@@ -47,6 +47,10 @@ public class Pipe extends Container {
 
 	public void addPump(Pump pu, int index) throws MyException {
 
+		if(index > 1 || index < 0){
+			throw new MyException("Invalid index");
+		}
+
 		if(!(this.neighbors.size() == 2))
 			this.neighbors.add(index, pu);
 		else
@@ -54,6 +58,10 @@ public class Pipe extends Container {
 	}
 
 	public void removePump(int index) throws MyException {
+
+		if(index > 1 || index < 0){
+			throw new MyException("Invalid index");
+		}
 
 		if(!(this.neighbors.isEmpty()))
 			this.neighbors.remove(index);

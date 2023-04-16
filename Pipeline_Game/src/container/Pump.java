@@ -20,8 +20,8 @@ public class Pump extends Container {
 		isDamaged=false;
 	}
 
-	
-	/** 
+
+	/**
 	 * @param player
 	 * @throws MyException
 	 */
@@ -52,8 +52,8 @@ public class Pump extends Container {
 		return true;
 	}
 
-	public void lifeCycle(){
-		if(Map.getTurnCount() == this.randomDamageValue && !this.isDamaged){
+	public void lifeCycle(int turnCount){
+		if(turnCount == this.randomDamageValue && !this.isDamaged){
 			this.isDamaged = true;
 		}
 	}

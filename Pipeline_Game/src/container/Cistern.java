@@ -24,9 +24,9 @@ public class Cistern extends Container {
 		collectedWater++;
 	}
 	
-	public void createPipe()
+	public void lifeCycle(int turnCount)
 	{
-		if(Map.getTurnCount()%3==0)
+		if(turnCount%3==0)
 			madePipes.add(new Pipe());
 	}
 

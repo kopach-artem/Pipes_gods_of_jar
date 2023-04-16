@@ -40,7 +40,9 @@ public class Player {
 	public void Move(Container c) throws MyException {
 		if (this.position.seeifNeighbors(c)) {
 			if (c.steppable()) {
+				((Pipe) this.position).setOccupied(false);
 				this.setPosition(c);
+				((Pipe) this.position).setOccupied(true);
 			} else {
 				throw new MyException("The container is clearly not steppable");
 			}

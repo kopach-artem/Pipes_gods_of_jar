@@ -14,10 +14,16 @@ import map.Map;
 
 public class Controller {
 
+	private int turnCount;
+
 	public void damagePump(){
 		for(Container c : Map.getContainers()){
-			c.lifeCycle();
+			c.lifeCycle(turnCount);
 		}
+	}
+
+	public void increaseTurnCount(){
+		turnCount++;
 	}
 
 	

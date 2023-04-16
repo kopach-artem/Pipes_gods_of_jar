@@ -1,5 +1,6 @@
 package map;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
@@ -8,23 +9,20 @@ import container.*;
 
 public class Map {
 	private int leakedWater;
-	private static int turnCount;
-	
-	private ArrayList<Player> players;
-	
-	private static ArrayList<Container> containers;
+
+	private ArrayList<Player> players = new ArrayList<Player>();
+	private static ArrayList<Container> containers = new ArrayList<Container>();
+
+	public Map(){
 
 	
 	/** 
 	 * @return int
 	 */
-	public static int getTurnCount(){
-		return turnCount;
+		leakedWater = 0;
+
 	}
 
-	public void checkLeakage() {
-	}
-	
 	public void increaseLeakedWater() {
 	}
 	

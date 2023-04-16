@@ -6,7 +6,7 @@ import exception.MyException;
 import player.*;
 
 public abstract class Container {
-	protected ArrayList<Container> neighbors;
+	protected ArrayList<Container> neighbors = new ArrayList<Container>();
 	private boolean[] inputState;
 	
 	
@@ -14,9 +14,9 @@ public abstract class Container {
         	this.neighbors = new ArrayList<>();
         	this.inputState = new boolean[2]; // default to false for both inputs
     	}
-	
-	
-	/** 
+
+
+	/**
 	 * @param neighbor
 	 * @return boolean
 	 */
@@ -25,7 +25,7 @@ public abstract class Container {
 		return this.neighbors.contains(neighbor);
 	}
 
-	public void lifeCycle(){
+	public void lifeCycle(int turnCount){
 
 	}
 

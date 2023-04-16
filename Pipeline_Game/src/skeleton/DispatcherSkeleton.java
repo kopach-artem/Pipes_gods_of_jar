@@ -21,8 +21,27 @@ import java.util.Scanner;
  * melyeket beolvasva lefuttatja a kiválasztott szekvenciát
  */
 public class DispatcherSkeleton {
-    
-    /** 
+
+    public void initalizeTable(){
+
+        Map map = new Map();
+
+        //Make 3 pumps
+        for(int i = 0; i < 3; i++){
+            map.getContainers().add(new Pump(4));
+        }
+
+        //Make 3 pipes
+        for(int i = 0; i < 3; i++){
+            map.getContainers().add(new Pipe());
+        }
+
+
+    }
+
+
+
+    /**
      * @param args
      * @throws MyException
      */
@@ -48,9 +67,9 @@ public class DispatcherSkeleton {
         System.out.println("0. Kilépés");
 
         Scanner scanner = new Scanner(System.in);
-        Pump c = new Pump(2);
-        Mechanic m = new Mechanic(c);
-        Saboteur s = new Saboteur(c);
+        Pump cpump = new Pump(2);
+        Mechanic m = new Mechanic(cpump);
+        Saboteur s = new Saboteur(cpump);
         Pump pu = new Pump(2);
         Pipe pi = new Pipe();
         ArrayList<Pipe> carriedPipe=new ArrayList<>();
@@ -213,7 +232,7 @@ public class DispatcherSkeleton {
                  */
                 case 9:
                     System.out.println("AdjustPump has started");
-                    Player p = new Player(c);
+                    Player p = new Player(cpump);
                     Pipe pipe = new Pipe();
                     Type t = new Type();
                     Pump pum = new Pump(2);
@@ -226,7 +245,7 @@ public class DispatcherSkeleton {
                  */
                 case 10:
                     System.out.println("PlayerMovesOnPipeSuc has started");
-                    Player pl = new Player(c);
+                    Player pl = new Player(cpump);
                     Pipe pipe1 = new Pipe();
                     Pipe pipe2 = new Pipe();
                     pipe1.seeifNeighbors(pipe2); //true
@@ -266,9 +285,9 @@ public class DispatcherSkeleton {
                  */
                 case 12:
                     System.out.println("Player moves to pump has started");
-                    Player pla = new Player(c);
+                    Player pla = new Player(cpump);
                     Pump pu1 = new Pump(2);
-                    pu1.seeifNeighbors(c); //true
+                    pu1.seeifNeighbors(cpump); //true
                     pla.setPosition(pu1);
                     System.out.println("Player moves to pump has finished");
                     break;
@@ -278,7 +297,7 @@ public class DispatcherSkeleton {
                  */
                 case 13:
                     System.out.println("Player moves to cistern has started");
-                    Player pla1 = new Player(c);
+                    Player pla1 = new Player(cpump);
                     Pipe co2 = new Pipe();
                     Cistern cis = new Cistern(new Pipe(), new Pump(2), 1000);
                     cis.seeifNeighbors(co2); //true
@@ -291,7 +310,7 @@ public class DispatcherSkeleton {
                  */
                 case 14:
                     System.out.println("Player moves to MountainSpring has started");
-                    Player pla2 = new Player(c);
+                    Player pla2 = new Player(cpump);
                     MountainSpring mo = new MountainSpring();
                     Pump pu3 = new Pump(2);
                     try {
