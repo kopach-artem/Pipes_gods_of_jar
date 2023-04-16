@@ -22,7 +22,7 @@ public class Pump extends Container {
 
 	public void insertPipe(Player player) throws MyException{
 
-		Pipe atPipe = player.getCarriedPipes().get(player.getCarriedPipes().size());
+		Pipe atPipe = player.getCarriedPipes().get(0);
 
 		if(!isAllConnected()){
 			this.addPipe(atPipe);

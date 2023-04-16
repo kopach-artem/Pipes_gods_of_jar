@@ -43,6 +43,8 @@ public class DispatcherSkeleton {
         Saboteur s = new Saboteur(c);
         Pump pu = new Pump(2);
         Pipe pi = new Pipe();
+        ArrayList<Pipe> carriedPipe=new ArrayList<>();
+        carriedPipe.add(new Pipe());
         int n;
         while((n = scanner.nextInt()) != 0) {
             switch(n){
@@ -104,6 +106,7 @@ public class DispatcherSkeleton {
                 case 4:
                     System.out.println("Player attach pipe successful has started");
                     System.out.println("attachPipe is called");
+                    m.setCarriedPipes(carriedPipe);
                     m.attachPipe();
                     System.out.println("attachPipe has returned");
                     if (m.getCarriedPipes().isEmpty()) {
