@@ -313,7 +313,7 @@ public class DispatcherSkeleton {
                     try {
                         p1.Move(pip2);
                     } catch (MyException e) {
-                        throw new RuntimeException(e);
+                        //throw new RuntimeException(e);
                     }
                     System.out.println("Move has returned");
                     if (!p1.getPosition().equals(pip2)) {
