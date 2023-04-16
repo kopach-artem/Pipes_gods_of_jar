@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import exception.MyException;
 import player.*;
 
-public class Container {
+public abstract class Container {
 	protected ArrayList<Container> neighbors;
 	private boolean[] inputState;
 	

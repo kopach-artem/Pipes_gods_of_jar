@@ -55,7 +55,8 @@ public class Pump extends Container {
 
 	public void addPipe(Pipe pi) {
 
-		this.neighbors.add(pi);
+		if(!this.isAllConnected())
+			this.neighbors.add(pi);
 
 	}
 
