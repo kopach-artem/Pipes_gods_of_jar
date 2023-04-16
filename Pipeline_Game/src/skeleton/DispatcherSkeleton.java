@@ -38,7 +38,7 @@ public class DispatcherSkeleton {
         System.out.println("0. Kilépés");
 
         Scanner scanner = new Scanner(System.in);
-        Container c = new Container();
+        Pump c = new Pump(2);
         Mechanic m = new Mechanic(c);
         Saboteur s = new Saboteur(c);
         Pump pu = new Pump(2);
@@ -179,49 +179,47 @@ public class DispatcherSkeleton {
                 case 10:
                     System.out.println("PlayerMovesOnPipeSuc has started");
                     Player pl = new Player(c);
-                    Container co = new Container();
                     Pipe pipe1 = new Pipe();
-                    pipe1.seeifNeighbors(co); //true
+                    Pipe pipe2 = new Pipe();
+                    pipe1.seeifNeighbors(pipe2); //true
                     pl.setPosition(pipe1);
                     System.out.println("PlayerMovesOnPipeSuc has finished");
                     break;
                 case 11:
                     System.out.println("PlayerMovesOnPipeFail has started");
-                    Container cc = new Container();
-                    Player p1 = new Player(cc);
-                    Pipe pip = new Pipe();
+                    Pipe pip1 = new Pipe();
+                    Pipe pip2 = new Pipe();
+                    Player p1 = new Player(pip1);
                     ArrayList<Container> neighb = new ArrayList<Container>();
-                    neighb.add(pip);
-                    cc.setNeighbors(neighb);
-                    pip.setOccupied(true);
+                    neighb.add(pip2);
+                    pip1.setNeighbors(neighb);
+                    pip2.setOccupied(true);
                     System.out.println("Move is called");
                     try {
-                        p1.Move(pip);
+                        p1.Move(pip2);
                     } catch (MyException e) {
                         throw new RuntimeException(e);
                     }
                     System.out.println("Move has returned");
-                    if (!p1.getPosition().equals(pip)) {
+                    if (!p1.getPosition().equals(pip2)) {
                         System.out.println("Test was successful, move failed :)");
                     } else {
                         System.out.println("Test failed, move was successful :(");
                     }
-                    pip.seeifNeighbors(cc); //false
                     System.out.println("PlayerMovesOnPipeFail has finished");
                     break;
                 case 12:
                     System.out.println("Player moves to pump has started");
                     Player pla = new Player(c);
-                    Container co1 = new Container();
                     Pump pu1 = new Pump(2);
-                    pu1.seeifNeighbors(co1); //true
+                    pu1.seeifNeighbors(c); //true
                     pla.setPosition(pu1);
                     System.out.println("Player moves to pump has finished");
                     break;
                 case 13:
                     System.out.println("Player moves to cistern has started");
                     Player pla1 = new Player(c);
-                    Container co2 = new Container();
+                    Pipe co2 = new Pipe();
                     Cistern cis = new Cistern(new Pipe(), new Pump(2), 1000);
                     cis.seeifNeighbors(co2); //true
                     pla1.setPosition(cis);
