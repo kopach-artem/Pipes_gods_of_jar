@@ -1,8 +1,7 @@
 package container;
 
 import java.util.ArrayList;
-import java.util.Random;
-import map.Map;
+
 
 /**
  * Először is úgy döntöttünk, hogy a Cistern is felvesszük Objektum katalógusba,

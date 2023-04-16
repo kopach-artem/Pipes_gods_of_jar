@@ -1,6 +1,5 @@
 package container;
 import exception.MyException;
-import map.Map;
 import player.Player;
 import player.Type;
 
