@@ -1,5 +1,6 @@
 package container;
 
+import map.Map;
 import player.*;
 import exception.*;
 import player.Saboteur;
@@ -25,7 +26,7 @@ public class Pipe extends Container {
 	 */
 	private boolean waterFlowing;
 
-	
+
 	/**
 	 * Megadja, hogy az adott csőre léphet-e játékos
 	 * @return boolean - Léphet-e ide játékos vagy sem.
@@ -46,20 +47,18 @@ public class Pipe extends Container {
 	public void mendPipe() throws MyException {
 		if(this.isLeaked){
 			this.setLeaked(false);
-		}
-		else
+		} else
 			throw new MyException("It wasn't damaged to begin with");
 	}
 
 	public void puncturePipe() throws MyException {
 		if(!this.isLeaked){
 			this.setLeaked(true);
-		}
-		else
+		} else
 			throw new MyException("It was already damaged");
 	}
 
-	
+
 	/**
 	 * A csőhöz csatlakoztatja hozzá a paraméterként kapott játékos által hordozott pumpát.
 	 * @param player - A játékos
@@ -165,9 +164,32 @@ public class Pipe extends Container {
 	}
 
 	public void eval() {
+
+		if(this.isLooseEnd()){
+			Map.increaseLeakedWater();
+		}
+
+		Container output = null;
+
+		for(Container c : this.neighbors){
+			if(c.amInput(this)){
+				output = c;
+				break;
+			}
+		}
+		if(inputState[0]) {
+			if (!isLeaked && (output != null)) {
+				output.setInputState();
+			} else
+				Map.increaseLeakedWater();
+
+		}
 	}
 
-	public void setInputState() {
+	public void setInputState(){
+
+		inputState[1] = true;
+
 	}
 
 	/**

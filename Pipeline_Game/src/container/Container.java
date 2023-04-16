@@ -18,16 +18,7 @@ public abstract class Container {
 	/**
 	 * A Bemenetek állapotai
 	 */
-	private boolean[] inputState;
-
-	/**
-	 * Container osztály konstruktora
-	 */
-    	public Container() {
-        	this.neighbors = new ArrayList<>();
-        	this.inputState = new boolean[2]; // default to false for both inputs
-    	}
-
+	protected boolean[] inputState = { false, false };
 
 	/**
 	 * Megnézi, hogy apraméterként kapott Container a szomszédja-e a Cotainernek
@@ -44,6 +35,10 @@ public abstract class Container {
 	 */
 	public void lifeCycle(int turnCount){
 
+	}
+
+	public boolean amInput(Container c){
+		return false;
 	}
 
 	public void movedFrom(){
@@ -118,6 +113,9 @@ public abstract class Container {
 	 *
 	 */
 	public void makeHistory() {
+
+		inputState[0] = inputState[1];
+		inputState[1] = false;
 	}
 
 	/**

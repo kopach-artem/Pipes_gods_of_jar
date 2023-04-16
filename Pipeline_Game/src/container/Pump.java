@@ -155,12 +155,18 @@ public class Pump extends Container {
 
 	}
 
+	public boolean amInput(Container c){
+
+		return this.input.equals(c);
+	}
+
 	public void eval() {
 
 	}
 
 	public void setInputState() {
-
+		if(!this.isDamaged)
+			output.setInputState();
 	}
 
 	

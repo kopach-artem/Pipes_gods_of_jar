@@ -79,9 +79,20 @@ public class Cistern extends Container {
 	}
 	
 	public void eval() {
+
+		setInputState();
+
+	}
+
+	public boolean amInput(Container c){
+		if(this.input.equals(c)){
+			return true;
+		}
+		return false;
 	}
 	
 	public void setInputState() {
+
 	}
 
 	/**

@@ -11,12 +11,14 @@ import container.*;
 /**
  * A Map osztály felelőssége a pályán elhelyezett pumpák és csövek tárolása.
  */
-public class Map {
+public class Map{
 
+
+	static Map map;
 	/**
 	 * Az eddig elfolyt víz értéke.
 	 */
-	private int leakedWater;
+	private int leakedWater = 0;
 
 	/**
 	 * A pályán lévő játékosok ArrayList-je.
@@ -34,7 +36,7 @@ public class Map {
 	 */
 	public Map(){
 
-		leakedWater = 0;
+		map = this;
 
 	}
 
@@ -54,7 +56,10 @@ public class Map {
 	/**
 	 * Növeli a leakedWater attribútum értékét.
 	 */
-	public void increaseLeakedWater() {
+	public static void increaseLeakedWater() {
+
+		map.leakedWater++;
+
 	}
 	
 	
