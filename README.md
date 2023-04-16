@@ -11,7 +11,5 @@ Cloud bme test TODO.
 TODO:
 Kommentezés:
     Container
-    Mechanic
     Player
-    Saboteur
     DispatcherSkeleton
