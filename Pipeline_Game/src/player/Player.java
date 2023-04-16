@@ -60,7 +60,7 @@ public class Player {
 				this.position.movedFrom();
 				this.setPosition(c);
 			} else {
-				throw new MyException("The container is clearly not steppable");
+				throw new MyException("The Pipe is clearly not steppable");
 			}
 		} else {
 			throw new MyException("Not even next to it");

@@ -34,6 +34,10 @@ public class DispatcherSkeleton {
         Pipe detachable = new Pipe();
         Pipe outputChan = new Pipe();
 
+        Cistern cs = new Cistern(detachable);
+        detachable.getNeighbors().add(cs);
+        cs.getNeighbors().add(detachable);
+
         Pump pu1 = new Pump(2);
         Pump pu2 = new Pump(3);
         Pump pu3 = new Pump(5);
@@ -226,15 +230,13 @@ public class DispatcherSkeleton {
         Player player = new Player(map.getContainers().get(6));
 
         System.out.println("Player adjust pump Input has started");
-        System.out.println("Original input of pump: ");
-        System.out.println(((Pump)player.getPosition()).getInput());
+        System.out.println("Original input of pump: " + ((Pump)player.getPosition()).getInput());
         System.out.println("adjustPump is called");
         player.adjustPump((Pipe)map.getContainers().get(8), Type.Input);
         System.out.println("adjustPump has returned");
         if (((Pump)player.getPosition()).getInput().equals(map.getContainers().get(8))) {
             System.out.println("Input adjustment successful :)");
-            System.out.println("Input successfully got adjusted to: ");
-            System.out.println(((Pump)player.getPosition()).getInput());
+            System.out.println("Input successfully got adjusted to: " + ((Pump)player.getPosition()).getInput());
         } else {
             System.out.println("Input adjustment failed :(");
         }
@@ -244,21 +246,19 @@ public class DispatcherSkeleton {
     /**
      * Player adjust pump Output szekvencia
      */
-    void PlayerAdjustPumpOutput() throws MyException {
+    static void PlayerAdjustPumpOutput() throws MyException {
         Map map = initalizeTable();
 
         Player player = new Player(map.getContainers().get(6));
 
         System.out.println("AdjustPump has started");
-        System.out.println("Original output of pump: ");
-        System.out.println(((Pump)player.getPosition()).getOutput());
+        System.out.println("Original output of pump: " + ((Pump)player.getPosition()).getOutput());
         System.out.println("adjustPump is called");
         player.adjustPump((Pipe) map.getContainers().get(8), Type.Output);
         System.out.println("adjustPump has returned");
         if (((Pump)player.getPosition()).getOutput().equals(map.getContainers().get(8))) {
             System.out.println("adjustPump Output successful :)");
-            System.out.println("Output successfully got adjusted to: ");
-            System.out.println(((Pump)player.getPosition()).getOutput());
+            System.out.println("Output successfully got adjusted to: " + ((Pump)player.getPosition()).getOutput());
         } else {
             System.out.println("adjustPump Output failed :(");
         }
@@ -268,23 +268,88 @@ public class DispatcherSkeleton {
     /**
      * Player moves to Pipe szekvencia
      */
-    void PlayerMovesToPipe() throws MyException
+    static void PlayerMovesToPipe() throws MyException
     {
+        Map map = initalizeTable();
+
+        Player player = new Player(map.getContainers().get(0));
+
+        System.out.println("PlayerMovesOnPipeSuc has started");
+        ArrayList<Container> neighbors = player.getPosition().getNeighbors();
+        System.out.println("Pipe we want to move onto: " + neighbors.get(0));
+        System.out.println("Move is called");
+        player.Move(neighbors.get(0));
+        System.out.println("Move has returned");
+        if (player.getPosition().equals(neighbors.get(0))) {
+            System.out.println("Player moves to Pipe successful :)");
+            System.out.println("Player moved successfully onto: " + (Pipe)player.getPosition());
+        } else {
+            System.out.println("Player moves to Pipe failed :(");
+        }
+        System.out.println("PlayerMovesOnPipeSuc has finished");
 
     }
+
+    /**
+     * Player moves to Pipe Fail szekvencia
+     */
+    static void PlayerMovesToPipeFail() throws MyException
+    {
+        Map map = initalizeTable();
+
+        Player player = new Player(map.getContainers().get(0));
+
+        System.out.println("PlayerMovesOnPipeSuc has started");
+        ArrayList<Container> neighbors = player.getPosition().getNeighbors();
+        System.out.println("Pipe we want to move onto: " + neighbors.get(0));
+        ((Pipe)neighbors.get(0)).setOccupied(true);
+        System.out.println("Given pipe is currently occupied so Move to that pipe must fail");
+        System.out.println("Move is called");
+        player.Move(neighbors.get(0));
+        System.out.println("Move has returned");
+        if (player.getPosition().equals(neighbors.get(0))) {
+            System.out.println("Player moves to Pipe successful :)");
+            System.out.println("Player moved successfully onto: " + (Pipe)player.getPosition());
+        } else {
+            System.out.println("Player moves to Pipe failed :(");
+            System.out.println("Player stayed on: " + (Pump)player.getPosition());
+        }
+        System.out.println("PlayerMovesOnPipeSuc has finished");
+
+    }
+
 
     /**
      * Player moves to Pump szekvencia
      */
-    void PlayerMovesToPump() throws MyException
+    static void PlayerMovesToPump() throws MyException
     {
+        Map map = initalizeTable();
+
+        Player player = new Player(map.getContainers().get(1));
+
+        System.out.println("Player moves to pump has started");
+        ArrayList<Container> neighbors = player.getPosition().getNeighbors();
+        System.out.println("Pump the player wants to move onto: " + neighbors.get(0));
+        System.out.println("Move is called");
+        player.Move(neighbors.get(0));
+        System.out.println("Move has returned");
+        if (player.getPosition().equals(neighbors.get(0))) {
+            System.out.println("Move to Pump successful :)");
+            System.out.println("Player successfully moved onto: " + (Pump)player.getPosition());
+        } else {
+            System.out.println("Move to Pump failed :(");
+        }
+        System.out.println("Player moves to pump has finished");
 
     }
+
+
 
     /**
      * Player moves to Cistern szekvencia
      */
-    void PlayerMovesToCistern() throws MyException
+    static void PlayerMovesToCistern() throws MyException
     {
 
     }
@@ -293,7 +358,7 @@ public class DispatcherSkeleton {
     /**
      * Player moves to MountainSpring szekvencia
      */
-    void PlayerMovesToMountainSpring()
+    static void PlayerMovesToMountainSpring()
     {
 
     }
@@ -301,7 +366,7 @@ public class DispatcherSkeleton {
     /**
      * Pump breaks randomly szekvencia
      */
-    void RandomPumpBreaking()
+    static void RandomPumpBreaking()
     {
 
     }
@@ -309,7 +374,7 @@ public class DispatcherSkeleton {
     /**
      * CollectingWater szekvencia
      */
-    void CollectingWater()
+    static void CollectingWater()
     {
 
     }
@@ -432,77 +497,28 @@ public class DispatcherSkeleton {
                  * Player adjust pump Output szekvencia
                  */
                 case 9:
-
+                    PlayerAdjustPumpOutput();
                     break;
 
                 /**
                  * Player moves to Pipe successfully szekvencia
                  */
                 case 10:
-                    System.out.println("PlayerMovesOnPipeSuc has started");
-                    Pipe pipe1 = new Pipe();
-                    Pipe pipe2 = new Pipe();
-                    Player pl = new Player(pipe1);
-                    ArrayList<Container> neighb10 = new ArrayList<Container>();
-                    neighb10.add(pipe2);
-                    pipe1.setNeighbors(neighb10);
-                    System.out.println("Move is called");
-                    pl.Move(pipe2);
-                    System.out.println("Move has returned");
-                    if (pl.getPosition().equals(pipe2)) {
-                        System.out.println("Player moves to Pipe successful :)");
-                    } else {
-                        System.out.println("Player moves to Pipe failed :(");
-                    }
-                    System.out.println("PlayerMovesOnPipeSuc has finished");
+                    PlayerMovesToPipe();
                     break;
 
                 /**
                  * Player moves to Pipe failed szekvencia
                  */
                 case 11:
-                    System.out.println("PlayerMovesOnPipeFail has started");
-                    Pipe pip1 = new Pipe();
-                    Pipe pip2 = new Pipe();
-                    Player p1 = new Player(pip1);
-                    ArrayList<Container> neighb11 = new ArrayList<Container>();
-                    neighb11.add(pip2);
-                    pip1.setNeighbors(neighb11);
-                    pip2.setOccupied(true);
-                    System.out.println("Move is called");
-                    try {
-                        p1.Move(pip2);
-                    } catch (MyException e) {
-                        throw new RuntimeException(e);
-                    }
-                    System.out.println("Move has returned");
-                    if (!p1.getPosition().equals(pip2)) {
-                        System.out.println("Test was successful, move failed :)");
-                    } else {
-                        System.out.println("Test failed, move was successful :(");
-                    }
-                    System.out.println("PlayerMovesOnPipeFail has finished");
+                    PlayerMovesToPipeFail();
                     break;
 
                 /**
                  * Player moves to Pump szekvencia
                  */
                 case 12:
-                    System.out.println("Player moves to pump has started");
-                    Player pla = new Player(cpump);
-                    Pump pu12 = new Pump(2);
-                    ArrayList<Container> neighb12 = new ArrayList<Container>();
-                    neighb12.add(pu12);
-                    cpump.setNeighbors(neighb12);
-                    System.out.println("Move is called");
-                    pla.Move(pu12);
-                    System.out.println("Move has returned");
-                    if (pla.getPosition().equals(pu12)) {
-                        System.out.println("Move to Pump successful :)");
-                    } else {
-                        System.out.println("Move to Pump failed :(");
-                    }
-                    System.out.println("Player moves to pump has finished");
+                    PlayerMovesToPump();
                     break;
 
                 /**

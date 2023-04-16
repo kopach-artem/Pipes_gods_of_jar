@@ -41,13 +41,11 @@ public class Cistern extends Container {
 	/**
 	 * Cistern osztály konstruktora
 	 * @param input - A Cistern bemeneti csöve
-	 * @param freePump - A szabadon mozgatható Pump
-	 * @param randomPipeCreationTime - A csövek véletlenszerű időközönkénti létrehozását folyásolja be
 	 */
-	public Cistern(Pipe input, Pump freePump, int randomPipeCreationTime) {
+	public Cistern(Pipe input) {
         this.input = input;
         this.collectedWater = 0;
-        this.freePump = freePump;
+        this.freePump = null;
         this.madePipes = new ArrayList<Pipe>();
     }
 
