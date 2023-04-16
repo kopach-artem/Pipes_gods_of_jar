@@ -1,11 +1,13 @@
 package skeleton;
 
 import exception.MyException;
+
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main
 {
-    public static void main(String[] args) throws MyException, InterruptedException {
+    public static void main(String[] args) throws MyException, InterruptedException, IOException {
         DispatcherSkeleton skeleton = new DispatcherSkeleton();
         System.out.println("[Üdvözli önt a Gods of jar csapat skeleton programja!]");
         System.out.println("[Válassza ki a kívánt szekvenciát!]");

@@ -84,15 +84,16 @@ public class Cistern extends Container {
 
 	public String writeInputState(){
 
-		return "Cistern inputStatjének első illetve második eleme: " + this + ": "+ inputState[0] + inputState[1];
+		return "Cistern inputStatjének első illetve második eleme: " + this + ": "+ inputState[0]+ ',' + inputState[1];
 	}
 	
 	public void eval() {
 
 		if(inputState[0]){
+			System.out.println("Before: "+ this.writeInputState() + "Collected water amount: " + collectedWater);
 			increaseCollectedWater();
 		}
-		System.out.println("Before: "+ this.writeInputState());
+
 
 	}
 

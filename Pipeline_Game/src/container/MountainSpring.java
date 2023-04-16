@@ -37,7 +37,7 @@ public class MountainSpring extends Container {
 
 	public String writeInputState(){
 
-		return "MountainSpring inputStatjének első illetve második eleme: " + this + ": "+ inputState[0] + inputState[1];
+		return "MountainSpring inputStatjének első illetve második eleme: " + this + ": "+ inputState[0] + ',' + inputState[1];
 	}
 
 	@Override
@@ -88,8 +88,8 @@ public class MountainSpring extends Container {
 	public void eval() {
 		System.out.println("Before: "+ this.writeInputState());
 		if(waterCapac != 0) {
-			this.setInputState();
 			decreaseWaterAm();
+			this.setInputState();
 			output.setInputState();
 		}
 	}
@@ -97,7 +97,7 @@ public class MountainSpring extends Container {
 	public void setInputState() {
 		inputState[0] = true;
 		inputState[1] = true;
-		System.out.println("After: "+ this.writeInputState());
+		System.out.println("After: "+ this.writeInputState() + "Water remaining in Mountain Spring: " + waterCapac);
 	}
 
 	

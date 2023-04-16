@@ -23,6 +23,57 @@ public class DispatcherSkeleton {
     public DispatcherSkeleton() throws MyException {
     }
 
+    public static Map waterFlowingMap() throws MyException {
+        Map map = new Map();
+
+        Pipe msOutput = new Pipe();
+        Pipe looseEnd = new Pipe();
+        Pipe pu1Output = new Pipe();
+        Pipe pu2Output = new Pipe();
+
+        Pump pu1 = new Pump(4);
+        Pump pu2 = new Pump(4);
+
+        System.out.println("msOutput Pipe: " + msOutput);
+        System.out.println("looseEnd Pipe: " + looseEnd);
+        System.out.println("pu1Output" + pu1Output);
+        System.out.println("pu2Output" + pu2Output);
+
+        MountainSpring ms = new MountainSpring();
+        Cistern cs = new Cistern(pu2Output);
+
+        ms.getNeighbors().add(msOutput);
+        msOutput.getNeighbors().add(ms);
+        cs.getNeighbors().add(pu2Output);
+        pu2Output.getNeighbors().add(cs);
+
+
+        //I-O
+        ms.setOutput(msOutput);
+        pu1.setInput(msOutput);
+        pu1.setOutput(pu1Output);
+        pu2.setInput(pu1Output);
+        pu2.setOutput(pu2Output);
+
+        //Adding everyone to the family - Pipes, Pumps, Cistern, MountainSpring
+        map.getContainers().add(ms);
+        map.getContainers().add(msOutput);
+        map.getContainers().add(pu1);
+        map.getContainers().add(pu1Output);
+        map.getContainers().add(looseEnd);
+        map.getContainers().add(pu2);
+        map.getContainers().add(pu2Output);
+        map.getContainers().add(cs);
+
+
+        //Connecting the dots - Pipes and Pumps
+        map.connectPumpToPipe(pu1, msOutput);
+        map.connectPumpToPipe(pu1, pu1Output);
+        map.connectPumpToPipe(pu2, pu1Output);
+        map.connectPumpToPipe(pu2, pu2Output);
+
+        return map;
+    }
     public static Map initalizeTable() throws MyException {
 
         Map map = new Map();
@@ -455,15 +506,14 @@ public class DispatcherSkeleton {
      * CollectingWater szekvencia
      */
     public void CollectingWater() throws MyException {
-        Map map = initalizeTable();
+        Map map = waterFlowingMap();
 
         Controller konTroll = new Controller();
         konTroll.setMap(map);
 
         System.out.println("Water is about to flow!");
-        for(int i=0; i < 3; i++) {
+        for(int i=0; i < 7; i++) {
             konTroll.waterFlow();
-            System.out.println();
             System.out.println();
             System.out.println();
         }

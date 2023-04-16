@@ -179,7 +179,7 @@ public class Pipe extends Container {
 
 	public String writeInputState(){
 
-		return "Pipe inputStatjének első illetve második eleme: " + this + ": "+ inputState[0] + inputState[1];
+		return "Pipe inputStatjének első illetve második eleme: " + this + ": "+ inputState[0] + ',' + inputState[1];
 	}
 
 	@Override
@@ -189,22 +189,23 @@ public class Pipe extends Container {
 
 	public void eval() {
 
-		System.out.println("Before: "+ this.writeInputState());
-
-		if(this.isLooseEnd()){
-			Map.increaseLeakedWater();
-		}
-
-		Container output = null;
-
-		for(Container c : this.neighbors){
-			if(c.amInput(this)){
-				output = c;
-				break;
-			}
-		}
 		if(inputState[0]) {
+
+			if(this.isLooseEnd()){
+				Map.increaseLeakedWater();
+				return;
+			}
+
+			Container output = null;
+			for(Container c : this.neighbors){
+				if(c.amInput(this)){
+					output = c;
+					break;
+				}
+			}
+
 			if (!isLeaked && (output != null)) {
+				System.out.println("Before: "+ this.writeInputState());
 				output.setInputState();
 			} else
 				Map.increaseLeakedWater();
