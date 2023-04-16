@@ -8,7 +8,7 @@ public class Main
 
     static void printOperations()
     {
-        System.out.println("Válassza ki a kívánt szekvenciát!");
+        System.out.println("\nVálassza ki a kívánt szekvenciát!");
         System.out.println("1. Mehcanic repairs pump");
         System.out.println("2. Mechanic repairs pipe");
         System.out.println("3. Saboteur leaks pipe");
@@ -35,49 +35,79 @@ public class Main
         while ((n = scanner.nextInt()) != 0) {
             switch (n) {
                 case 1:
+                    System.out.flush();
                     skeleton.MechanicRepairsPump();
+                    printOperations();
                     break;
                 case 2:
+                    System.out.flush();
                     skeleton.MechanicRepairsPipe();
+                    printOperations();
                     break;
                 case 3:
+                    System.out.flush();
                     skeleton.SaboteurLeaksPipe();
+                    printOperations();
                     break;
                 case 4:
+                    System.out.flush();
                     skeleton.PlayerAttachPipe();
+                    printOperations();
                     break;
                 case 5:
+                    System.out.flush();
                     skeleton.PlayerAttachPump();
+                    printOperations();
                     break;
                 case 6:
+                    System.out.flush();
                     skeleton.PlayerDetachPipe();
+                    printOperations();
                     break;
                 case 7:
+                    System.out.flush();
                     skeleton.PlayerAdjustPumpInput();
+                    printOperations();
                     break;
                 case 8:
+                    System.out.flush();
                     skeleton.PlayerAdjustPumpOutput();
+                    printOperations();
                     break;
                 case 9:
+                    System.out.flush();
                     skeleton.PlayerMovesToPipe();
+                    printOperations();
                     break;
                 case 10:
+                    System.out.flush();
                     skeleton.PlayerMovesToPipeFail();
+                    printOperations();
                     break;
                 case 11:
+                    System.out.flush();
                     skeleton.PlayerMovesToPump();
+                    printOperations();
                     break;
                 case 12:
+                    System.out.flush();
                     skeleton.PlayerMovesToCistern();
+                    printOperations();
                     break;
                 case 13:
+                    System.out.flush();
                     skeleton.PlayerMovesToMountainSpring();
+                    printOperations();
                     break;
                 case 14:
+                    System.out.flush();
                     skeleton.RandomPumpBreaking();
+                    printOperations();
                     break;
                 case 15:
+                    System.out.flush();
                     skeleton.CollectingWater();
+                    printOperations();
                     break;
             }
         }
