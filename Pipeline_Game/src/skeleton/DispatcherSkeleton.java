@@ -21,14 +21,18 @@ public class DispatcherSkeleton {
     public DispatcherSkeleton() throws MyException {
     }
 
-    public Map initalizeTable() throws MyException {
+    public static Map initalizeTable() throws MyException {
 
         Map map = new Map();
         Pump pos = new Pump(4);
 
+        pos.setDamaged(true);
+
         Pipe p1 = new Pipe();
         Pipe p2 = new Pipe();
         Pipe p3 = new Pipe();
+        Pipe detachable = new Pipe();
+        Pipe outputChan = new Pipe();
 
         Pump pu1 = new Pump(2);
         Pump pu2 = new Pump(3);
@@ -41,6 +45,8 @@ public class DispatcherSkeleton {
         map.getContainers().add(pu1);
         map.getContainers().add(pu2);
         map.getContainers().add(pu3);
+        map.getContainers().add(detachable);
+        map.getContainers().add(outputChan);
 
         map.connectPumpToPipe(pos, p1);
         map.connectPumpToPipe(pu1, p1);
@@ -48,82 +54,215 @@ public class DispatcherSkeleton {
         map.connectPumpToPipe(pu2, p2);
         map.connectPumpToPipe(pu2, p3);
         map.connectPumpToPipe(pu3, p3);
+        map.connectPumpToPipe(pu3, detachable);
+        map.connectPumpToPipe(pu3, outputChan);
+
+        pu3.setOutput(detachable);
+        pu3.setInput(p3);
 
         return map;
     }
 
-    Map map = initalizeTable();
 
     public void playerMove() throws MyException {
 
 
-        map.getPlayers().get(0).Move(map.getContainers().get(0));
+        //map.getPlayers().get(0).Move(map.getContainers().get(0));
 
     }
     /**
      * Mechanic repairs pump szekvencia
      */
-    void MechanicRepairsPump()
-    {
+    static void MechanicRepairsPump() throws MyException {
 
+        Map map = initalizeTable();
 
-
+        Mechanic mecha = new Mechanic(map.getContainers().get(0));
+        System.out.println("Mechanic repairs pump has started");
+        System.out.print("Pump isDamaged before repair: ");
+        System.out.println(((Pump)mecha.getPosition()).getisDamaged());
+        System.out.println("RepairPump is called");
+        mecha.RepairPump();
+        System.out.println("RepairPump has returned");
+        if (!((Pump) mecha.getPosition()).getisDamaged()) {
+            System.out.println("Pump repair was succesful :)");
+        } else {
+            System.out.println("Pump repair failed :(");
+        }
+        System.out.print("Pump isDamaged after repair: ");
+        System.out.println(((Pump)mecha.getPosition()).getisDamaged());
+        System.out.println("Mechanic repairs pump has finished");
     }
 
     /**
      * Mechanic repairs pipe szekvencia
      */
-    void MechanicRepairsPipe()
-    {
+    static void MechanicRepairsPipe() throws MyException {
+
+        Map map = initalizeTable();
+
+        Mechanic mecha = new Mechanic(map.getContainers().get(1));
+
+        System.out.println("Mechanic repairs pipe has started");
+        ((Pipe)mecha.getPosition()).setLeaked(true);
+        System.out.print("Pipe isLeaked before repair: ");
+        System.out.println(((Pipe)mecha.getPosition()).isLeaked());
+        System.out.println("RepairPipe is called");
+        mecha.RepairPipe();
+        System.out.println("RepairPipe has returned");
+        if (((Pipe)mecha.getPosition()).isLeaked()) {
+            System.out.println("Pipe repair was successful :)");
+        } else {
+            System.out.println("Pipe repair failed :(");
+        }
+        System.out.print("Pipe isLeaked after repair: ");
+        System.out.println(((Pipe)mecha.getPosition()).isLeaked());
+        System.out.println("Mechanic repairs pump has finished");
 
     }
 
     /**
      * Saboteur leaks pipe szekvencia
      */
-    void SaboteurLeaksPipe()
-    {
+    static void SaboteurLeaksPipe() throws MyException {
+        Map map = initalizeTable();
+
+        Saboteur saboteur = new Saboteur(map.getContainers().get(1));
+
+        System.out.println("Saboteur leaks pipe has started");
+        ((Pipe)saboteur.getPosition()).setLeaked(false);
+        System.out.print("Pipe isleaked before sabotage: ");
+        System.out.println(((Pipe)saboteur.getPosition()).isLeaked());
+        System.out.println("LeakPipe is called");
+        saboteur.LeakPipe();
+        System.out.println("LeakPipe has returned");
+        if (((Pipe) saboteur.getPosition()).isLeaked()) {
+            System.out.println("Pipe sabotage was succesful :)");
+        } else {
+            System.out.println("Pipe sabotage failed :(");
+        }
+        System.out.print("Pipe isleaked after sabotage: ");
+        System.out.println(((Pipe)saboteur.getPosition()).isLeaked());
+        System.out.println("Saboteur leaks pipe has finished");
 
     }
 
     /**
      * Player attaches pipe szekvencia
      */
-    void PlayerAttachPipe() throws MyException
+    static void PlayerAttachPipe() throws MyException
     {
+        Map map = initalizeTable();
 
+        Player player = new Player(map.getContainers().get(6));
+
+        ArrayList<Pipe> carriedPipes = new ArrayList<Pipe>();
+        carriedPipes.add(new Pipe());
+        player.setCarriedPipes(carriedPipes);
+
+        System.out.println("Player attach pipe successful has started");
+        System.out.println("attachPipe is called");
+        player.setCarriedPipes(carriedPipes);
+        player.attachPipe();
+        System.out.println("attachPipe has returned");
+        if (player.getCarriedPipes().isEmpty()) {
+            System.out.println("Player attach pipe successful was successful :)");
+        } else {
+            System.out.println("Player attach pipe successful has failed :(");
+        }
+        System.out.println("Player attach pipe successful has finished");
     }
 
     /**
      * Player attaches pump szekvencia
      */
-    void PlayerAttachPump() throws MyException
+    static void PlayerAttachPump() throws MyException
     {
+        Map map = initalizeTable();
 
+        Player player = new Player(map.getContainers().get(2));
+
+        System.out.println("Player attaches pump has started");
+        Pump pumpToAttach = new Pump(4);
+        player.setCarriedPump(pumpToAttach);
+        System.out.println("attachPump is called");
+        player.attachPump();
+        if (player.getPosition().seeifNeighbors(pumpToAttach)) {
+            System.out.println("Player attached pump successfully :)");
+        } else {
+            System.out.println("Player failed to attach pump :(");
+        }
+        System.out.println("Player attaches pump has finished");
     }
 
     /**
      * Player detach pipe szekvencia
      */
-    void PlayerDetachPipe() throws MyException
+    static void PlayerDetachPipe() throws MyException
     {
+        Map map = initalizeTable();
+
+        Player player = new Player(map.getContainers().get(6));
+
+        System.out.println("Player detach pipe has started");
+        System.out.println("detachPipe is called");
+        player.detachPipe((Pipe)map.getContainers().get(7));
+        System.out.println("detachPipe has returned");
+        if (player.getCarriedPipes().contains((Pipe)map.getContainers().get(7))) {
+            System.out.println("Player has detached pipe successfully :)");
+        } else {
+            System.out.println("Player failed to take pipe :(");
+        }
+        System.out.println("Player detach pipe has finished");
 
     }
 
     /**
      * Player adjust pump Input szekvencia
      */
-    void PlayerAdjustPumpInput()
-    {
+    static void PlayerAdjustPumpInput() throws MyException {
+        Map map = initalizeTable();
 
+        Player player = new Player(map.getContainers().get(6));
+
+        System.out.println("Player adjust pump Input has started");
+        System.out.println("Original input of pump: ");
+        System.out.println(((Pump)player.getPosition()).getInput());
+        System.out.println("adjustPump is called");
+        player.adjustPump((Pipe)map.getContainers().get(8), Type.Input);
+        System.out.println("adjustPump has returned");
+        if (((Pump)player.getPosition()).getInput().equals(map.getContainers().get(8))) {
+            System.out.println("Input adjustment successful :)");
+            System.out.println("Input successfully got adjusted to: ");
+            System.out.println(((Pump)player.getPosition()).getInput());
+        } else {
+            System.out.println("Input adjustment failed :(");
+        }
+        System.out.println("Player adjust pump Input has finished");
     }
 
     /**
      * Player adjust pump Output szekvencia
      */
-    void PlayerAdjustPumpOutput()
-    {
+    void PlayerAdjustPumpOutput() throws MyException {
+        Map map = initalizeTable();
 
+        Player player = new Player(map.getContainers().get(6));
+
+        System.out.println("AdjustPump has started");
+        System.out.println("Original output of pump: ");
+        System.out.println(((Pump)player.getPosition()).getOutput());
+        System.out.println("adjustPump is called");
+        player.adjustPump((Pipe) map.getContainers().get(8), Type.Output);
+        System.out.println("adjustPump has returned");
+        if (((Pump)player.getPosition()).getOutput().equals(map.getContainers().get(8))) {
+            System.out.println("adjustPump Output successful :)");
+            System.out.println("Output successfully got adjusted to: ");
+            System.out.println(((Pump)player.getPosition()).getOutput());
+        } else {
+            System.out.println("adjustPump Output failed :(");
+        }
+        System.out.println("AdjustPump has finished");
     }
 
     /**
@@ -237,167 +376,63 @@ public class DispatcherSkeleton {
                  * Mechanic repairs pump szekvencia
                  */
                 case 1:
-                    System.out.println("Mechanic repairs pump has started");
-                    pu.setisDamaged(true);
-                    System.out.print("Pump isDamaged before repair: ");
-                    System.out.println(pu.getisDamaged());
-                    System.out.println("RepairPump is called");
-                    m.RepairPump(pu);
-                    System.out.println("RepairPump has returned");
-                    if (pu.getisDamaged() == false) {
-                        System.out.println("Pump repair was succesful :)");
-                    } else {
-                        System.out.println("Pump repair failed :(");
-                    }
-                    System.out.print("Pump isDamaged after repair: ");
-                    System.out.println(pu.getisDamaged());
-                    System.out.println("Mechanic repairs pump has finished");
+                    MechanicRepairsPump();
                     break;
 
                 /**
                  * Mechanic repairs pipe szekvencia
                  */
                 case 2:
-                    System.out.println("Mechanic repairs pipe has started");
-                    pi.setLeaked(true);
-                    System.out.print("Pipe isLeaked before repair: ");
-                    System.out.println(pi.isLeaked());
-                    System.out.println("RepairPipe is called");
-                    m.RepairPipe(pi);
-                    System.out.println("RepairPipe has returned");
-                    if (pi.isLeaked() == false) {
-                        System.out.println("Pipe repair was successful :)");
-                    } else {
-                        System.out.println("Pipe repair failed :(");
-                    }
-                    System.out.print("Pipe isLeaked after repair: ");
-                    System.out.println(pi.isLeaked());
-                    System.out.println("Mechanic repairs pump has finished");
+                    MechanicRepairsPipe();
                     break;
 
                 /**
                  * Saboteur leaks pipe szekvencia
                  */
                 case 3:
-                    System.out.println("Saboteur leaks pipe has started");
-                    pi.setLeaked(false);
-                    System.out.print("Pipe isleaked before sabotage: ");
-                    System.out.println(pi.isLeaked());
-                    System.out.println("LeakPipe is called");
-                    s.LeakPipe();
-                    System.out.println("LeakPipe has returned");
-                    if (pi.isLeaked() == true) {
-                        System.out.println("Pipe sabotage was succesful :)");
-                    } else {
-                        System.out.println("Pipe sabotage failed :(");
-                    }
-                    System.out.print("Pipe isleaked after sabotage: ");
-                    System.out.println(pi.isLeaked());
-                    System.out.println("Saboteur leaks pipe has finished");
+                    SaboteurLeaksPipe();
                     break;
 
                 /**
                  * Player attach pipe successful szekvencia
                  */
                 case 4:
-                    System.out.println("Player attach pipe successful has started");
-                    System.out.println("attachPipe is called");
-                    m.setCarriedPipes(carriedPipe);
-                    m.attachPipe();
-                    System.out.println("attachPipe has returned");
-                    if (m.getCarriedPipes().isEmpty()) {
-                        System.out.println("Player attach pipe successful was successful :)");
-                    } else {
-                        System.out.println("Player attach pipe successful has failed :(");
-                    }
-                    System.out.println("Player attach pipe successful has finished");
+                    PlayerAttachPipe();
                     break;
 
                 /**
                  * Player attach pipe Fail szekvencia
                  */
                 case 5:
-                    System.out.println("Player attach pipe fail has started");
-                    System.out.println("attachPipe is called");
-                    m.attachPipe();
-                    System.out.println("attachPipe has returned");
-                    if (!m.getCarriedPipes().isEmpty()) {
-                        System.out.println("Player attach pipe fail was successful :)");
-                    } else {
-                        System.out.println("Player attach pipe fail has failed :(");
-                    }
-                    System.out.println("Player attach pipe fail has finished");
+
                     break;
 
                 /**
                  * Player attaches pump szekvencia
                  */
                 case 6:
-                    System.out.println("Player attaches pump has started");
-                    Pump pumpToAttach = new Pump(2);
-                    emese.setCarriedPump(pumpToAttach);
-                    System.out.println("attachPump is called");
-                    emese.attachPump();
-                    System.out.println("attachPump has returned");
-                    if (m.getPosition().seeifNeighbors(pumpToAttach)) {
-                        System.out.println("Player attached pump successfully :)");
-                    } else {
-                        System.out.println("Player failed to attach pump :(");
-                    }
-                    System.out.println("Player attaches pump has finished");
+                    PlayerAttachPump();
                     break;
 
                 /**
                  * Player detach pipe szekvencia
                  */
                 case 7:
-                    System.out.println("Player detach pipe has started");
-                    System.out.println("detachPipe is called");
-                    cpump.addPipe(pi);
-                    pi.addPump(cpump);
-                    m.detachPipe(pi);
-                    System.out.println("detachPipe has returned");
-                    if (m.getCarriedPipes().contains(pi)) {
-                        System.out.println("Player has detached pipe successfully :)");
-                    } else {
-                        System.out.println("Player failed to take pipe :(");
-                    }
-                    System.out.println("Player detach pipe has finished");
+                    PlayerDetachPipe();
                     break;
 
                 /**
                  * Player adjust pump Input szekvencia
                  */
                 case 8:
-                    System.out.println("Player adjust pump Input has started");
-                    System.out.println("adjustPump is called");
-                    m.adjustPump(pipeB, Type.Input);
-                    System.out.println("adjustPump has returned");
-                    if (cpump.getInput() == pipeB) {
-                        System.out.println("Input adjustment successful :)");
-                    } else {
-                        System.out.println("Input adjustment failed :(");
-                    }
-                    System.out.println("Player adjust pump Input has finished");
+                    PlayerAdjustPumpInput();
                     break;
 
                 /**
                  * Player adjust pump Output szekvencia
                  */
                 case 9:
-                    System.out.println("AdjustPump has started");
-                    Player p = new Player(cpump);
-                    Pipe pipe = new Pipe();
-                    Pump pum = new Pump(2);
-                    System.out.println("adjustPump is called");
-                    p.adjustPump(pipe, Type.Output);
-                    System.out.println("adjustPump has returned");
-                    if (cpump.getOutput().equals(pipe)) {
-                        System.out.println("adjustPump Output successful :)");
-                    } else {
-                        System.out.println("adjustPump Output failed :(");
-                    }
-                    System.out.println("AdjustPump has finished");
+
                     break;
 
                 /**

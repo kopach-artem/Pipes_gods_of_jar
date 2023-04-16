@@ -18,18 +18,16 @@ public class Mechanic extends Player {
 
 	
 	/**
-	 * Megjavítja a praméterül kapott csövet.
-	 * @param p - A javítani kívánt cső
+	 * Megjavítja a pozíciónál lévő csövet
 	 */
-	public void RepairPipe(Pipe p) throws MyException {
+	public void RepairPipe() throws MyException {
 		this.getPosition().mendPipe();
 	}
 	
 	/**
-	 * Megjavítja a paraméterül kapott pumpát.
-	 * @param pu - A megjavítani kívánt pumpa
+	 * Megjavítja a pozíciójánál lévő pumpát
 	 */
-	public void RepairPump(Pump pu) throws MyException {
+	public void RepairPump() throws MyException {
 		this.getPosition().mendPump();
 	}
 }

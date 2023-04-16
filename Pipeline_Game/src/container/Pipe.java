@@ -76,29 +76,30 @@ public class Pipe extends Container {
 		 * Initialize pumps
 		 */
 		Pump atPu = player.getCarriedPump();
-		Container pump2 = this.neighbors.get(1);
+		player.setCarriedPump(null);
+		Pump pump2 = (Pump) this.neighbors.get(0);
 
 		/**
 		 * Adding pumps to split Pipe
 		 */
-		split1.addPump((Pump) pump2, 1);
-		split1.addPump(atPu, 0);
+		split1.addPump(pump2);
+		split1.addPump(atPu);
 
 		/**
 		 * Removing the Pump that now connects to split1 Pipe but was connected to the base Pipe, and Adding the new Pump
 		 */
-		this.removePump(1);
-		this.addPump(atPu, 1);
+		this.removePump(pump2);
+		this.addPump(atPu);
 
 		/**
 		 * Add Pipes to Pumps too
 		 */
 		atPu.addPipe(split1);
 		atPu.addPipe(this);
-		((Pump) pump2).addPipe(split1);
-		((Pump) pump2).removePipe(this);
 
-		player.setCarriedPump(null);
+		pump2.addPipe(split1);
+		pump2.removePipe(this);
+
 
 	}
 

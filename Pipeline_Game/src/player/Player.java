@@ -98,7 +98,7 @@ public class Player {
 	 */
 	public void attachPump() throws MyException {
 
-		if(getCarriedPump() == null)
+		if(!(getCarriedPump() == null))
 			position.insertPump(this);
 
 	}
