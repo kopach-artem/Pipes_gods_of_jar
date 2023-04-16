@@ -621,5 +621,6 @@ public class DispatcherSkeleton {
             }
 
         }
+        scanner.close();
     }
 }
