@@ -237,7 +237,14 @@ public class DispatcherSkeleton {
                     Pipe pipe = new Pipe();
                     Type t = new Type();
                     Pump pum = new Pump(2);
-                    p.adjustPump(pu, pipe, t);
+                    System.out.println("adjustPump is called");
+                    p.adjustPump(cpump, pipe, t);
+                    System.out.println("adjustPump has returned");
+                    if (cpump.getOutput().equals(pipe)) {
+                        System.out.println("adjustPump Output successful :)");
+                    } else {
+                        System.out.println("adjustPump Output failed :(");
+                    }
                     System.out.println("AdjustPump has finished");
                     break;
 
@@ -246,11 +253,20 @@ public class DispatcherSkeleton {
                  */
                 case 10:
                     System.out.println("PlayerMovesOnPipeSuc has started");
-                    Player pl = new Player(cpump);
                     Pipe pipe1 = new Pipe();
                     Pipe pipe2 = new Pipe();
-                    pipe1.seeifNeighbors(pipe2); //true
-                    pl.setPosition(pipe1);
+                    Player pl = new Player(pipe1);
+                    ArrayList<Container> neighb10 = new ArrayList<Container>();
+                    neighb10.add(pipe2);
+                    pipe1.setNeighbors(neighb10);
+                    System.out.println("Move is called");
+                    pl.Move(pipe2);
+                    System.out.println("Move has returned");
+                    if (pl.getPosition().equals(pipe2)) {
+                        System.out.println("Player moves to Pipe successful :)");
+                    } else {
+                        System.out.println("Player moves to Pipe failed :(");
+                    }
                     System.out.println("PlayerMovesOnPipeSuc has finished");
                     break;
 
@@ -262,9 +278,9 @@ public class DispatcherSkeleton {
                     Pipe pip1 = new Pipe();
                     Pipe pip2 = new Pipe();
                     Player p1 = new Player(pip1);
-                    ArrayList<Container> neighb = new ArrayList<Container>();
-                    neighb.add(pip2);
-                    pip1.setNeighbors(neighb);
+                    ArrayList<Container> neighb11 = new ArrayList<Container>();
+                    neighb11.add(pip2);
+                    pip1.setNeighbors(neighb11);
                     pip2.setOccupied(true);
                     System.out.println("Move is called");
                     try {
