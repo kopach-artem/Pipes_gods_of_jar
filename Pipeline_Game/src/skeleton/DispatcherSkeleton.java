@@ -463,6 +463,9 @@ public class DispatcherSkeleton {
         System.out.println("Water is about to flow!");
         for(int i=0; i < 3; i++) {
             konTroll.waterFlow();
+            System.out.println();
+            System.out.println();
+            System.out.println();
         }
         System.out.println("Phew...");
     }

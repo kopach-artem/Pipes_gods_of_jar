@@ -37,7 +37,7 @@ public class MountainSpring extends Container {
 
 	public String writeInputState(){
 
-		return "MountainSpring inputStatjének első illetve második eleme" + this + ": "+ inputState[0] + inputState[1];
+		return "MountainSpring inputStatjének első illetve második eleme: " + this + ": "+ inputState[0] + inputState[1];
 	}
 
 	@Override

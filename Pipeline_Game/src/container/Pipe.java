@@ -179,7 +179,7 @@ public class Pipe extends Container {
 
 	public String writeInputState(){
 
-		return "Pipe inputStatjének első illetve második eleme" + this + ": "+ inputState[0] + inputState[1];
+		return "Pipe inputStatjének első illetve második eleme: " + this + ": "+ inputState[0] + inputState[1];
 	}
 
 	@Override
