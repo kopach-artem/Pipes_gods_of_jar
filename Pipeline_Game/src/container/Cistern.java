@@ -1,10 +1,7 @@
 package container;
 
 import java.util.ArrayList;
-import java.util.Random;
-
 import exception.MyException;
-import map.Map;
 import player.Player;
 import player.Type;
 
