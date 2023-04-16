@@ -20,6 +20,11 @@ public class Pipe extends Container {
 			return false;
 	}
 
+	
+	/** 
+	 * @param player
+	 * @throws MyException
+	 */
 	public void insertPump(Player player) throws MyException{
 
 		//Create new Pipe for the attachement

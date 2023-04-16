@@ -24,6 +24,10 @@ public class Cistern extends Container {
 		collectedWater++;
 	}
 	
+	
+	/** 
+	 * @param turnCount
+	 */
 	public void lifeCycle(int turnCount)
 	{
 		if(turnCount%3==0)

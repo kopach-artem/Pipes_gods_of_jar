@@ -26,6 +26,10 @@ public class Map {
 	public void increaseLeakedWater() {
 	}
 	
+	
+	/** 
+	 * @param c
+	 */
 	public void removeElement(Container c) {
 	}
 	

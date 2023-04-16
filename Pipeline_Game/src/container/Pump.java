@@ -62,6 +62,10 @@ public class Pump extends Container {
 		return true;
 	}
 
+	
+	/** 
+	 * @param turnCount
+	 */
 	public void lifeCycle(int turnCount){
 		if(turnCount == this.randomDamageValue && !this.isDamaged){
 			this.isDamaged = true;

@@ -19,6 +19,10 @@ public class Mechanic extends Player {
 			p.setisLeaked(false);
 		}
 	}
+	
+	/** 
+	 * @param pu
+	 */
 	public void RepairPump(Pump pu)
 	{
 		if(pu.getisDamaged())

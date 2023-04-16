@@ -25,6 +25,10 @@ public class MountainSpring extends Container {
 	public void setInputState() {
 	}
 
+	
+	/** 
+	 * @return int
+	 */
 	public int getWaterCapac() {
 		return waterCapac;
 	}

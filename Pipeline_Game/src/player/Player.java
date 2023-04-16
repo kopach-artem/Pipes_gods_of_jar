@@ -37,6 +37,11 @@ public class Player {
 		}
 	}
 
+	
+	/** 
+	 * @param c
+	 * @throws MyException
+	 */
 	public void Move(Container c) throws MyException {
 		if (this.position.seeifNeighbors(c)) {
 			if (c.steppable()) {

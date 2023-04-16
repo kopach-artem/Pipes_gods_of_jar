@@ -3,6 +3,7 @@ package skeleton;
 import container.*;
 import controller.Controller;
 import exception.MyException;
+import map.Map;
 import player.Mechanic;
 import player.Saboteur;
 import player.Type;
