@@ -15,6 +15,11 @@ import player.Type;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * A DispatcherSkeleton osztály segítségével végezhető a skeleton program tesztelése.
+ * Ebben az osztályban található a main metódus, amely a standard inputra vár egész számokat,
+ * melyeket beolvasva lefuttatja a kiválasztott szekvenciát
+ */
 public class DispatcherSkeleton {
     public static void main(String[] args) throws MyException {
         System.out.println("Üdvözli önt a Gods of jar csapat skeleton programja!");
@@ -44,9 +49,15 @@ public class DispatcherSkeleton {
         Pump pu = new Pump(2);
         Pipe pi = new Pipe();
         int n;
+        /**
+         * A főciklus, itt várjuk az egész számokat.
+         * Ha 0-t kap a bementre a program, akkor kilép.
+         */
         while((n = scanner.nextInt()) != 0) {
             switch(n){
-                //Mechanic repairs pump
+                /**
+                 * Mechanic repairs pump szekvencia
+                 */
                 case 1:
                     System.out.println("Mechanic repairs pump has started");
                     pu.setisDamaged(true);
@@ -64,7 +75,10 @@ public class DispatcherSkeleton {
                     System.out.println(pu.getisDamaged());
                     System.out.println("Mechanic repairs pump has finished");
                     break;
-                //Mechanic repairs pipe
+
+                /**
+                 * Mechanic repairs pipe szekvencia
+                 */
                 case 2:
                     System.out.println("Mechanic repairs pipe has started");
                     pi.setisLeaked(true);
@@ -82,7 +96,10 @@ public class DispatcherSkeleton {
                     System.out.println(pi.isLeaked());
                     System.out.println("Mechanic repairs pump has finished");
                     break;
-                //Saboteur leaks pipe
+
+                /**
+                 * Saboteur leaks pipe szekvencia
+                 */
                 case 3:
                     System.out.println("Saboteur leaks pipe has started");
                     pi.setisLeaked(false);
@@ -100,7 +117,10 @@ public class DispatcherSkeleton {
                     System.out.println(pi.isLeaked());
                     System.out.println("Saboteur leaks pipe has finished");
                     break;
-                //Player attach pipe successful
+
+                /**
+                 * Player attach pipe successful szekvencia
+                 */
                 case 4:
                     System.out.println("Player attach pipe successful has started");
                     System.out.println("attachPipe is called");
@@ -113,7 +133,10 @@ public class DispatcherSkeleton {
                     }
                     System.out.println("Player attach pipe successful has finished");
                     break;
-                //Player attach pipe Fail
+
+                /**
+                 * Player attach pipe Fail szekvencia
+                 */
                 case 5:
                     System.out.println("Player attach pipe fail has started");
                     System.out.println("attachPipe is called");
@@ -126,7 +149,10 @@ public class DispatcherSkeleton {
                     }
                     System.out.println("Player attach pipe fail has finished");
                     break;
-                //Player attaches pump
+
+                /**
+                 * Player attaches pump szekvencia
+                 */
                 case 6:
                     System.out.println("Player attaches pump has started");
                     Pump pumpToAttach = new Pump(1);
@@ -141,7 +167,10 @@ public class DispatcherSkeleton {
                     }
                     System.out.println("Player attaches pump has finished");
                     break;
-                //Player detach pipe
+
+                /**
+                 * Player detach pipe szekvencia
+                 */
                 case 7:
                     System.out.println("Player detach pipe has started");
                     System.out.println("detachPipe is called");
@@ -154,7 +183,10 @@ public class DispatcherSkeleton {
                     }
                     System.out.println("Player detach pipe has finished");
                     break;
-                //Player adjust pump Input
+
+                /**
+                 * Player adjust pump Input szekvencia
+                 */
                 case 8:
                     System.out.println("Player adjust pump Input has started");
                     System.out.println("adjustPump is called");
@@ -167,6 +199,10 @@ public class DispatcherSkeleton {
                     }
                     System.out.println("Player adjust pump Input has finished");
                     break;
+
+                /**
+                 * Player adjust pump Output szekvencia
+                 */
                 case 9:
                     System.out.println("AdjustPump has started");
                     Player p = new Player(c);
@@ -176,6 +212,10 @@ public class DispatcherSkeleton {
                     p.adjustPump(pu, pipe, t);
                     System.out.println("AdjustPump has finished");
                     break;
+
+                /**
+                 * Player moves to Pipe successfully szekvencia
+                 */
                 case 10:
                     System.out.println("PlayerMovesOnPipeSuc has started");
                     Player pl = new Player(c);
@@ -185,6 +225,10 @@ public class DispatcherSkeleton {
                     pl.setPosition(pipe1);
                     System.out.println("PlayerMovesOnPipeSuc has finished");
                     break;
+
+                /**
+                 * Player moves to Pipe failed szekvencia
+                 */
                 case 11:
                     System.out.println("PlayerMovesOnPipeFail has started");
                     Pipe pip1 = new Pipe();
@@ -208,6 +252,10 @@ public class DispatcherSkeleton {
                     }
                     System.out.println("PlayerMovesOnPipeFail has finished");
                     break;
+
+                /**
+                 * Player moves to Pump szekvencia
+                 */
                 case 12:
                     System.out.println("Player moves to pump has started");
                     Player pla = new Player(c);
@@ -216,6 +264,10 @@ public class DispatcherSkeleton {
                     pla.setPosition(pu1);
                     System.out.println("Player moves to pump has finished");
                     break;
+
+                /**
+                 * Player moves to Cistern szekvencia
+                 */
                 case 13:
                     System.out.println("Player moves to cistern has started");
                     Player pla1 = new Player(c);
@@ -225,6 +277,10 @@ public class DispatcherSkeleton {
                     pla1.setPosition(cis);
                     System.out.println("Player moves to cistern has finished");
                     break;
+
+                /**
+                 * Player moves to MountainSpring szekvencia
+                 */
                 case 14:
                     System.out.println("Player moves to MountainSpring has started");
                     Player pla2 = new Player(c);
@@ -238,12 +294,20 @@ public class DispatcherSkeleton {
                     mo.steppable(); //false
                     System.out.println("Player moves to MountainSpring has finished");
                     break;
+
+                /**
+                 * Evalutaion szekvencia
+                 */
                 case 15:
                     System.out.println("Evaluation has started");
                     Pump pump1 = new Pump(2);
                     pump1.setisDamaged(true);
                     System.out.println("Evaluation has started");
                     break;
+
+                /**
+                 * CollectingWater szekvencia
+                 */
                 case 16:
                     System.out.println("CollectingWater has started");
                     Controller cont = new Controller();
@@ -259,6 +323,7 @@ public class DispatcherSkeleton {
                     ci.makeHistory();
                     System.out.println("CollectingWater has finished");
                     break;
+
                 default:
                     break;
             }
