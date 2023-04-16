@@ -18,16 +18,13 @@ import java.util.Scanner;
  */
 public class DispatcherSkeleton {
 
+    public DispatcherSkeleton() throws MyException {
+    }
+
     public Map initalizeTable() throws MyException {
 
         Map map = new Map();
         Pump pos = new Pump(4);
-
-        Mechanic mecha = new Mechanic(pos);
-        Saboteur sabo = new Saboteur(pos);
-
-        map.getPlayers().add(mecha);
-        map.getPlayers().add(sabo);
 
         Pipe p1 = new Pipe();
         Pipe p2 = new Pipe();
@@ -37,6 +34,7 @@ public class DispatcherSkeleton {
         Pump pu2 = new Pump(3);
         Pump pu3 = new Pump(5);
 
+        map.getContainers().add(pos);
         map.getContainers().add(p1);
         map.getContainers().add(p2);
         map.getContainers().add(p3);
@@ -67,6 +65,7 @@ public class DispatcherSkeleton {
      */
     void MechanicRepairsPump()
     {
+
 
 
     }
@@ -285,7 +284,7 @@ public class DispatcherSkeleton {
                     System.out.print("Pipe isleaked before sabotage: ");
                     System.out.println(pi.isLeaked());
                     System.out.println("LeakPipe is called");
-                    s.LeakPipe(pi);
+                    s.LeakPipe();
                     System.out.println("LeakPipe has returned");
                     if (pi.isLeaked() == true) {
                         System.out.println("Pipe sabotage was succesful :)");
