@@ -3,15 +3,8 @@
 Ádám 5.3.1-5.3.3 
 
 TODO:
-5.3.5
-5.3.8
-Also CONSTRUCTORS FOR ALL CLASEES (Double check), 
-Tests for menu with some input/output( in progress), 
-Run in cloud.bme(holnap), 
-Word file(holnap)
+4,5,7,8,9 most NullPointerException,    
+11,14 RunTimeException,  
+WordFile TODO,  
+Cloud bme test TODO.
 
-CHECK LIST:
-Menu with switch-case
-5.3.1-5.3.4
-5.3.6, 5.3.7 
-5.3.10
