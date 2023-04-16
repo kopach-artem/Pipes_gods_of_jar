@@ -12,8 +12,6 @@ TODO:
 Kommentezés:
     Container
     Pipe
-    Pump
-    Map
     Mechanic
     Player
     Saboteur
