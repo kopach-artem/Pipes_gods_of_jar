@@ -45,6 +45,7 @@ public class Player {
 	
 	public void attachPipe() throws MyException
 	{
+		if (!getCarriedPipes().isEmpty())
 		this.position.insertPipe(this);
 	}
 	
