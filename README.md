@@ -10,9 +10,7 @@ Cloud bme test TODO.
 
 TODO:
 Kommentezés:
-    Cistern DONE
     Container
-    MountainSpring
     Pipe
     Pump
     Map
