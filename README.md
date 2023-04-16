@@ -11,9 +11,7 @@ Cloud bme test TODO.
 TODO:
 Kommentezés:
     Container
-    Pipe
     Mechanic
     Player
     Saboteur
-    Type
     DispatcherSkeleton
