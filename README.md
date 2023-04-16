@@ -11,5 +11,4 @@ Cloud bme test TODO.
 TODO:
 Kommentezés:
     Container
-    Player
     DispatcherSkeleton
