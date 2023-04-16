@@ -419,7 +419,7 @@ public class DispatcherSkeleton {
         Player player = new Player(map.getContainers().get(11));
 
         System.out.println("Player moves to MountainSpring has started");
-        System.out.println("MountainSpring the player wants to move onto: " + map.getContainers().get(11));
+        System.out.println("MountainSpring the player wants to move onto: " + map.getContainers().get(10));
         System.out.println("Move is called");
         try {
             player.Move(map.getContainers().get(10));

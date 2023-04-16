@@ -196,7 +196,6 @@ public class Pipe extends Container {
 	public void setInputState(){
 
 		inputState[1] = true;
-
 		System.out.println("After: "+ this.writeInputState());
 
 	}
