@@ -187,13 +187,24 @@ public class DispatcherSkeleton {
                     break;
                 case 11:
                     System.out.println("PlayerMovesOnPipeFail has started");
-                    Player p1 = new Player(c);
                     Container cc = new Container();
+                    Player p1 = new Player(cc);
                     Pipe pip = new Pipe();
+                    ArrayList<Container> neighb = new ArrayList<Container>();
+                    neighb.add(pip);
+                    cc.setNeighbors(neighb);
+                    pip.setOccupied(true);
+                    System.out.println("Move is called");
                     try {
-                        p1.Move(pi);
+                        p1.Move(pip);
                     } catch (MyException e) {
                         throw new RuntimeException(e);
+                    }
+                    System.out.println("Move has returned");
+                    if (!p1.getPosition().equals(pip)) {
+                        System.out.println("Test was successful, move failed :)");
+                    } else {
+                        System.out.println("Test failed, move was successful :(");
                     }
                     pip.seeifNeighbors(cc); //false
                     System.out.println("PlayerMovesOnPipeFail has finished");
@@ -222,7 +233,7 @@ public class DispatcherSkeleton {
                     MountainSpring mo = new MountainSpring();
                     Pump pu3 = new Pump(2);
                     try {
-                        pla2.Move(pu3);
+                        pla2.Move(mo);
                     } catch (MyException e) {
                         throw new RuntimeException(e);
                     }
