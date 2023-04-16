@@ -37,6 +37,12 @@ public class Pump extends Container {
 
 	}
 
+	
+	/** 
+	 * @param player
+	 * @param pi
+	 * @throws MyException
+	 */
 	public void extractPipe(Player player, Pipe pi) throws MyException {
 
 		if(this.seeifNeighbors(pi)){
@@ -48,6 +54,10 @@ public class Pump extends Container {
 		}
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	public boolean steppable() {
 		return true;
 	}
@@ -58,6 +68,10 @@ public class Pump extends Container {
 		}
 	}
 
+	
+	/** 
+	 * @param pi
+	 */
 	public void addPipe(Pipe pi) {
 
 		if(!this.isAllConnected())
@@ -65,6 +79,10 @@ public class Pump extends Container {
 
 	}
 
+	
+	/** 
+	 * @param pi
+	 */
 	public void removePipe(Pipe pi) {
 
 		if(!this.neighbors.isEmpty())
@@ -80,6 +98,10 @@ public class Pump extends Container {
 
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	public boolean isAllConnected() {
 		if(getMaxPipeAmount()==neighbors.size())
 			return true;
@@ -87,6 +109,10 @@ public class Pump extends Container {
 			return false;
 	}
 
+	
+	/** 
+	 * @return int
+	 */
 	public int getRandomDamageValue() {
 		return randomDamageValue;
 	}
