@@ -22,6 +22,11 @@ public class DispatcherSkeleton {
     public DispatcherSkeleton() throws MyException {
     }
 
+    
+    /** 
+     * @return Map
+     * @throws MyException
+     */
     public static Map initalizeTable() throws MyException {
 
         Map map = new Map();

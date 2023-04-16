@@ -30,6 +30,10 @@ public abstract class Container {
 		return this.neighbors.contains(neighbor);
 	}
 
+	
+	/** 
+	 * @return String
+	 */
 	public String writeInputState(){
 
 		return null;

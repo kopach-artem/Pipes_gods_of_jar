@@ -38,6 +38,13 @@ public class Pipe extends Container {
 		setOccupied(true);
 	}
 
+	
+	/** 
+	 * @param player
+	 * @param pi
+	 * @param t
+	 * @throws MyException
+	 */
 	@Override
 	public void alterPump(Player player, Pipe pi, Type t) throws MyException {
 

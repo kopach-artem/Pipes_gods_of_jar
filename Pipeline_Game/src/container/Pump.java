@@ -48,6 +48,10 @@ public class Pump extends Container {
 		isDamaged=false;
 	}
 
+	
+	/** 
+	 * @throws MyException
+	 */
 	public void mendPump() throws MyException {
 		if(this.isDamaged){
 			this.setDamaged(false);

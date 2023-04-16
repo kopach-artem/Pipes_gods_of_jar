@@ -79,6 +79,10 @@ public class Cistern extends Container {
 		return true;
 	}
 
+	
+	/** 
+	 * @return String
+	 */
 	public String writeInputState(){
 
 		return "Cistern inputStatjének első illetve második eleme: " + this + ": "+ inputState[0] + inputState[1];

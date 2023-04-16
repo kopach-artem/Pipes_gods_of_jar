@@ -5,6 +5,12 @@ import java.util.Scanner;
 
 public class Main
 {
+    
+    /** 
+     * @param args
+     * @throws MyException
+     * @throws InterruptedException
+     */
     public static void main(String[] args) throws MyException, InterruptedException {
         DispatcherSkeleton skeleton = new DispatcherSkeleton();
         System.out.println("[Üdvözli önt a Gods of jar csapat skeleton programja!]");
