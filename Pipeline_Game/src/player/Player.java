@@ -22,14 +22,14 @@ public class Player {
 	 * @param pi
 	 * @param t
 	 */
-	public void adjustPump(Pump pu, Pipe pi, Type t) {
-		if (t.Input.equals(t)){
+	public void adjustPump(Pump pu, Pipe pi, Direction d) {
+		if (d == Direction.Input){
 			pu.getNeighbors();
 			pu.getInput();
 			pi.getWaterFlowing();
 			pu.setInput(pi);
 		}
-		else if (t.Output.equals(t)){
+		else{
 			pu.getNeighbors();
 			pu.setOutput(pi);
 		}

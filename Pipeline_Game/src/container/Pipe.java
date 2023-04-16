@@ -64,7 +64,6 @@ public class Pipe extends Container {
 
 	public void addPump(Pump pu) throws MyException {
 
-
 		if(!(this.neighbors.size() == 2))
 			this.neighbors.add(pu);
 		else

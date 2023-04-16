@@ -226,7 +226,7 @@ public class DispatcherSkeleton {
                     System.out.println("Player detach pipe has started");
                     System.out.println("detachPipe is called");
                     cpump.addPipe(pi);
-                    pi.addPump(cpump);
+                    pi.addPump(cpump); 
                     m.detachPipe(pi);
                     System.out.println("detachPipe has returned");
                     if (m.getCarriedPipes().contains(pi)) {
@@ -243,9 +243,11 @@ public class DispatcherSkeleton {
                 case 8:
                     System.out.println("Player adjust pump Input has started");
                     System.out.println("adjustPump is called");
-                    m.adjustPump(pu, pi, new Type());
+                    pi.addPump(cpump);
+                    Direction d = Direction.Input;
+                    m.adjustPump(cpump, pi, d);
                     System.out.println("adjustPump has returned");
-                    if (pu.getInput().equals(pi)) {
+                    if (cpump.getInput().equals(pi)) {
                         System.out.println("Input adjustment successful :)");
                     } else {
                         System.out.println("Input adjustment failed :(");
@@ -260,10 +262,10 @@ public class DispatcherSkeleton {
                     System.out.println("AdjustPump has started");
                     Player p = new Player(cpump);
                     Pipe pipe = new Pipe();
-                    Type t = new Type();
-                    Pump pum = new Pump(2);
+                    Direction dir = Direction.Output;
+                    //Pump pum = new Pump(2);
                     System.out.println("adjustPump is called");
-                    p.adjustPump(cpump, pipe, t);
+                    p.adjustPump(cpump, pipe, dir);
                     System.out.println("adjustPump has returned");
                     if (cpump.getOutput().equals(pipe)) {
                         System.out.println("adjustPump Output successful :)");
