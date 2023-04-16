@@ -1,10 +1,7 @@
 package container;
 
 import java.util.ArrayList;
-import java.util.Random;
-
 import exception.MyException;
-import map.Map;
 import player.Player;
 import player.Type;
 
@@ -82,6 +79,10 @@ public class Cistern extends Container {
 		return true;
 	}
 
+	
+	/** 
+	 * @return String
+	 */
 	public String writeInputState(){
 
 		return "Cistern inputStatjének első illetve második eleme: " + this + ": "+ inputState[0]+ ',' + inputState[1];

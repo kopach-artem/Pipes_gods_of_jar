@@ -35,6 +35,10 @@ public class MountainSpring extends Container {
 		waterCapac--;
 	}
 
+	
+	/** 
+	 * @return String
+	 */
 	public String writeInputState(){
 
 		return "MountainSpring inputStatjének első illetve második eleme: " + this + ": "+ inputState[0] + ',' + inputState[1];
