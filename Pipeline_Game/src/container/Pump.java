@@ -2,6 +2,7 @@ package container;
 import exception.MyException;
 import map.Map;
 import player.Player;
+import player.Type;
 
 import java.util.Random;
 
@@ -64,6 +65,25 @@ public class Pump extends Container {
 			player.getCarriedPipes().remove(atPipe);
 		}
 
+	}
+
+	public void alterPump(Player player, Pipe pi, Type t) throws MyException {
+
+		if(this.seeifNeighbors(pi)){
+			if(t == Type.Input){
+				if(!pi.isWaterFlowing() || this.getOutput() != pi){
+					this.setInput(pi);
+				}
+				else
+					throw new MyException("Input pipe cannot be changed once water is flowing through it");
+			}
+			if(t == Type.Output){
+				if(this.getInput() != pi)
+					this.setOutput(pi);
+				else
+					throw new MyException("Input pipe cannot be changed to be the output pipe of the pump");
+			}
+		}
 	}
 
 	

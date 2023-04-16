@@ -91,7 +91,25 @@ public class DispatcherSkeleton {
         System.out.println("0. Kilépés");
 
         Scanner scanner = new Scanner(System.in);
-        Pump cpump = new Pump(2);
+        Pump cpump = new Pump(3);
+        Pump cpump2 = new Pump(2);
+        Pipe pozi = new Pipe();
+        Pipe pipeA = new Pipe();
+        Pipe pipeB = new Pipe();
+        cpump.addPipe(pipeA);
+        cpump.addPipe(pipeB);
+        cpump.addPipe(pozi);
+
+        cpump.setOutput(pozi);
+        cpump.setInput(pipeA);
+
+        pipeA.addPump(cpump);
+        pipeB.addPump(cpump);
+
+        cpump2.addPipe(pozi);
+        pozi.addPump(cpump2, 0);
+        pozi.addPump(cpump2, 1);
+        Mechanic emese = new Mechanic(pozi);
         Mechanic m = new Mechanic(cpump);
         Saboteur s = new Saboteur(cpump);
         Pump pu = new Pump(2);
@@ -131,14 +149,14 @@ public class DispatcherSkeleton {
                  */
                 case 2:
                     System.out.println("Mechanic repairs pipe has started");
-                    pi.setisLeaked(true);
+                    pi.setLeaked(true);
                     System.out.print("Pipe isLeaked before repair: ");
                     System.out.println(pi.isLeaked());
                     System.out.println("RepairPipe is called");
                     m.RepairPipe(pi);
                     System.out.println("RepairPipe has returned");
                     if (pi.isLeaked() == false) {
-                        System.out.println("Pipe repair was succesful :)");
+                        System.out.println("Pipe repair was successful :)");
                     } else {
                         System.out.println("Pipe repair failed :(");
                     }
@@ -152,7 +170,7 @@ public class DispatcherSkeleton {
                  */
                 case 3:
                     System.out.println("Saboteur leaks pipe has started");
-                    pi.setisLeaked(false);
+                    pi.setLeaked(false);
                     System.out.print("Pipe isleaked before sabotage: ");
                     System.out.println(pi.isLeaked());
                     System.out.println("LeakPipe is called");
@@ -206,12 +224,12 @@ public class DispatcherSkeleton {
                  */
                 case 6:
                     System.out.println("Player attaches pump has started");
-                    Pump pumpToAttach = new Pump(1);
-                    m.setCarriedPump(pumpToAttach);
+                    Pump pumpToAttach = new Pump(2);
+                    emese.setCarriedPump(pumpToAttach);
                     System.out.println("attachPump is called");
-                    m.attachPump();
+                    emese.attachPump();
                     System.out.println("attachPump has returned");
-                    if (m.getCarriedPump() == null) {
+                    if (m.getPosition().seeifNeighbors(pumpToAttach)) {
                         System.out.println("Player attached pump successfully :)");
                     } else {
                         System.out.println("Player failed to attach pump :(");
@@ -226,7 +244,7 @@ public class DispatcherSkeleton {
                     System.out.println("Player detach pipe has started");
                     System.out.println("detachPipe is called");
                     cpump.addPipe(pi);
-                    pi.addPump(cpump); 
+                    pi.addPump(cpump);
                     m.detachPipe(pi);
                     System.out.println("detachPipe has returned");
                     if (m.getCarriedPipes().contains(pi)) {
@@ -243,11 +261,9 @@ public class DispatcherSkeleton {
                 case 8:
                     System.out.println("Player adjust pump Input has started");
                     System.out.println("adjustPump is called");
-                    pi.addPump(cpump);
-                    Direction d = Direction.Input;
-                    m.adjustPump(cpump, pi, d);
+                    m.adjustPump(pipeB, Type.Input);
                     System.out.println("adjustPump has returned");
-                    if (cpump.getInput().equals(pi)) {
+                    if (cpump.getInput() == pipeB) {
                         System.out.println("Input adjustment successful :)");
                     } else {
                         System.out.println("Input adjustment failed :(");
@@ -262,10 +278,9 @@ public class DispatcherSkeleton {
                     System.out.println("AdjustPump has started");
                     Player p = new Player(cpump);
                     Pipe pipe = new Pipe();
-                    Direction dir = Direction.Output;
-                    //Pump pum = new Pump(2);
+                    Pump pum = new Pump(2);
                     System.out.println("adjustPump is called");
-                    p.adjustPump(cpump, pipe, dir);
+                    p.adjustPump(pipe, Type.Output);
                     System.out.println("adjustPump has returned");
                     if (cpump.getOutput().equals(pipe)) {
                         System.out.println("adjustPump Output successful :)");
@@ -313,7 +328,7 @@ public class DispatcherSkeleton {
                     try {
                         p1.Move(pip2);
                     } catch (MyException e) {
-                        //throw new RuntimeException(e);
+                        throw new RuntimeException(e);
                     }
                     System.out.println("Move has returned");
                     if (!p1.getPosition().equals(pip2)) {

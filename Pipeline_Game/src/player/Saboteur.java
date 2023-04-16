@@ -25,6 +25,6 @@ public class Saboteur extends Player {
 	 */
 	public void LeakPipe(Pipe p)
 	{
-		p.setisLeaked(true);
+		p.setLeaked(true);
 	}
 }

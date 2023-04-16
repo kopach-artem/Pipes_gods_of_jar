@@ -76,6 +76,8 @@ public class Pipe extends Container {
 		((Pump) pump2).addPipe(split1);
 		((Pump) pump2).removePipe(this);
 
+		player.setCarriedPump(null);
+
 	}
 
 	/**
@@ -203,17 +205,5 @@ public class Pipe extends Container {
 	 */
 	public void setWaterFlowing(boolean waterFlowing) {
 		this.waterFlowing = waterFlowing;
-	}
-
-	public boolean getWaterFlowing() {
-		return false;
-	}
-
-	/**
-	 * Beállítja az isLeakeda ttribútum értékét
-	 * @param b
-	 */
-	public void setisLeaked(boolean b) {
-		isLeaked=b;
 	}
 }

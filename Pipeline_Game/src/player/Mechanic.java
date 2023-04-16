@@ -24,7 +24,7 @@ public class Mechanic extends Player {
 	{
 		if(p.isLeaked())
 		{
-			p.setisLeaked(false);
+			p.setLeaked(false);
 		}
 	}
 	

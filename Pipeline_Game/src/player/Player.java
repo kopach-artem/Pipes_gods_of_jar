@@ -24,7 +24,7 @@ public class Player {
 	/**
 	 * Ez tartalmazza a játékos által hordozott pumpát.
 	 */
-	protected Pump carriedPump = new Pump(3);
+	protected Pump carriedPump;
 
 	/**
 	 * Player osztály konstruktora.
@@ -33,6 +33,7 @@ public class Player {
 	public Player(Container position)
 	{
 		this.position=position;
+		carriedPump = null;
 	}
 	
 	/**
@@ -41,17 +42,10 @@ public class Player {
 	 * @param pi - Ezt a csövet szeretnénk beállítani
 	 * @param d - Ez alapján dönti el a metódus, hogy a be- vagy kimenetet szeretnénk átállítani
 	 */
-	public void adjustPump(Pump pu, Pipe pi, Direction d) {
-		if (d == Direction.Input){
-			pu.getNeighbors();
-			pu.getInput();
-			pi.getWaterFlowing();
-			pu.setInput(pi);
-		}
-		else{
-			pu.getNeighbors();
-			pu.setOutput(pi);
-		}
+	public void adjustPump(Pipe pi, Type t) throws MyException {
+
+		this.position.alterPump(this, pi, t);
+
 	}
 
 	
@@ -106,7 +100,8 @@ public class Player {
 	 */
 	public void attachPump() throws MyException {
 
-		position.insertPump(this);
+		if(getCarriedPump() == null)
+			position.insertPump(this);
 
 	}
 
