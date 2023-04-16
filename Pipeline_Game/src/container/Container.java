@@ -45,6 +45,7 @@ public abstract class Container {
 	 */
 	public abstract void lifeCycle(int turnCount);
 
+
 	public boolean amInput(Container c){
 		return false;
 	}
