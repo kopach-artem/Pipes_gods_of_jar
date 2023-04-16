@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import exception.MyException;
 import player.*;
 import container.*;
 
@@ -11,15 +12,18 @@ public class Map {
 	private int leakedWater;
 
 	private ArrayList<Player> players = new ArrayList<Player>();
-	private static ArrayList<Container> containers = new ArrayList<Container>();
+	private ArrayList<Container> containers = new ArrayList<Container>();
 
 	public Map(){
 
-	
-	/** 
-	 * @return int
-	 */
 		leakedWater = 0;
+
+	}
+
+	public void connectPumpToPipe(Pump pu, Pipe pi) throws MyException {
+
+		pu.addPipe(pi);
+		pi.addPump(pu);
 
 	}
 
@@ -36,7 +40,7 @@ public class Map {
 	public void addElement(Container c) {
 	}
 
-	public static ArrayList<Container> getContainers() {
+	public ArrayList<Container> getContainers() {
 		return containers;
 	}
 

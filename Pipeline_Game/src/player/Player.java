@@ -9,14 +9,12 @@ import exception.*;
 public class Player {
 
 	protected Container position;
-	protected ArrayList<Pipe> carriedPipes;
-	protected Pump carriedPump;
+	protected ArrayList<Pipe> carriedPipes = new ArrayList<Pipe>();
+	protected Pump carriedPump = new Pump(3);
 
 	public Player(Container position)
 	{
 		this.position=position;
-		carriedPump=null;
-		carriedPipes=null;
 	}
 	
 	/** 

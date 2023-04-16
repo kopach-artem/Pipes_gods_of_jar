@@ -62,6 +62,15 @@ public class Pipe extends Container {
 			throw new MyException("Add pump failed");
 	}
 
+	public void addPump(Pump pu) throws MyException {
+
+
+		if(!(this.neighbors.size() == 2))
+			this.neighbors.add(pu);
+		else
+			throw new MyException("Add pump failed");
+	}
+
 	public void removePump(int index) throws MyException {
 
 		if(index > 1 || index < 0){

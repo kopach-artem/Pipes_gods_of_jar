@@ -16,8 +16,8 @@ public class Controller {
 
 	private int turnCount;
 
-	public void damagePump(){
-		for(Container c : Map.getContainers()){
+	public void damagePump(Map map){
+		for(Container c : map.getContainers()){
 			c.lifeCycle(turnCount);
 		}
 	}

@@ -3,15 +3,10 @@ package skeleton;
 import container.*;
 import controller.Controller;
 import exception.MyException;
-import map.Map;
-import player.Mechanic;
-import player.Saboteur;
-import player.Type;
 
-import container.Pipe;
-import container.Pump;
-import player.Player;
-import player.Type;
+import player.*;
+import map.*;
+
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -23,20 +18,48 @@ import java.util.Scanner;
  */
 public class DispatcherSkeleton {
 
-    public void initalizeTable(){
+    public Map initalizeTable() throws MyException {
 
         Map map = new Map();
+        Pump pos = new Pump(4);
 
-        //Make 3 pumps
-        for(int i = 0; i < 3; i++){
-            map.getContainers().add(new Pump(4));
-        }
+        Mechanic mecha = new Mechanic(pos);
+        Saboteur sabo = new Saboteur(pos);
 
-        //Make 3 pipes
-        for(int i = 0; i < 3; i++){
-            map.getContainers().add(new Pipe());
-        }
+        map.getPlayers().add(mecha);
+        map.getPlayers().add(sabo);
 
+        Pipe p1 = new Pipe();
+        Pipe p2 = new Pipe();
+        Pipe p3 = new Pipe();
+
+        Pump pu1 = new Pump(2);
+        Pump pu2 = new Pump(3);
+        Pump pu3 = new Pump(5);
+
+        map.getContainers().add(p1);
+        map.getContainers().add(p2);
+        map.getContainers().add(p3);
+        map.getContainers().add(pu1);
+        map.getContainers().add(pu2);
+        map.getContainers().add(pu3);
+
+        map.connectPumpToPipe(pos, p1);
+        map.connectPumpToPipe(pu1, p1);
+        map.connectPumpToPipe(pu1, p2);
+        map.connectPumpToPipe(pu2, p2);
+        map.connectPumpToPipe(pu2, p3);
+        map.connectPumpToPipe(pu3, p3);
+
+        return map;
+    }
+
+    public void playerMove() throws MyException {
+
+        Map map = initalizeTable();
+
+
+        map.getPlayers().get(0).Move(map.getContainers().get(0));
 
     }
 
@@ -202,6 +225,8 @@ public class DispatcherSkeleton {
                 case 7:
                     System.out.println("Player detach pipe has started");
                     System.out.println("detachPipe is called");
+                    cpump.addPipe(pi);
+                    pi.addPump(cpump);
                     m.detachPipe(pi);
                     System.out.println("detachPipe has returned");
                     if (m.getCarriedPipes().contains(pi)) {
