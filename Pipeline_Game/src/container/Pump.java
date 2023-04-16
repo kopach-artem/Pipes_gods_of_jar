@@ -76,7 +76,7 @@ public class Pump extends Container {
 	}
 
 	public boolean isAllConnected() {
-		if(getMaxPipeAmount()==4)
+		if(getMaxPipeAmount()==neighbors.size())
 			return true;
 		else
 			return false;
