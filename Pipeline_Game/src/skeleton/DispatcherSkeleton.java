@@ -11,6 +11,8 @@ import map.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static java.lang.Thread.sleep;
+
 /**
  * A DispatcherSkeleton osztály segítségével végezhető a skeleton program tesztelése.
  * Ebben az osztályban található a main metódus, amely a standard inputra vár egész számokat,
@@ -103,17 +105,10 @@ public class DispatcherSkeleton {
         return map;
     }
 
-
-    public void playerMove() throws MyException {
-
-
-        //map.getPlayers().get(0).Move(map.getContainers().get(0));
-
-    }
     /**
      * Mechanic repairs pump szekvencia
      */
-    static void MechanicRepairsPump() throws MyException {
+    public void MechanicRepairsPump() throws MyException {
 
         Map map = initalizeTable();
 
@@ -137,7 +132,7 @@ public class DispatcherSkeleton {
     /**
      * Mechanic repairs pipe szekvencia
      */
-    static void MechanicRepairsPipe() throws MyException {
+    public void MechanicRepairsPipe() throws MyException {
 
         Map map = initalizeTable();
 
@@ -164,7 +159,7 @@ public class DispatcherSkeleton {
     /**
      * Saboteur leaks pipe szekvencia
      */
-    static void SaboteurLeaksPipe() throws MyException {
+    public void SaboteurLeaksPipe() throws MyException {
         Map map = initalizeTable();
 
         Saboteur saboteur = new Saboteur(map.getContainers().get(1));
@@ -190,7 +185,7 @@ public class DispatcherSkeleton {
     /**
      * Player attaches pipe szekvencia
      */
-    static void PlayerAttachPipe() throws MyException
+    public void PlayerAttachPipe() throws MyException
     {
         Map map = initalizeTable();
 
@@ -216,7 +211,7 @@ public class DispatcherSkeleton {
     /**
      * Player attaches pump szekvencia
      */
-    static void PlayerAttachPump() throws MyException
+    public void PlayerAttachPump() throws MyException
     {
         Map map = initalizeTable();
 
@@ -238,7 +233,7 @@ public class DispatcherSkeleton {
     /**
      * Player detach pipe szekvencia
      */
-    static void PlayerDetachPipe() throws MyException
+    public void PlayerDetachPipe() throws MyException
     {
         Map map = initalizeTable();
 
@@ -260,7 +255,7 @@ public class DispatcherSkeleton {
     /**
      * Player adjust pump Input szekvencia
      */
-    static void PlayerAdjustPumpInput() throws MyException {
+    public void PlayerAdjustPumpInput() throws MyException {
         Map map = initalizeTable();
 
         Player player = new Player(map.getContainers().get(6));
@@ -282,7 +277,7 @@ public class DispatcherSkeleton {
     /**
      * Player adjust pump Output szekvencia
      */
-    static void PlayerAdjustPumpOutput() throws MyException {
+    public void PlayerAdjustPumpOutput() throws MyException {
         Map map = initalizeTable();
 
         Player player = new Player(map.getContainers().get(6));
@@ -304,7 +299,7 @@ public class DispatcherSkeleton {
     /**
      * Player moves to Pipe szekvencia
      */
-    static void PlayerMovesToPipe() throws MyException
+    public void PlayerMovesToPipe() throws MyException
     {
         Map map = initalizeTable();
 
@@ -329,7 +324,7 @@ public class DispatcherSkeleton {
     /**
      * Player moves to Pipe Fail szekvencia
      */
-    static void PlayerMovesToPipeFail() throws MyException
+    public void PlayerMovesToPipeFail() throws MyException
     {
         Map map = initalizeTable();
 
@@ -362,7 +357,7 @@ public class DispatcherSkeleton {
     /**
      * Player moves to Pump szekvencia
      */
-    static void PlayerMovesToPump() throws MyException
+    public void PlayerMovesToPump() throws MyException
     {
         Map map = initalizeTable();
 
@@ -389,7 +384,7 @@ public class DispatcherSkeleton {
     /**
      * Player moves to Cistern szekvencia
      */
-    static void PlayerMovesToCistern() throws MyException
+    public void PlayerMovesToCistern() throws MyException
     {
         Map map = initalizeTable();
 
@@ -413,7 +408,7 @@ public class DispatcherSkeleton {
     /**
      * Player moves to MountainSpring szekvencia
      */
-    static void PlayerMovesToMountainSpring() throws MyException {
+    public void PlayerMovesToMountainSpring() throws MyException {
         Map map = initalizeTable();
 
         Player player = new Player(map.getContainers().get(11));
@@ -439,7 +434,7 @@ public class DispatcherSkeleton {
     /**
      * Pump breaks randomly szekvencia
      */
-    static void RandomPumpBreaking() throws MyException{
+    public void RandomPumpBreaking() throws MyException, InterruptedException {
         Map map = initalizeTable();
 
         Controller konTroll = new Controller();
@@ -451,6 +446,7 @@ public class DispatcherSkeleton {
             System.out.println("Current turnCount:" + i);
             konTroll.increaseTurnCount();
             konTroll.damagePump();
+            sleep(1000);
         }
         System.out.println("Pumps all up and gone!");
     }
@@ -458,168 +454,16 @@ public class DispatcherSkeleton {
     /**
      * CollectingWater szekvencia
      */
-    static void CollectingWater() throws MyException {
+    public void CollectingWater() throws MyException {
         Map map = initalizeTable();
 
         Controller konTroll = new Controller();
         konTroll.setMap(map);
 
         System.out.println("Water is about to flow!");
-        for(int i=0; i > 3; i++) {
+        for(int i=0; i < 3; i++) {
             konTroll.waterFlow();
         }
         System.out.println("Phew...");
-    }
-
-    /**
-     * @param args
-     * @throws MyException
-     */
-    public static void main(String[] args) throws MyException {
-        System.out.println("[Üdvözli önt a Gods of jar csapat skeleton programja!]");
-        System.out.println("[Válassza ki a kívánt szekvenciát!]");
-        System.out.println("[1.] Mehcanic repairs pump");
-        System.out.println("[2.] Mechanic repairs pipe");
-        System.out.println("[3.] Saboteur leaks pipe");
-        System.out.println("[4.] Player attach pipe (Successful)");
-        System.out.println("[5.] Player attach pipe (Fail)");
-        System.out.println("[6.] Player attaches pump");
-        System.out.println("[7.] Player detach pipe");
-        System.out.println("[8.] Player adjust pump Input");
-        System.out.println("[9.] Player adjust pump Output");
-        System.out.println("[10.] Player moves to pipe successfully");
-        System.out.println("[11.] Player moves to pipe fail");
-        System.out.println("[12.] Player moves to pump");
-        System.out.println("[13.] Player moves to cistern");
-        System.out.println("[14.] Player moves to mountain spring");
-        System.out.println("[15.] Random pump breaking");
-        System.out.println("[16.] Collecting water in cistern");
-        System.out.println("[0.] Kilépés");
-
-        Scanner scanner = new Scanner(System.in);
-        int n;
-        /**
-         * A főciklus, itt várjuk az egész számokat.
-         * Ha 0-t kap a bementre a program, akkor kilép.
-         */
-        while((n = scanner.nextInt()) != 0) {
-            switch(n){
-                /**
-                 * Mechanic repairs pump szekvencia
-                 */
-                case 1:
-                    MechanicRepairsPump();
-                    break;
-
-                /**
-                 * Mechanic repairs pipe szekvencia
-                 */
-                case 2:
-                    MechanicRepairsPipe();
-                    break;
-
-                /**
-                 * Saboteur leaks pipe szekvencia
-                 */
-                case 3:
-                    SaboteurLeaksPipe();
-                    break;
-
-                /**
-                 * Player attach pipe successful szekvencia
-                 */
-                case 4:
-                    PlayerAttachPipe();
-                    break;
-
-                /**
-                 * Player attach pipe Fail szekvencia
-                 */
-                case 5:
-
-                    break;
-
-                /**
-                 * Player attaches pump szekvencia
-                 */
-                case 6:
-                    PlayerAttachPump();
-                    break;
-
-                /**
-                 * Player detach pipe szekvencia
-                 */
-                case 7:
-                    PlayerDetachPipe();
-                    break;
-
-                /**
-                 * Player adjust pump Input szekvencia
-                 */
-                case 8:
-                    PlayerAdjustPumpInput();
-                    break;
-
-                /**
-                 * Player adjust pump Output szekvencia
-                 */
-                case 9:
-                    PlayerAdjustPumpOutput();
-                    break;
-
-                /**
-                 * Player moves to Pipe successfully szekvencia
-                 */
-                case 10:
-                    PlayerMovesToPipe();
-                    break;
-
-                /**
-                 * Player moves to Pipe failed szekvencia
-                 */
-                case 11:
-                    PlayerMovesToPipeFail();
-                    break;
-
-                /**
-                 * Player moves to Pump szekvencia
-                 */
-                case 12:
-                    PlayerMovesToPump();
-                    break;
-
-                /**
-                 * Player moves to Cistern szekvencia
-                 */
-                case 13:
-                    PlayerMovesToCistern();
-                    break;
-
-                /**
-                 * Player moves to MountainSpring szekvencia
-                 */
-                case 14:
-                    PlayerMovesToMountainSpring();
-                    break;
-
-                /**
-                 * Evaluation szekvencia
-                 */
-                case 15:
-                    RandomPumpBreaking();
-                    break;
-
-                /**
-                 * CollectingWater szekvencia
-                 */
-                case 16:
-                    CollectingWater();
-                    break;
-
-                default:
-                    break;
-            }
-
-        }
     }
 }

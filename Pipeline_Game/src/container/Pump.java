@@ -57,6 +57,16 @@ public class Pump extends Container {
 			throw new MyException("Wasn't even a scratch on it");
 	}
 
+	@Override
+	public void puncturePipe() throws MyException {
+
+	}
+
+	@Override
+	public void insertPump(Player player) throws MyException {
+
+	}
+
 	/**
 	 * Hozzácsatlakoztatja a paraméterük kapott Player áttal hordozott csövet a pumpához.
 	 * @param player - A játékos
@@ -78,7 +88,7 @@ public class Pump extends Container {
 
 		if(this.seeifNeighbors(pi)){
 			if(t == Type.Input){
-				if(!pi.isWaterFlowing() || this.getOutput() != pi){
+				if(this.getOutput() != pi){
 					this.setInput(pi);
 				}
 				else
@@ -93,7 +103,12 @@ public class Pump extends Container {
 		}
 	}
 
-	
+	@Override
+	public void mendPipe() throws MyException {
+
+	}
+
+
 	/**
 	 * Elveszi a kívánt csövet a pumpától és a player-hez adja hozzá.
 	 * @param player - A játékos
@@ -159,6 +174,11 @@ public class Pump extends Container {
 	public boolean amInput(Container c){
 
 		return this.input.equals(c);
+	}
+
+	@Override
+	public void movedFrom() {
+
 	}
 
 	public void eval() {

@@ -39,42 +39,28 @@ public abstract class Container {
 	/** 
 	 * @param turnCount
 	 */
-	public void lifeCycle(int turnCount){
-
-	}
+	public abstract void lifeCycle(int turnCount);
 
 	public boolean amInput(Container c){
 		return false;
 	}
 
-	public void movedFrom(){
+	public abstract void movedFrom();
 
-	}
+	public abstract void alterPump(Player player, Pipe pi, Type t) throws MyException;
 
-	public void alterPump(Player player, Pipe pi, Type t) throws MyException {
+	public abstract void mendPipe() throws MyException;
 
-	}
+	public abstract void mendPump() throws MyException;
 
-	public void mendPipe() throws MyException {
-
-	}
-
-	public void mendPump() throws MyException {
-
-	}
-
-	public void puncturePipe() throws MyException {
-
-	}
+	public abstract void puncturePipe() throws MyException;
 
 	/**
 	 *
 	 * @param player
 	 * @throws MyException
 	 */
-	public void insertPump(Player player) throws MyException {
-
-	}
+	public abstract void insertPump(Player player) throws MyException;
 
 	/**
 	 *
@@ -82,18 +68,14 @@ public abstract class Container {
 	 * @param pi
 	 * @throws MyException
 	 */
-	public void extractPipe(Player player, Pipe pi) throws MyException {
-
-	}
+	public abstract void extractPipe(Player player, Pipe pi) throws MyException;
 
 	/**
 	 *
 	 * @param player
 	 * @throws MyException
 	 */
-	public void insertPipe(Player player) throws MyException {
-
-	}
+	public abstract void insertPipe(Player player) throws MyException;
 
 	/**
 	 *
@@ -106,14 +88,12 @@ public abstract class Container {
 	/**
 	 *
 	 */
-	public void eval() {
-	}
+	public abstract void eval();
 
 	/**
 	 *
 	 */
-	public void setInputState() {
-	}
+	public abstract void setInputState();
 
 	/**
 	 *

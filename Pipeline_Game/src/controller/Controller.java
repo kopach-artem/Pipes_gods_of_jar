@@ -12,6 +12,8 @@ package controller;
 import container.*;
 import map.Map;
 
+import java.util.ArrayList;
+
 public class Controller {
 
 	private Map map;
@@ -27,11 +29,11 @@ public class Controller {
 		turnCount++;
 	}
 
-	
-
 	public void waterFlow()
 	{
-		for(Container c : map.getContainers()){
+		ArrayList<Container> containers = map.getContainers();
+
+		for(Container c : containers){
 			c.eval();
 			c.makeHistory();
 		}

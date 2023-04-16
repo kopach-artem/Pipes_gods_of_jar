@@ -2,7 +2,11 @@ package container;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import exception.MyException;
 import map.Map;
+import player.Player;
+import player.Type;
 
 /**
  * Először is úgy döntöttünk, hogy a Cistern is felvesszük Objektum katalógusba,
@@ -97,7 +101,47 @@ public class Cistern extends Container {
 		return this.input.equals(c);
 
 	}
-	
+
+	@Override
+	public void movedFrom() {
+
+	}
+
+	@Override
+	public void alterPump(Player player, Pipe pi, Type t) throws MyException {
+
+	}
+
+	@Override
+	public void mendPipe() throws MyException {
+
+	}
+
+	@Override
+	public void mendPump() throws MyException {
+
+	}
+
+	@Override
+	public void puncturePipe() throws MyException {
+
+	}
+
+	@Override
+	public void insertPump(Player player) throws MyException {
+
+	}
+
+	@Override
+	public void extractPipe(Player player, Pipe pi) throws MyException {
+
+	}
+
+	@Override
+	public void insertPipe(Player player) throws MyException {
+
+	}
+
 	public void setInputState() {
 		inputState[1] = true;
 		System.out.println("After: " + this.writeInputState());

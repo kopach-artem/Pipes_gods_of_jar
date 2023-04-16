@@ -21,11 +21,6 @@ public class Pipe extends Container {
 	 */
 	private boolean isOccupied;
 
-	/**
-	 * Ez az attribútum jelzi, hogy az adott csövön víz folyik át.
-	 */
-	private boolean waterFlowing;
-
 
 	/**
 	 * Megadja, hogy az adott csőre léphet-e játékos
@@ -44,11 +39,21 @@ public class Pipe extends Container {
 		setOccupied(true);
 	}
 
+	@Override
+	public void alterPump(Player player, Pipe pi, Type t) throws MyException {
+
+	}
+
 	public void mendPipe() throws MyException {
 		if(this.isLeaked){
 			this.setLeaked(false);
 		} else
 			throw new MyException("It wasn't damaged to begin with");
+	}
+
+	@Override
+	public void mendPump() throws MyException {
+
 	}
 
 	public void puncturePipe() throws MyException {
@@ -99,6 +104,16 @@ public class Pipe extends Container {
 		pump2.addPipe(split1);
 		pump2.removePipe(this);
 
+
+	}
+
+	@Override
+	public void extractPipe(Player player, Pipe pi) throws MyException {
+
+	}
+
+	@Override
+	public void insertPipe(Player player) throws MyException {
 
 	}
 
@@ -166,6 +181,11 @@ public class Pipe extends Container {
 	public String writeInputState(){
 
 		return "Pipe inputStatjének első illetve második eleme" + this + ": "+ inputState[0] + inputState[1];
+	}
+
+	@Override
+	public void lifeCycle(int turnCount) {
+
 	}
 
 	public void eval() {
@@ -242,21 +262,5 @@ public class Pipe extends Container {
 	 */
 	public void setOccupied(boolean isOccupied) {
 		this.isOccupied = isOccupied;
-	}
-
-	/**
-	 * Visszatér az waterFlowing attribútum értékével
-	 * @return boolean
-	 */
-	public boolean isWaterFlowing() {
-		return waterFlowing;
-	}
-
-	/**
-	 * Beáééítja a waterFlowing attribútum értékét
-	 * @param waterFlowing
-	 */
-	public void setWaterFlowing(boolean waterFlowing) {
-		this.waterFlowing = waterFlowing;
 	}
 }

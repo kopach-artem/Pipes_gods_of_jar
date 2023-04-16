@@ -1,5 +1,9 @@
 package container;
 
+import exception.MyException;
+import player.Player;
+import player.Type;
+
 /**
  * Ez a hegyi forrás, ebből származik a víz, amelyért a játékosok versengenek
  */
@@ -35,7 +39,52 @@ public class MountainSpring extends Container {
 
 		return "MountainSpring inputStatjének első illetve második eleme" + this + ": "+ inputState[0] + inputState[1];
 	}
-	
+
+	@Override
+	public void lifeCycle(int turnCount) {
+
+	}
+
+	@Override
+	public void movedFrom() {
+
+	}
+
+	@Override
+	public void alterPump(Player player, Pipe pi, Type t) throws MyException {
+
+	}
+
+	@Override
+	public void mendPipe() throws MyException {
+
+	}
+
+	@Override
+	public void mendPump() throws MyException {
+
+	}
+
+	@Override
+	public void puncturePipe() throws MyException {
+
+	}
+
+	@Override
+	public void insertPump(Player player) throws MyException {
+
+	}
+
+	@Override
+	public void extractPipe(Player player, Pipe pi) throws MyException {
+
+	}
+
+	@Override
+	public void insertPipe(Player player) throws MyException {
+
+	}
+
 	public void eval() {
 		System.out.println("Before: "+ this.writeInputState());
 		if(waterCapac != 0) {
