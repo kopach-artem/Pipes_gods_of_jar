@@ -77,22 +77,30 @@ public class Cistern extends Container {
 	public boolean steppable(){
 		return true;
 	}
+
+	public String writeInputState(){
+
+		return "Cistern inputStatjének első illetve második eleme" + this + ": "+ inputState[0] + inputState[1];
+	}
 	
 	public void eval() {
 
-		setInputState();
+		if(inputState[0]){
+			increaseCollectedWater();
+		}
+		System.out.println("Before: "+ this.writeInputState());
 
 	}
 
 	public boolean amInput(Container c){
-		if(this.input.equals(c)){
-			return true;
-		}
-		return false;
+
+		return this.input.equals(c);
+
 	}
 	
 	public void setInputState() {
-
+		inputState[1] = true;
+		System.out.println("After: " + this.writeInputState());
 	}
 
 	/**

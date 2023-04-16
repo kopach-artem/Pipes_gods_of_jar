@@ -14,9 +14,10 @@ import map.Map;
 
 public class Controller {
 
+	private Map map;
 	private int turnCount;
 
-	public void damagePump(Map map){
+	public void damagePump(){
 		for(Container c : map.getContainers()){
 			c.lifeCycle(turnCount);
 		}
@@ -32,11 +33,14 @@ public class Controller {
 	 * @param pu
 	 * @param p2
 	 */
-	public void waterFlow(Pipe p1, Pump pu, Pipe p2)
+	public void waterFlow()
 	{
-		p1.eval();
-		p2.eval();
-		p1.makeHistory();
-		p2.makeHistory();
+		for(Container c : map.getContainers()){
+			c.eval();
+			c.makeHistory();
+		}
+	}
+	public void setMap(Map map){
+		this.map = map;
 	}
 }

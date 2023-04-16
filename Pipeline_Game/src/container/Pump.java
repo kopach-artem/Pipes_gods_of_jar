@@ -127,6 +127,7 @@ public class Pump extends Container {
 	 */
 	public void lifeCycle(int turnCount){
 		if(turnCount == this.randomDamageValue && !this.isDamaged){
+			System.out.println("Naww this pump got damaged: " + this);
 			this.isDamaged = true;
 		}
 	}

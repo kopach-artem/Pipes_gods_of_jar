@@ -30,6 +30,12 @@ public abstract class Container {
 		return this.neighbors.contains(neighbor);
 	}
 
+	public String writeInputState(){
+
+		return null;
+
+	}
+
 	/** 
 	 * @param turnCount
 	 */

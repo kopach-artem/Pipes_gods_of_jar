@@ -13,12 +13,10 @@ import container.*;
  */
 public class Map{
 
-
-	static Map map;
 	/**
 	 * Az eddig elfolyt víz értéke.
 	 */
-	private int leakedWater = 0;
+	private static int leakedWater;
 
 	/**
 	 * A pályán lévő játékosok ArrayList-je.
@@ -35,9 +33,7 @@ public class Map{
 	 * Map osztály konstruktora.
 	 */
 	public Map(){
-
-		map = this;
-
+		leakedWater = 0;
 	}
 
 	/**
@@ -58,7 +54,7 @@ public class Map{
 	 */
 	public static void increaseLeakedWater() {
 
-		map.leakedWater++;
+		leakedWater++;
 
 	}
 	

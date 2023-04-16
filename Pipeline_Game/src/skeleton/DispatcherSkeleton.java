@@ -28,41 +28,77 @@ public class DispatcherSkeleton {
 
         pos.setDamaged(true);
 
+        Pipe msOutput = new Pipe();
         Pipe p1 = new Pipe();
         Pipe p2 = new Pipe();
         Pipe p3 = new Pipe();
         Pipe detachable = new Pipe();
         Pipe outputChan = new Pipe();
 
-        Cistern cs = new Cistern(detachable);
-        detachable.getNeighbors().add(cs);
-        cs.getNeighbors().add(detachable);
+        MountainSpring ms = new MountainSpring();
+        ms.setOutput(msOutput);
+        ms.getNeighbors().add(msOutput);
+        ms.getNeighbors().add(ms);
+
+        Cistern cs = new Cistern(outputChan);
+        outputChan.getNeighbors().add(cs);
+        cs.getNeighbors().add(outputChan);
 
         Pump pu1 = new Pump(2);
         Pump pu2 = new Pump(3);
-        Pump pu3 = new Pump(5);
+        Pump pu3 = new Pump(4);
 
+        //containers -> 0.idx
         map.getContainers().add(pos);
+        //containers -> 1.idx
         map.getContainers().add(p1);
+        //containers -> 2.idx
         map.getContainers().add(p2);
+        //containers -> 3.idx
         map.getContainers().add(p3);
+        //containers -> 4.idx
         map.getContainers().add(pu1);
+        //containers -> 5.idx
         map.getContainers().add(pu2);
+        //containers -> 6.idx
         map.getContainers().add(pu3);
+        //containers -> 7.idx
         map.getContainers().add(detachable);
+        //containers -> 8.idx
         map.getContainers().add(outputChan);
+        //containers -> 9.idx
+        map.getContainers().add(cs);
+        //containers -> 10.idx
+        map.getContainers().add(ms);
+        //containers -> 11.idx
+        map.getContainers().add(msOutput);
 
+        map.connectPumpToPipe(pos, msOutput);
+        //Set input for pos Pump
+        pos.setInput(msOutput);
         map.connectPumpToPipe(pos, p1);
+        //Set output for pos Pump
+        pos.setOutput(p1);
         map.connectPumpToPipe(pu1, p1);
+        //Set input for pu1 Pump
+        pu1.setInput(p1);
         map.connectPumpToPipe(pu1, p2);
+        //Set input for pu1 Pump
+        pu1.setOutput(p2);
         map.connectPumpToPipe(pu2, p2);
+        //Set input for pu2 Pump
+        pu2.setInput(p2);
         map.connectPumpToPipe(pu2, p3);
+        //Set input for pu2 Pump
+        pu2.setOutput(p3);
         map.connectPumpToPipe(pu3, p3);
+        //Set input for pu3 Pump
+        pu3.setInput(p3);
         map.connectPumpToPipe(pu3, detachable);
+        //Set output for pu3 Pump
+        pu3.setOutput(detachable);
         map.connectPumpToPipe(pu3, outputChan);
 
-        pu3.setOutput(detachable);
-        pu3.setInput(p3);
 
         return map;
     }
@@ -114,7 +150,7 @@ public class DispatcherSkeleton {
         System.out.println("RepairPipe is called");
         mecha.RepairPipe();
         System.out.println("RepairPipe has returned");
-        if (((Pipe)mecha.getPosition()).isLeaked()) {
+        if (!((Pipe)mecha.getPosition()).isLeaked()) {
             System.out.println("Pipe repair was successful :)");
         } else {
             System.out.println("Pipe repair failed :(");
@@ -299,19 +335,23 @@ public class DispatcherSkeleton {
 
         Player player = new Player(map.getContainers().get(0));
 
-        System.out.println("PlayerMovesOnPipeSuc has started");
+        System.out.println("PlayerMovesOnPipeFail has started");
         ArrayList<Container> neighbors = player.getPosition().getNeighbors();
         System.out.println("Pipe we want to move onto: " + neighbors.get(0));
         ((Pipe)neighbors.get(0)).setOccupied(true);
         System.out.println("Given pipe is currently occupied so Move to that pipe must fail");
         System.out.println("Move is called");
-        player.Move(neighbors.get(0));
+        try {
+            player.Move(neighbors.get(0));
+        }catch (MyException e){
+            System.out.println(e);
+        }
         System.out.println("Move has returned");
         if (player.getPosition().equals(neighbors.get(0))) {
-            System.out.println("Player moves to Pipe successful :)");
+            System.out.println("Player moves to Pipe successful :(");
             System.out.println("Player moved successfully onto: " + (Pipe)player.getPosition());
         } else {
-            System.out.println("Player moves to Pipe failed :(");
+            System.out.println("Player moves to Pipe failed :)");
             System.out.println("Player stayed on: " + (Pump)player.getPosition());
         }
         System.out.println("PlayerMovesOnPipeSuc has finished");
@@ -351,32 +391,84 @@ public class DispatcherSkeleton {
      */
     static void PlayerMovesToCistern() throws MyException
     {
+        Map map = initalizeTable();
 
+        Player player = new Player(map.getContainers().get(8));
+
+        System.out.println("Player moves to cistern has started");
+        System.out.println("The Cistern that the player wants to move onto: " + map.getContainers().get(9));
+        System.out.println("Move is called");
+        player.Move(map.getContainers().get(9));
+        System.out.println("Move has returned");
+        if (player.getPosition().equals(map.getContainers().get(9))) {
+            System.out.println("Move to Cistern successful :)");
+            System.out.println("Player sucessfully moved onto: " + (Cistern) player.getPosition());
+        } else {
+            System.out.println("Move to Cistern failed :(");
+        }
+        System.out.println("Player moves to cistern has finished");
     }
 
 
     /**
      * Player moves to MountainSpring szekvencia
      */
-    static void PlayerMovesToMountainSpring()
-    {
+    static void PlayerMovesToMountainSpring() throws MyException {
+        Map map = initalizeTable();
+
+        Player player = new Player(map.getContainers().get(11));
+
+        System.out.println("Player moves to MountainSpring has started");
+        System.out.println("MountainSpring the player wants to move onto: " + map.getContainers().get(11));
+        System.out.println("Move is called");
+        try {
+            player.Move(map.getContainers().get(10));
+        }catch (MyException e){
+            System.out.println(e);
+        }
+        if (player.getPosition().equals(map.getContainers().get(10))) {
+            System.out.println("Move to MountainSpring successful :(");
+        } else {
+            System.out.println("Move to MountainSpring failed :)");
+            System.out.println("Mission failed successfully, position is: " + (Pipe)player.getPosition());
+        }
+        System.out.println("Player moves to MountainSpring has finished");
 
     }
 
     /**
      * Pump breaks randomly szekvencia
      */
-    static void RandomPumpBreaking()
-    {
+    static void RandomPumpBreaking() throws MyException{
+        Map map = initalizeTable();
 
+        Controller konTroll = new Controller();
+        konTroll.setMap(map);
+
+        System.out.println("Pump breaking sequence initiated!");
+
+        for(int i=1; i <= 20; i++){
+            System.out.println("Current turnCount:" + i);
+            konTroll.increaseTurnCount();
+            konTroll.damagePump();
+        }
+        System.out.println("Pumps all up and gone!");
     }
 
     /**
      * CollectingWater szekvencia
      */
-    static void CollectingWater()
-    {
+    static void CollectingWater() throws MyException {
+        Map map = initalizeTable();
 
+        Controller konTroll = new Controller();
+        konTroll.setMap(map);
+
+        System.out.println("Water is about to flow!");
+        for(int i=0; i > 3; i++) {
+            konTroll.waterFlow();
+        }
+        System.out.println("Phew...");
     }
 
     /**
@@ -384,52 +476,27 @@ public class DispatcherSkeleton {
      * @throws MyException
      */
     public static void main(String[] args) throws MyException {
-        System.out.println("Üdvözli önt a Gods of jar csapat skeleton programja!");
-        System.out.println("Válassza ki a kívánt szekvenciát!");
-        System.out.println("1. Mehcanic repairs pump");
-        System.out.println("2. Mechanic repairs pipe");
-        System.out.println("3. Saboteur leaks pipe");
-        System.out.println("4. Player attach pipe (Successful)");
-        System.out.println("5. Player attach pipe (Fail)");
-        System.out.println("6. Player attaches pump");
-        System.out.println("7. Player detach pipe");
-        System.out.println("8. Player adjust pump Input");
-        System.out.println("9. Player adjust pump Output");
-        System.out.println("10. Player moves to pipe successfully");
-        System.out.println("11. Player moves to pipe fail");
-        System.out.println("12. Player moves to pump");
-        System.out.println("13. Player moves to cistern");
-        System.out.println("14. Player moves to mountain spring");
-        System.out.println("15. Random pump breaking");
-        System.out.println("16. Collecting water in cistern");
-        System.out.println("0. Kilépés");
+        System.out.println("[Üdvözli önt a Gods of jar csapat skeleton programja!]");
+        System.out.println("[Válassza ki a kívánt szekvenciát!]");
+        System.out.println("[1.] Mehcanic repairs pump");
+        System.out.println("[2.] Mechanic repairs pipe");
+        System.out.println("[3.] Saboteur leaks pipe");
+        System.out.println("[4.] Player attach pipe (Successful)");
+        System.out.println("[5.] Player attach pipe (Fail)");
+        System.out.println("[6.] Player attaches pump");
+        System.out.println("[7.] Player detach pipe");
+        System.out.println("[8.] Player adjust pump Input");
+        System.out.println("[9.] Player adjust pump Output");
+        System.out.println("[10.] Player moves to pipe successfully");
+        System.out.println("[11.] Player moves to pipe fail");
+        System.out.println("[12.] Player moves to pump");
+        System.out.println("[13.] Player moves to cistern");
+        System.out.println("[14.] Player moves to mountain spring");
+        System.out.println("[15.] Random pump breaking");
+        System.out.println("[16.] Collecting water in cistern");
+        System.out.println("[0.] Kilépés");
 
         Scanner scanner = new Scanner(System.in);
-        Pump cpump = new Pump(3);
-        Pump cpump2 = new Pump(2);
-        Pipe pozi = new Pipe();
-        Pipe pipeA = new Pipe();
-        Pipe pipeB = new Pipe();
-        cpump.addPipe(pipeA);
-        cpump.addPipe(pipeB);
-        cpump.addPipe(pozi);
-
-        cpump.setOutput(pozi);
-        cpump.setInput(pipeA);
-
-        pipeA.addPump(cpump);
-        pipeB.addPump(cpump);
-
-        cpump2.addPipe(pozi);
-        pozi.addPump(cpump2, 0);
-        pozi.addPump(cpump2, 1);
-        Mechanic emese = new Mechanic(pozi);
-        Mechanic m = new Mechanic(cpump);
-        Saboteur s = new Saboteur(cpump);
-        Pump pu = new Pump(2);
-        Pipe pi = new Pipe();
-        ArrayList<Pipe> carriedPipe=new ArrayList<>();
-        carriedPipe.add(new Pipe());
         int n;
         /**
          * A főciklus, itt várjuk az egész számokat.
@@ -525,75 +592,28 @@ public class DispatcherSkeleton {
                  * Player moves to Cistern szekvencia
                  */
                 case 13:
-                    System.out.println("Player moves to cistern has started");
-                    Player pla1 = new Player(cpump);
-                    ArrayList<Container> neighb13 = new ArrayList<Container>();
-                    Cistern cis = new Cistern(new Pipe(), new Pump(2), 1000);
-                    neighb13.add(cis);
-                    cpump.setNeighbors(neighb13);
-                    System.out.println("Move is called");
-                    pla1.Move(cis);
-                    System.out.println("Move has returned");
-                    if (pla1.getPosition().equals(cis)) {
-                        System.out.println("Move to Cistern successful :)");
-                    } else {
-                        System.out.println("Move to Cistern failed :(");
-                    }
-                    System.out.println("Player moves to cistern has finished");
+                    PlayerMovesToCistern();
                     break;
 
                 /**
                  * Player moves to MountainSpring szekvencia
                  */
                 case 14:
-                    System.out.println("Player moves to MountainSpring has started");
-                    Player pla2 = new Player(cpump);
-                    ArrayList<Container> neighb14 = new ArrayList<Container>();
-                    MountainSpring mo = new MountainSpring();
-                    neighb14.add(mo);
-                    cpump.setNeighbors(neighb14);
-                    try {
-                        System.out.println("Move is called");
-                        pla2.Move(mo);
-                        System.out.println("Move has returned");
-                    } catch (MyException e) {
-                        //throw new RuntimeException(e);
-                    }
-                    if (pla2.getPosition().equals(mo)) {
-                        System.out.println("Move to MountainSpring successful :)");
-                    } else {
-                        System.out.println("Move to MountainSpring failed :(");
-                    }
-                    System.out.println("Player moves to MountainSpring has finished");
+                    PlayerMovesToMountainSpring();
                     break;
 
                 /**
                  * Evaluation szekvencia
                  */
                 case 15:
-                    System.out.println("Evaluation has started");
-                    Pump pump1 = new Pump(2);
-                    pump1.setisDamaged(true);
-                    System.out.println("Evaluation has started");
+                    RandomPumpBreaking();
                     break;
 
                 /**
                  * CollectingWater szekvencia
                  */
                 case 16:
-                    System.out.println("CollectingWater has started");
-                    Controller cont = new Controller();
-                    Pipe input = new Pipe();
-                    Pipe output = new Pipe();
-                    Pump pu4 = new Pump(2);
-                    Cistern ci = new Cistern(input, pu4, 1000);
-                    cont.waterFlow(input, pu4, output);
-                    input.eval();
-                    ci.setInputState();
-                    ci.eval();
-                    input.makeHistory();
-                    ci.makeHistory();
-                    System.out.println("CollectingWater has finished");
+                    CollectingWater();
                     break;
 
                 default:

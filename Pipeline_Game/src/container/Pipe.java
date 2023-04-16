@@ -163,7 +163,14 @@ public class Pipe extends Container {
 			throw new MyException("Remove Pump failed");
 	}
 
+	public String writeInputState(){
+
+		return "Pipe inputStatjének első illetve második eleme" + this + ": "+ inputState[0] + inputState[1];
+	}
+
 	public void eval() {
+
+		System.out.println("Before: "+ this.writeInputState());
 
 		if(this.isLooseEnd()){
 			Map.increaseLeakedWater();
@@ -189,6 +196,8 @@ public class Pipe extends Container {
 	public void setInputState(){
 
 		inputState[1] = true;
+
+		System.out.println("After: "+ this.writeInputState());
 
 	}
 
