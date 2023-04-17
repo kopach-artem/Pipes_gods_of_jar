@@ -138,7 +138,7 @@ public class MountainSpring extends Container {
 	public void setInputState() {
 		inputState[0] = true;
 		inputState[1] = true;
-		System.out.println("After: "+ this.writeInputState() + "Water remaining in Mountain Spring: " + waterCapac);
+		System.out.println("After: "+ this.writeInputState() + " " + "Water remaining in Mountain Spring: " + waterCapac);
 	}
 
 	

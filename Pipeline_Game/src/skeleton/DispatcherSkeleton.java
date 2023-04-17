@@ -21,6 +21,10 @@ public class DispatcherSkeleton {
     public DispatcherSkeleton() throws MyException {
     }
 
+    /**
+     * Inicializál egy pályát a víz mozgatásának bemutatásához
+     * @return
+     */
     public static Map waterFlowingMap() throws MyException {
         Map map = new Map();
 
@@ -72,6 +76,11 @@ public class DispatcherSkeleton {
 
         return map;
     }
+
+    /**
+     * Inicializál egy pályát a programhoz tartozó alkatrészek bemutatásához
+     * @return
+     */
     public static Map initalizeTable() throws MyException {
 
         Map map = new Map();
@@ -156,6 +165,11 @@ public class DispatcherSkeleton {
 
     /**
      * Mechanic repairs pump szekvencia
+     * Ebben azt teszteljük le a szerelő pumpa javító akcióját
+     * Inicializálunk egy pályát és egy szerelő játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy pumpán hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások után) meghívjuk a játékosra a RepairPump() függvényt
+     * A RepairPump() függvény meghívása után egy if ágban megvizsgáljuk, hogy a szerelő pozíciójánál lévő pumpa megjavult-e
+     * Ha megjavult szuper minden rendben, ha nem azt meg nem kell részletezni
      */
     public void MechanicRepairsPump() throws MyException {
 
@@ -180,6 +194,11 @@ public class DispatcherSkeleton {
 
     /**
      * Mechanic repairs pipe szekvencia
+     * Ebben azt teszteljük le a szerelő cső javító akcióját
+     * Inicializálunk egy pályát és egy szerelő játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy csövön hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások után) meghívjuk a játékosra a RepairPipe() függvényt
+     * A RepairPipe() függvény meghívása után egy if ágban megvizsgáljuk, hogy a szerelő pozíciójánál lévő pipe megjavult-e, azaz nincsen meglyukasztva már
+     * Ha megjavult szuper minden rendben, ha nem azt meg nem kell részletezni
      */
     public void MechanicRepairsPipe() throws MyException {
 
@@ -207,6 +226,11 @@ public class DispatcherSkeleton {
 
     /**
      * Saboteur leaks pipe szekvencia
+     * Ebben azt teszteljük le a szabotőr cső lyukasztó akcióját
+     * Inicializálunk egy pályát és egy szabotőr játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy csövön hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások után) meghívjuk a játékosra a LeakPipe() függvényt
+     * A LeakPipe() függvény meghívása után egy if ágban megvizsgáljuk, hogy a szabotőr pozíciójánál lévő pipe kilyukadt-e
+     * Ha igen szuper minden rendben, ha nem azt meg nem kell részletezni
      */
     public void SaboteurLeaksPipe() throws MyException {
         Map map = initalizeTable();
@@ -233,6 +257,11 @@ public class DispatcherSkeleton {
 
     /**
      * Player attaches pipe szekvencia
+     * Ebben azt teszteljük le hogyan tesz egy játékos egy csövet egy pumpához
+     * Inicializálunk egy pályát és egy játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy pumpán hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások és egy cső lista létrehozása és játékosnak adása után) meghívjuk a játékosra az attachPipe() függvényt
+     * Az attachPipe() függvény meghívása után egy if ágban megvizsgáljuk, hogy a játékos pozíciójánál lévő pumpához hozzáadódott-e cső illetve, hogy maradt-e nálunk.
+     * Ha nem maradt nálunk és hozzácsatlakozott mindena legnagyobb rendben van
      */
     public void PlayerAttachPipe() throws MyException
     {
@@ -241,7 +270,8 @@ public class DispatcherSkeleton {
         Player player = new Player(map.getContainers().get(6));
 
         ArrayList<Pipe> carriedPipes = new ArrayList<Pipe>();
-        carriedPipes.add(new Pipe());
+        Pipe pipe = new Pipe();
+        carriedPipes.add(pipe);
         player.setCarriedPipes(carriedPipes);
 
         System.out.println("Player attach pipe successful has started");
@@ -249,7 +279,7 @@ public class DispatcherSkeleton {
         player.setCarriedPipes(carriedPipes);
         player.attachPipe();
         System.out.println("attachPipe has returned");
-        if (player.getCarriedPipes().isEmpty()) {
+        if (player.getCarriedPipes().isEmpty() && player.getPosition().seeifNeighbors(pipe)) {
             System.out.println("Player attach pipe successful was successful :)");
         } else {
             System.out.println("Player attach pipe successful has failed :(");
@@ -259,6 +289,11 @@ public class DispatcherSkeleton {
 
     /**
      * Player attaches pump szekvencia
+     * Ebben azt teszteljük le hogyan tesz egy játékos egy pumpát egy csőhöz
+     * Inicializálunk egy pályát és egy játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy csövön hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások és egy pumpa létrehozása és játékosnak adása után) meghívjuk a játékosra az attachPump() függvényt
+     * Az attachPump() függvény meghívása után egy if ágban megvizsgáljuk, hogy a játékos pozíciójánál lévő csőhöz hozzáadódott-e pumpa illetve, hogy maradt-e nálunk.
+     * Ha nem maradt nálunk és hozzácsatlakozott minden a legnagyobb rendben van
      */
     public void PlayerAttachPump() throws MyException
     {
@@ -271,7 +306,7 @@ public class DispatcherSkeleton {
         player.setCarriedPump(pumpToAttach);
         System.out.println("attachPump is called");
         player.attachPump();
-        if (player.getPosition().seeifNeighbors(pumpToAttach)) {
+        if (player.getPosition().seeifNeighbors(pumpToAttach) && player.getCarriedPump() == null) {
             System.out.println("Player attached pump successfully :)");
         } else {
             System.out.println("Player failed to attach pump :(");
@@ -280,7 +315,12 @@ public class DispatcherSkeleton {
     }
 
     /**
-     * Player detach pipe szekvencia
+     * Player detaches pipe szekvencia
+     * Ebben azt teszteljük le hogyan vesz egy játékos egy csövet egy pumpától le
+     * Inicializálunk egy pályát és egy játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy pumpán hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások) meghívjuk a játékosra a detachPipe() függvényt
+     * z detachPipe() függvény meghívása után egy if ágban megvizsgáljuk, hogy a játékos pozíciójánál lévő pumpától lekerült-e a cső vagy sem, illetve, hogy nálunk van-e a lecsatlakoztatott cső
+     * Ha nálunk van és nem szomszédos a pozícónknál lévő pumpával akkor minden rendben
      */
     public void PlayerDetachPipe() throws MyException
     {
@@ -292,7 +332,7 @@ public class DispatcherSkeleton {
         System.out.println("detachPipe is called");
         player.detachPipe((Pipe)map.getContainers().get(7));
         System.out.println("detachPipe has returned");
-        if (player.getCarriedPipes().contains((Pipe)map.getContainers().get(7))) {
+        if (player.getCarriedPipes().contains((Pipe)map.getContainers().get(7)) && !(player.getPosition().seeifNeighbors(map.getContainers().get(7)))) {
             System.out.println("Player has detached pipe successfully :)");
         } else {
             System.out.println("Player failed to take pipe :(");
@@ -302,7 +342,12 @@ public class DispatcherSkeleton {
     }
 
     /**
-     * Player adjust pump Input szekvencia
+     * Player adjusts pump input szekvencia
+     * Ebben azt teszteljük le hogyan állít a játékos át egy pumpát
+     * Inicializálunk egy pályát és egy játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy pumpán hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások) meghívjuk a játékosra az adjustPump() függvényt
+     * Az adjustPump() függvény meghívása után egy if ágban megvizsgáljuk, hogy a játékos pozíciójánál lévő pumpának az általunk választott új Pipe lett-e az inputja
+     * Ha igen akkor minden a legnagyobb rendben
      */
     public void PlayerAdjustPumpInput() throws MyException {
         Map map = initalizeTable();
@@ -324,7 +369,12 @@ public class DispatcherSkeleton {
     }
 
     /**
-     * Player adjust pump Output szekvencia
+     * Player adjusts pump output szekvencia
+     * Ebben azt teszteljük le hogyan állít a játékos át egy pumpát
+     * Inicializálunk egy pályát és egy játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy pumpán hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások) meghívjuk a játékosra az adjustPump() függvényt
+     * Az adjustPump() függvény meghívása után egy if ágban megvizsgáljuk, hogy a játékos pozíciójánál lévő pumpának az általunk választott új Pipe lett-e az outputja
+     * Ha igen akkor minden a legnagyobb rendben
      */
     public void PlayerAdjustPumpOutput() throws MyException {
         Map map = initalizeTable();
@@ -346,7 +396,12 @@ public class DispatcherSkeleton {
     }
 
     /**
-     * Player moves to Pipe szekvencia
+     * Player moves to pipe szekvencia
+     * Ebben azt teszteljük le hogyan lép a játékos egy csőre
+     * Inicializálunk egy pályát és egy játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy pumpán hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások) meghívjuk a játékosra az Move(Container c) függvényt
+     * A Move(Container c) függvény meghívása után egy if ágban megvizsgáljuk, hogy a játékos pozíciója a kívánt konténerre változott-e
+     * Ha igen akkor minden a legnagyobb rendben
      */
     public void PlayerMovesToPipe() throws MyException
     {
@@ -371,7 +426,12 @@ public class DispatcherSkeleton {
     }
 
     /**
-     * Player moves to Pipe Fail szekvencia
+     * Player moves to pipe fail szekvencia
+     * Ebben azt teszteljük le hogyan próbál lépni a játékos egy csőre ha a cső foglalt
+     * Inicializálunk egy pályát és egy játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy pumpán hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások) meghívjuk a játékosra az Move(Container c) függvényt
+     * A Move(Container c) függvény meghívása után, elsősorban kell kapnun egy kivételt, amelyet ki is iratun illetve egy if ágban megvizsgáljuk, hogy a játékos pozíciója megváltozott-e
+     * Ha nem akkor minden a legnagyobb rendben
      */
     public void PlayerMovesToPipeFail() throws MyException
     {
@@ -402,9 +462,13 @@ public class DispatcherSkeleton {
 
     }
 
-
     /**
-     * Player moves to Pump szekvencia
+     * Player moves to pump szekvencia
+     * Ebben azt teszteljük le hogyan lép a játékos egy pumpára
+     * Inicializálunk egy pályát és egy játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy csövön hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások) meghívjuk a játékosra az Move(Container c) függvényt
+     * A Move(Container c) függvény meghívása után egy if ágban megvizsgáljuk, hogy a játékos pozíciója a kívánt konténerre változott-e
+     * Ha igen akkor minden a legnagyobb rendben
      */
     public void PlayerMovesToPump() throws MyException
     {
@@ -431,7 +495,12 @@ public class DispatcherSkeleton {
 
 
     /**
-     * Player moves to Cistern szekvencia
+     * Player moves to cistern szekvencia
+     * Ebben azt teszteljük le hogyan lép a játékos a ciszternára
+     * Inicializálunk egy pályát és egy játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy csövön hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások) meghívjuk a játékosra az Move(Container c) függvényt
+     * A Move(Container c) függvény meghívása után egy if ágban megvizsgáljuk, hogy a játékos pozíciója a kívánt konténerre (ciszternára) változott-e
+     * Ha igen akkor minden a legnagyobb rendben
      */
     public void PlayerMovesToCistern() throws MyException
     {
@@ -455,7 +524,12 @@ public class DispatcherSkeleton {
 
 
     /**
-     * Player moves to MountainSpring szekvencia
+     * Player moves to mountain spring szekvencia
+     * Ebben azt teszteljük le hogyan nem tud lépni a játékos a hegyi forrásra
+     * Inicializálunk egy pályát és egy játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy csövön hozzuk létre (hegyi forráshoz tartozó csövön), majd (a konzolban érthetőséget segítő kiiratások) meghívjuk a játékosra az Move(Container c) függvényt
+     * A Move(Container c) függvény meghívása után egy kivételt (MyException) kell, hogy kapjunk majd egy if ágban megvizsgáljuk, hogy a játékos pozíciója a hegyi forrásra változott-e
+     * Ha nem akkor minden a legnagyobb rendben
      */
     public void PlayerMovesToMountainSpring() throws MyException {
         Map map = initalizeTable();
@@ -482,6 +556,10 @@ public class DispatcherSkeleton {
 
     /**
      * Pump breaks randomly szekvencia
+     * Ebben a függvényben azt teszteljük le, hogy az idő múlásával hogyan mennek tönkre a pumpák
+     * Inicializálunk egy Map-ot (map) és egy Controller-t (konTroll), majd a map-ot átadjuk a konTroll-nak
+     * Egy for cilusban 20 eltelt kört szimulálva megnézzük mi történik a pumpákkal a konTroll-on való damagePump meghívása után, illetve növeljük a kör számlálót
+     * Mivel a pályánkon összesen 3 pumpa van ezért három olyan üzenetet kell kapnunk ahol tönkrementek
      */
     public void RandomPumpBreaking() throws MyException, InterruptedException {
         Map map = initalizeTable();
@@ -502,6 +580,10 @@ public class DispatcherSkeleton {
 
     /**
      * CollectingWater szekvencia
+     * Ebben a függvényben azt teszteljük le, hogy az idő múlásával, hogyan megy a víz
+     * Inicializálunk egy Map-ot (map) és egy Controller-t (konTroll), majd a map-ot átadjuk a konTroll-nak
+     * Egy for ciklusban 7 eltelt kört szimulálva megnézzük, hogy hogyan mozgott a víz.
+     * A víz mozgását a waterFlow() függvény valósítja meg részletes leírás a Controller osztályon belül található róla
      */
     public void CollectingWater() throws MyException {
         Map map = waterFlowingMap();
