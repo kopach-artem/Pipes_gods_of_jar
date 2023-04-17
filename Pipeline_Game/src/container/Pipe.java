@@ -34,22 +34,31 @@ public class Pipe extends Container {
 			return false;
 	}
 
+
+	/**
+	 * Ez a függvény valósítja azt meg, hogy a cső amelyről a játékos ellépet átállítsa azt, hogy a cső már nem foglalt
+	 * @return
+	 */
 	public void movedFrom(){
-		setOccupied(true);
+		setOccupied(false);
 	}
 
-	
-	/** 
-	 * @param player
-	 * @param pi
-	 * @param t
-	 * @throws MyException
+
+
+	/**
+	 * A Pipe nem valósítja meg ezt a függvényt, ezért erről nem is beszélek többet
 	 */
 	@Override
 	public void alterPump(Player player, Pipe pi, Type t) throws MyException {
 
 	}
 
+
+	/**
+	 * Ez a függvény a cső megjavításáért felelős függvény
+	 * Ha a cső ki van lyukasztva akkor javítjuk más esetben kivételt dobunk
+	 * @throws MyException
+	 */
 	public void mendPipe() throws MyException {
 		if(this.isLeaked){
 			this.setLeaked(false);
@@ -57,11 +66,21 @@ public class Pipe extends Container {
 			throw new MyException("It wasn't damaged to begin with");
 	}
 
+
+	/**
+	 * A Pipe nem valósítja meg ezt a függvényt, ezért erről nem is beszélek többet
+	 */
 	@Override
 	public void mendPump() throws MyException {
 
 	}
 
+
+	/**
+	 * Ez a függvény valósítja meg a cső kilyukasztását
+	 * Megnézzük, hogy a cső lyukas-e ha nem kilyukasztjuk (beállítjuk az isLeaked attribútumát true-ra)
+	 * Ha pedig ki volt már lyukasztva kivételt dobunk
+	 */
 	public void puncturePipe() throws MyException {
 		if(!this.isLeaked){
 			this.setLeaked(true);
@@ -113,11 +132,17 @@ public class Pipe extends Container {
 
 	}
 
+	/**
+	 * A Pipe nem valósítja meg ezt a függvényt, ezért erről nem is beszélek többet
+	 */
 	@Override
 	public void extractPipe(Player player, Pipe pi) throws MyException {
 
 	}
 
+	/**
+	 * A Pipe nem valósítja meg ezt a függvényt, ezért erről nem is beszélek többet
+	 */
 	@Override
 	public void insertPipe(Player player) throws MyException {
 
@@ -184,16 +209,41 @@ public class Pipe extends Container {
 			throw new MyException("Remove Pump failed");
 	}
 
+
+	/**
+	 * Az inputState-hez tartozó kiírást valósítja meg, ez különösebben csak a víz mozgásának "grafikus" szemléltetésére kell
+	 */
 	public String writeInputState(){
 
 		return "Pipe inputStatjének első illetve második eleme: " + this + ": "+ inputState[0] + ',' + inputState[1];
 	}
 
+
+	/**
+	 * A Pipe nem valósítja meg ezt a függvényt, ezért erről nem is beszélek többet
+	 */
 	@Override
 	public void lifeCycle(int turnCount) {
 
 	}
 
+
+	/**
+	 * Ez a függvény a gerince a víz mozgatásának
+	 * Ez a függvény valósítja meg a víz mozgásának csőnél való kiértékelését
+	 * Nézzük végig:
+	 * 		Az első amit megnézünk, hogy az inputState[0] értéke igaz-e, azaz, hogy az előző körben volt-e benne víz, ha nem akkor nem is foglalkozunk ezzel tovább
+	 * 		Ha volt akkor vizsgáljuk meg a többi esetet, mint például szabadvégű-e a cső (isLooseEnd()), ha igen akkor növeljük a kifolyt víz mennyiségét
+	 * 		Ezután megkeressük a cső szomszédosságában azt a Container-t akinek-ő az inputja -> a két elágazás közötti rész
+	 * 		Ezt követően egy újabb elágazáshoz érkezünk, ahol is azt nézzük meg, hogy:
+	 *
+	 * 										1. Ki van-e lyukasztva? - ha igen akkor növeljük a kifolyt víz mennyiségét, máskülönben megyünk mélyebbre(ha a másik feltétel is teljesül)
+	 * 										2. Van-e outputja? - azaz, hogy létezik-e olyan Container akinek ő lenne az inputja
+	 * 															->ha van ilyen akkor erre meghívjuk a setInputState-et
+	 * 															->ha nincs ilyen akkor nem csinálunk semmit és visszatérünk
+	 *
+	 *
+	 */
 	public void eval() {
 
 		if(inputState[0]) {
@@ -214,12 +264,17 @@ public class Pipe extends Container {
 			if (!isLeaked && (output != null)) {
 				System.out.println("Before: "+ this.writeInputState());
 				output.setInputState();
-			} else
+			} else if(isLeaked)
 				Map.increaseLeakedWater();
 
 		}
 	}
 
+
+	/**
+	 * Előzőleg hazudtam igazából ez a gerince az egésznek mivel is itt történik meg ténylegesen az inputState módosítása
+	 * Amennyiben ez a függvény meghívódik az inputState[1] átállítjuk true (igaz) értékre (azaz, víz folyt/folyik bele/benne)
+	 */
 	public void setInputState(){
 
 		inputState[1] = true;

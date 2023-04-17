@@ -49,7 +49,9 @@ public class Pump extends Container {
 	}
 
 	
-	/** 
+	/**
+	 * Ez a függvény valósítja meg a pumpa megjavítását
+	 * Megnézzük, hogy a pumpa el van-e romolva amennyiben igen elvégezzük a javítást más esetben kivételt dobunk
 	 * @throws MyException
 	 */
 	public void mendPump() throws MyException {
@@ -60,11 +62,17 @@ public class Pump extends Container {
 			throw new MyException("Wasn't even a scratch on it");
 	}
 
+	/**
+	 * A Pump nem valósítja meg ezt a függvényt, ezért többet nem is írok róla
+	 */
 	@Override
 	public void puncturePipe() throws MyException {
 
 	}
 
+	/**
+	 * A Pump nem valósítja meg ezt a függvényt, ezért többet nem is írok róla
+	 */
 	@Override
 	public void insertPump(Player player) throws MyException {
 
@@ -87,6 +95,15 @@ public class Pump extends Container {
 
 	}
 
+	/**
+	 * Ez a függvény felelős a pumpa outputjának illetve inputjának átváltásáért
+	 * A paraméterül kapott csőről megállapítjuk, hogy szomszédos-e ezzel a pumpával amennyiben igen mélyebbre megyünk
+	 * Megnézzük, hogy melyiket akarjuk változtatni: a pumpa kimenetét (output) vagy bemenetét (input), ezt a t paraméterrel adjuk meg
+	 * Mind a két esetben megnézzük, hogy az egyik már nem másikhoz tartozik azaz, ha inputot akarunk változtatni nem az output-e amire változtatni akrjuk és fordítva
+	 * @param player
+	 * @param pi
+	 * @param t
+	 */
 	public void alterPump(Player player, Pipe pi, Type t) throws MyException {
 
 		if(this.seeifNeighbors(pi)){
@@ -106,6 +123,9 @@ public class Pump extends Container {
 		}
 	}
 
+	/**
+	 * A Pump nem valósítja meg ezt a függvényt, ezért többet nem is írok róla
+	 */
 	@Override
 	public void mendPipe() throws MyException {
 
@@ -174,20 +194,37 @@ public class Pump extends Container {
 
 	}
 
+	/**
+	 * Azt határozza meg a paraméterben kapott Containerről, hogy megegyezik-e az input-jával
+	 * @param c
+	 * @return
+	 */
 	public boolean amInput(Container c){
 
 		return this.input.equals(c);
 	}
 
+	/**
+	 * A Pump nem valósítja meg ezt a függvényt, ezért többet nem is írok róla
+	 */
 	@Override
 	public void movedFrom() {
 
 	}
 
+	/**
+	 * A Pump nem valósítja meg ezt a függvényt, ezért többet nem is írok róla
+	 */
 	public void eval() {
 
 	}
 
+	/**
+	 * A Pump osztályhoz tartozó setInputState
+	 * Ez a függvény egyszerűen csak annyit csinál, hogy az output Pipe-jára "továbbítja" a setInputState() függvény hívást
+	 * Mivel a Pump nem változtatja az inputStatjét hanem csak símán meghívja kimenetére az ő setInputState-jét ezért a pumpán keresztül egyből végigmegy a víz
+	 */
+	@Override
 	public void setInputState() {
 		if(!this.isDamaged)
 			output.setInputState();

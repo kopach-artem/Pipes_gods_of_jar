@@ -44,51 +44,85 @@ public class MountainSpring extends Container {
 		return "MountainSpring inputStatjének első illetve második eleme: " + this + ": "+ inputState[0] + ',' + inputState[1];
 	}
 
+
+	/**
+	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
+	 */
 	@Override
 	public void lifeCycle(int turnCount) {
 
 	}
 
+	/**
+	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
+	 */
 	@Override
 	public void movedFrom() {
 
 	}
 
+	/**
+	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
+	 */
 	@Override
 	public void alterPump(Player player, Pipe pi, Type t) throws MyException {
 
 	}
 
+	/**
+	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
+	 */
 	@Override
 	public void mendPipe() throws MyException {
 
 	}
 
+	/**
+	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
+	 */
 	@Override
 	public void mendPump() throws MyException {
 
 	}
 
+	/**
+	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
+	 */
 	@Override
 	public void puncturePipe() throws MyException {
 
 	}
 
+	/**
+	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
+	 */
 	@Override
 	public void insertPump(Player player) throws MyException {
 
 	}
 
+	/**
+	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
+	 */
 	@Override
 	public void extractPipe(Player player, Pipe pi) throws MyException {
 
 	}
 
+	/**
+	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
+	 */
 	@Override
 	public void insertPipe(Player player) throws MyException {
 
 	}
 
+	/**
+	 * A hegyi forráshoz tartozó kiértékelő függvény
+	 * Ez a függvény egyszerűen csak egy feltételben megnézi, hogy van-e benne víz ha van megyünk mélyebbre
+	 * Mélyebben meghívjuk benne a setInputState-et önmagára, illetve csökkentjük a víz tartalmát (mert folyik ki belőle víz)
+	 * És legvégül az outputján lévő Pipe-ra meghívjuk a setInputState-et
+	 */
 	public void eval() {
 		System.out.println("Before: "+ this.writeInputState());
 		if(waterCapac != 0) {
@@ -97,7 +131,10 @@ public class MountainSpring extends Container {
 			output.setInputState();
 		}
 	}
-	
+
+	/**
+	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
+	 */
 	public void setInputState() {
 		inputState[0] = true;
 		inputState[1] = true;
