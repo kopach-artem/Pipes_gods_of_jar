@@ -79,15 +79,20 @@ public class Cistern extends Container {
 		return true;
 	}
 
-	
-	/** 
-	 * @return String
+
+	/**
+	 * Az inputState-hez tartozó kiírást valósítja meg, ez különösebben csak a víz mozgásának "grafikus" szemléltetésére kell
+	 * @String
 	 */
 	public String writeInputState(){
 
 		return "Cistern inputStatjének első illetve második eleme: " + this + ": "+ inputState[0]+ ',' + inputState[1];
 	}
-	
+
+	/**
+	 * Ez a függvény valósítja meg a ciszternához tartozó kiértékelést
+	 * Amennyiben folyik bele víz (inputState[0]) növeljük a belekerült víz mennyiségét
+	 */
 	public void eval() {
 
 		if(inputState[0]){
@@ -98,52 +103,84 @@ public class Cistern extends Container {
 
 	}
 
+	/**
+	 * Azt mondja meg ez a függvény, hogy a paraméterében kapott Container megegyezik-e a ciszterna inputjával-e
+	 * @param c
+	 * @return
+	 */
 	public boolean amInput(Container c){
 
 		return this.input.equals(c);
 
 	}
 
+	/**
+	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
+	 */
 	@Override
 	public void movedFrom() {
 
 	}
 
+	/**
+	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
+	 */
 	@Override
 	public void alterPump(Player player, Pipe pi, Type t) throws MyException {
 
 	}
 
+	/**
+	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
+	 */
 	@Override
 	public void mendPipe() throws MyException {
 
 	}
 
+	/**
+	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
+	 */
 	@Override
 	public void mendPump() throws MyException {
 
 	}
 
+	/**
+	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
+	 */
 	@Override
 	public void puncturePipe() throws MyException {
 
 	}
 
+	/**
+	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
+	 */
 	@Override
 	public void insertPump(Player player) throws MyException {
 
 	}
 
+	/**
+	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
+	 */
 	@Override
 	public void extractPipe(Player player, Pipe pi) throws MyException {
 
 	}
 
+	/**
+	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
+	 */
 	@Override
 	public void insertPipe(Player player) throws MyException {
 
 	}
 
+	/**
+	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
+	 */
 	public void setInputState() {
 		inputState[1] = true;
 		System.out.println("After: " + this.writeInputState());

@@ -19,6 +19,10 @@ public class Controller {
 	private Map map;
 	private int turnCount;
 
+	/**
+	 * Ebben a függvényben történik meg a pumpák megrontása, avagy elrontása
+	 * Egyszerűen csak végigmegyünk a pálya konténerjein és mindenkire meghívjuk a lifeCycle() függvényt (amely függvényre majd azon példányok felelnek csak akik tudnak)
+	 */
 	public void damagePump(){
 		for(Container c : map.getContainers()){
 			c.lifeCycle(turnCount);
@@ -68,7 +72,8 @@ public class Controller {
 		}
 	}
 	
-	/** 
+	/**
+	 * Beállítjuk a paraméterben kapott pályát a Controller pályájára
 	 * @param map
 	 */
 	public void setMap(Map map){

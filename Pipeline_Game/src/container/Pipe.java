@@ -212,6 +212,7 @@ public class Pipe extends Container {
 
 	/**
 	 * Az inputState-hez tartozó kiírást valósítja meg, ez különösebben csak a víz mozgásának "grafikus" szemléltetésére kell
+	 * @return
 	 */
 	public String writeInputState(){
 
