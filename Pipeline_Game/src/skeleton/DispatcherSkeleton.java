@@ -9,8 +9,6 @@ import map.*;
 
 
 import java.util.ArrayList;
-import java.util.Scanner;
-
 import static java.lang.Thread.sleep;
 
 /**
