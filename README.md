@@ -1,5 +1,7 @@
 # Pipes_gods_of_jar
 
+# All written code, as well as documentation, is the private intellectual property of the BME student team gods_of_jar. Use as well as distribution may carry legal consequences
+
 # Hun./Magyarul:
 
 A sivatagban bonyolult csőrendszer szállítja a vizet a hegyi forrásokból a sivatagon túli városok ciszternáiba. A csőrendszer egyszerű csövekből és a csövekhez csatlakoztatott aktív elemekből (forrás, ciszterna, napelemes vízszivattyú stb.) épül fel. Egy szivattyúhoz több cső is csatlakoztatható, de a csatlakoztatható csövek száma az egyes szivattyúkra jellemző. Minden egyes szivattyú esetében a bejövő és a kimenő cső egyedileg választható ki, de egy szivattyúnak csak egyetlen bemenete és egyetlen kimenete lehet. A szivattyúhoz csatlakoztatott többi cső zárt. Véletlenszerűen előfordulhat, hogy egy szivattyú nem működik, és ebben az esetben a víz nem fog átfolyni a szivattyún. Minden szivattyú tartalmaz egy víztartályt, amelyet ideiglenes víztárolóként használnak, amikor a szivattyú a bejövő csőből a kimenő csőbe vizet továbbít. A szivattyú csak akkor tud vizet átadni, ha a kimenő csőnek van némi szabad kapacitása.
