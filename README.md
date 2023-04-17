@@ -16,8 +16,6 @@ Mivel a sivatag veszélyes hely, a vízvezeték-szerelők és a szabotőrök csa
 
 A játékot két csapat játssza. Minden csapatban legalább két játékos van. A szabotőr csapat feladata, hogy minél több vizet szivárogtasson ki a csőrendszerből, a vízvezeték-szerelő csapat feladata, hogy minél több vizet juttasson a ciszternákba. A játékot az a csapat nyeri, amelyik a legtöbb vizet gyűjti össze.
 
-Translated with www.DeepL.com/Translator (free version)
-
 # Eng./Anolul:
 
 In a desert a complex pipe system transfers water from the mountain springs to the cisterns of the cities beyond the desert. The pipe system is built from simple pipes and from active elements (spring, cistern, solar water pump, etc.) connected to the pipes. Multiple pipes can be connected to a pump, but the number of connectable pipes is specific to each pump. For each pump, the incoming and the outgoing pipe can be individually selected, but a pump can have only a single input and a single output. The other pipes connected to the pump are closed. At random times, a pump may go out of order, and in this case, the water will not flow through the pump. Each pump contains a water tank, which is used as a temporary reservoir when the pump transfers water from the incoming pipe to the outgoing pipe. The pump can transfer water only if the outgoing pipe has some free capacity.
