@@ -275,12 +275,14 @@ public class DispatcherSkeleton {
         player.setCarriedPipes(carriedPipes);
 
         System.out.println("Player attach pipe successful has started");
+        System.out.println("Player wants to attach this pipe: " + pipe);
         System.out.println("attachPipe is called");
         player.setCarriedPipes(carriedPipes);
         player.attachPipe();
         System.out.println("attachPipe has returned");
         if (player.getCarriedPipes().isEmpty() && player.getPosition().seeifNeighbors(pipe)) {
             System.out.println("Player attach pipe successful was successful :)");
+            System.out.println("Player attached pipe successfully, should be somewhere the player position's neighbors" + player.getPosition().getNeighbors());
         } else {
             System.out.println("Player attach pipe successful has failed :(");
         }
@@ -304,10 +306,12 @@ public class DispatcherSkeleton {
         System.out.println("Player attaches pump has started");
         Pump pumpToAttach = new Pump(4);
         player.setCarriedPump(pumpToAttach);
+        System.out.println("Player wants to attach this pump: " + pumpToAttach);
         System.out.println("attachPump is called");
         player.attachPump();
         if (player.getPosition().seeifNeighbors(pumpToAttach) && player.getCarriedPump() == null) {
             System.out.println("Player attached pump successfully :)");
+            System.out.println("Player attached pump successfully, should be somewhere the player position's neighbors" + player.getPosition().getNeighbors());
         } else {
             System.out.println("Player failed to attach pump :(");
         }
@@ -330,10 +334,12 @@ public class DispatcherSkeleton {
 
         System.out.println("Player detach pipe has started");
         System.out.println("detachPipe is called");
+        System.out.println("Player wants to detach this pipe: " + (Pipe)map.getContainers().get(7));
         player.detachPipe((Pipe)map.getContainers().get(7));
         System.out.println("detachPipe has returned");
         if (player.getCarriedPipes().contains((Pipe)map.getContainers().get(7)) && !(player.getPosition().seeifNeighbors(map.getContainers().get(7)))) {
             System.out.println("Player has detached pipe successfully :)");
+            System.out.println("Player detached pipe successfully, should not be in the player position's neighbors" + player.getPosition().getNeighbors());
         } else {
             System.out.println("Player failed to take pipe :(");
         }

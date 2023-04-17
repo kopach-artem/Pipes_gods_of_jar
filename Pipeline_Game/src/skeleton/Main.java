@@ -36,63 +36,48 @@ public class Main
             switch (n) {
                 case 1:
                     skeleton.MechanicRepairsPump();
-                    printOperations();
                     break;
                 case 2:
                     skeleton.MechanicRepairsPipe();
-                    printOperations();
                     break;
                 case 3:
                     skeleton.SaboteurLeaksPipe();
-                    printOperations();
                     break;
                 case 4:
                     skeleton.PlayerAttachPipe();
-                    printOperations();
                     break;
                 case 5:
                     skeleton.PlayerAttachPump();
-                    printOperations();
                     break;
                 case 6:
                     skeleton.PlayerDetachPipe();
-                    printOperations();
                     break;
                 case 7:
                     skeleton.PlayerAdjustPumpInput();
-                    printOperations();
                     break;
                 case 8:
                     skeleton.PlayerAdjustPumpOutput();
-                    printOperations();
                     break;
                 case 9:
                     skeleton.PlayerMovesToPipe();
-                    printOperations();
                     break;
                 case 10:
                     skeleton.PlayerMovesToPipeFail();
-                    printOperations();
                     break;
                 case 11:
                     skeleton.PlayerMovesToPump();
-                    printOperations();
                     break;
                 case 12:
                     skeleton.PlayerMovesToCistern();
-                    printOperations();
                     break;
                 case 13:
                     skeleton.PlayerMovesToMountainSpring();
-                    printOperations();
                     break;
                 case 14:
                     skeleton.RandomPumpBreaking();
-                    printOperations();
                     break;
                 case 15:
                     skeleton.CollectingWater();
-                    printOperations();
                     break;
             }
         }
