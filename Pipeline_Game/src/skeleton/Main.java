@@ -11,7 +11,7 @@ public class Main
         System.out.println("\nVálassza ki a kívánt szekvenciát!");
         System.out.println("[1]. Mechanic repairs pump");
         System.out.println("[2]. Mechanic repairs pipe");
-        System.out.println("[3]. Saboteur leaks pipe");
+        System.out.println("[3]. Player leaks pipe");
         System.out.println("[4]. Player attach pipe");
         System.out.println("[5]. Player attaches pump");
         System.out.println("[6]. Player detach pipe");
@@ -24,6 +24,9 @@ public class Main
         System.out.println("[13]. Player moves to mountain spring");
         System.out.println("[14]. Random pump breaking");
         System.out.println("[15]. Collecting water in cistern");
+        System.out.println("[16]. Player moves to a slippery Pipe");
+        System.out.println("[17]. Player tries to move from a sticky Pipe");
+        System.out.println("[18]. Player fails to leak pipe due to cooldown");
         System.out.println("[0]. Kilépés");
     }
     public static void main(String[] args) throws MyException, InterruptedException {
@@ -41,7 +44,7 @@ public class Main
                     skeleton.MechanicRepairsPipe();
                     break;
                 case 3:
-                    skeleton.SaboteurLeaksPipe();
+                    skeleton.PlayerLeaksPipe();
                     break;
                 case 4:
                     skeleton.PlayerAttachPipe();
@@ -78,6 +81,15 @@ public class Main
                     break;
                 case 15:
                     skeleton.CollectingWater();
+                    break;
+                case 16:
+                    skeleton.PlayerMovesToSlipperyPipe();
+                    break;
+                case 17:
+                    skeleton.PlayerTriesToMoveFromStickyPipe();
+                    break;
+                case 18:
+                    skeleton.PlayerLeaksPipeFailDueToCooldown();
                     break;
             }
         }

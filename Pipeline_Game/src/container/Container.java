@@ -127,6 +127,14 @@ public abstract class Container {
 	 */
 	public abstract void insertPipe(Player player) throws MyException;
 
+	public abstract void pipeGetsSlippery();
+
+	public abstract boolean getIsSlippery();
+
+	public abstract void pipeGetsSticky();
+
+	public abstract boolean getIsSticky();
+
 	/**
 	 * Ezt a függvényt megvalósítja a Pump, Pipe, Cistern illetve MountaiSpring osztályok
 	 * Ez a függvény visszaad egy boolean értéket az alapján, hogy az adott Container-re lehet-e lépni

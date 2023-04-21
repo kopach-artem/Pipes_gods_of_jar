@@ -77,6 +77,24 @@ public class DispatcherSkeleton {
         return map;
     }
 
+    public static Map initalizeForChangedMethods() throws MyException{
+
+        Map map = new Map();
+
+        Pump pos = new Pump(4);
+        Pipe p1 = new Pipe();
+        Pump pu1 = new Pump(3);
+
+        map.getContainers().add(pos);
+        map.getContainers().add(p1);
+        map.getContainers().add(pu1);
+
+        map.connectPumpToPipe(pos, p1);
+        map.connectPumpToPipe(pu1, p1);
+
+        return map;
+    }
+
     /**
      * Inicializál egy pályát a programhoz tartozó alkatrészek bemutatásához
      * @return
@@ -225,33 +243,78 @@ public class DispatcherSkeleton {
     }
 
     /**
-     * Saboteur leaks pipe szekvencia
-     * Ebben azt teszteljük le a szabotőr cső lyukasztó akcióját
-     * Inicializálunk egy pályát és egy szabotőr játékost és velük dolgozva végezzük el az akciót
+     * Player leaks pipe szekvencia
+     * Ebben azt teszteljük le hogy egy játékos (azaz vagy Mechanic vagy Saboteur) kilyukaszt egy csövet
+     * Inicializálunk egy pályát és egy játékost és velük dolgozva végezzük el az akciót
      * A játékost először is egy csövön hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások után) meghívjuk a játékosra a LeakPipe() függvényt
      * A LeakPipe() függvény meghívása után egy if ágban megvizsgáljuk, hogy a szabotőr pozíciójánál lévő pipe kilyukadt-e
      * Ha igen szuper minden rendben, ha nem azt meg nem kell részletezni
      */
-    public void SaboteurLeaksPipe() throws MyException {
+    public void PlayerLeaksPipe() throws MyException {
         Map map = initalizeTable();
 
-        Saboteur saboteur = new Saboteur(map.getContainers().get(1));
+        Player player = new Player(map.getContainers().get(1));
 
-        System.out.println("Saboteur leaks pipe has started");
-        ((Pipe)saboteur.getPosition()).setLeaked(false);
+        System.out.println("Player leaks pipe has started");
+        ((Pipe)player.getPosition()).setLeaked(false);
         System.out.print("Pipe isleaked before sabotage: ");
-        System.out.println(((Pipe)saboteur.getPosition()).isLeaked());
+        System.out.println(((Pipe)player.getPosition()).isLeaked());
         System.out.println("LeakPipe is called");
-        saboteur.LeakPipe();
+        player.LeakPipe();
         System.out.println("LeakPipe has returned");
-        if (((Pipe) saboteur.getPosition()).isLeaked()) {
+        if (((Pipe) player.getPosition()).isLeaked()) {
             System.out.println("Pipe sabotage was succesful :)");
         } else {
             System.out.println("Pipe sabotage failed :(");
         }
         System.out.print("Pipe isleaked after sabotage: ");
-        System.out.println(((Pipe)saboteur.getPosition()).isLeaked());
-        System.out.println("Saboteur leaks pipe has finished");
+        System.out.println(((Pipe)player.getPosition()).isLeaked());
+        System.out.println("Pipe leaks pipe has finished");
+
+    }
+
+    /**
+     * Player leaks pipe szekvencia
+     * Ebben azt teszteljük le hogy egy játékos (azaz vagy Mechanic vagy Saboteur) kilyukaszt egy csövet
+     * Inicializálunk egy pályát és egy játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy csövön hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások után) meghívjuk a játékosra a LeakPipe() függvényt
+     * A LeakPipe() függvény meghívása után egy if ágban megvizsgáljuk, hogy a szabotőr pozíciójánál lévő pipe kilyukadt-e
+     * Ha igen szuper minden rendben, ha nem azt meg nem kell részletezni
+     */
+    public void PlayerLeaksPipeFailDueToCooldown() throws MyException {
+        Map map = initalizeTable();
+
+        Player player = new Player(map.getContainers().get(1));
+
+        System.out.println("Player leaks pipe fail due to cooldown has started");
+        ((Pipe)player.getPosition()).setLeaked(false);
+        System.out.println("Pipe isleaked before sabotage: " + ((Pipe)player.getPosition()).isLeaked());
+        System.out.println("We call LeakPipe here");
+        player.LeakPipe();
+        System.out.println("LeakPipe method has returned");
+        if (((Pipe) player.getPosition()).isLeaked()) {
+            System.out.println("Pipe sabotage was succesful :)");
+            System.out.println("Pipe isleaked after sabotage: " + ((Pipe)player.getPosition()).isLeaked());
+        } else {
+            System.out.println("Pipe sabotage failed :(");
+        }
+        System.out.println("We try another sabotage right after the first one after we repair the pipe");
+        ((Pipe)(player.getPosition())).setLeaked(false);
+        System.out.println("Pipe isleaked after repairing it after the first sabotage: " + ((Pipe)player.getPosition()).isLeaked());
+        System.out.println("We call LeakPipe again");
+        for(int i = 1; i <= ((Pipe) player.getPosition()).getRandomInterval(); i++) {
+            try {
+                player.LeakPipe();
+            } catch (MyException e) {
+                System.out.println(e);
+                System.out.println("We must wait " + (((Pipe) player.getPosition()).getRandomInterval() - i) + " turns after we can leak it again");
+            }
+        }
+        System.out.println("And lastly we try try to leak it again");
+        player.LeakPipe();
+        System.out.print("Pipe isleaked after sabotage: ");
+        System.out.println(((Pipe)player.getPosition()).isLeaked());
+        System.out.println("Pipe leaks pipe has finished");
 
     }
 
@@ -432,6 +495,38 @@ public class DispatcherSkeleton {
     }
 
     /**
+     * Player moves to pipe szekvencia
+     * Ebben azt teszteljük le hogyan lép a játékos egy csőre
+     * Inicializálunk egy pályát és egy játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy pumpán hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások) meghívjuk a játékosra az Move(Container c) függvényt
+     * A Move(Container c) függvény meghívása után egy if ágban megvizsgáljuk, hogy a játékos pozíciója a kívánt konténerre változott-e
+     * Ha igen akkor minden a legnagyobb rendben
+     */
+    public void PlayerMovesToSlipperyPipe() throws MyException
+    {
+        Map map = initalizeForChangedMethods();
+
+        Saboteur saboteur = new Saboteur(map.getContainers().get(0));
+
+        ArrayList<Container> neighbors = saboteur.getPosition().getNeighbors();
+
+        Container moveTo = neighbors.get(0);
+
+        System.out.println("PlayerMovesOnSlipperyPipe has started");
+        System.out.println("Pipe we want to move onto: " + moveTo);
+        System.out.println("Neighbors of this pipe: " + moveTo.getNeighbors());
+        System.out.println("Move is called");
+        saboteur.makePipeSlippery();
+        System.out.println("Pipe's slippery status: " + moveTo.getIsSlippery());
+        saboteur.Move(moveTo);
+        System.out.println("Move has returned");
+        System.out.println("Player moves successfully ඞ");
+        System.out.println("Player moved onto: " + saboteur.getPosition());
+        System.out.println("PlayerMovesOnPipeSuc has finished");
+
+    }
+
+    /**
      * Player moves to pipe fail szekvencia
      * Ebben azt teszteljük le hogyan próbál lépni a játékos egy csőre ha a cső foglalt
      * Inicializálunk egy pályát és egy játékost és velük dolgozva végezzük el az akciót
@@ -496,6 +591,49 @@ public class DispatcherSkeleton {
         }
         System.out.println("Player moves to pump has finished");
 
+    }
+
+    /**
+     * Player tries to move from sticky pipe szekvencia
+     * Ebben azt teszteljük le hogyan próbál lépni a játékos egy pumpára egy ragadós csőről
+     * Inicializálunk egy pályát és egy játékost és velük dolgozva végezzük el az akciót
+     * A játékost először is egy csövön hozzuk létre, majd (a konzolban érthetőséget segítő kiiratások) meghívjuk a játékosra az Move(Container c) függvényt
+     * A Move(Container c) függvény meghívása után egy if ágban megvizsgáljuk, hogy a játékos pozíciója a kívánt konténerre változott-e
+     * Ha nem mivel a játékos beragadt akkor megfelelően működött a program
+     */
+    public void PlayerTriesToMoveFromStickyPipe() throws MyException
+    {
+        Map map = initalizeForChangedMethods();
+
+        Container startingPos = map.getContainers().get(0);
+
+        Player player = new Player(startingPos);
+
+        System.out.println("Firstly we will move our player to a sticky pipe, so we will set a neigboring pipe to sticky");
+        ArrayList<Container> startingNeighbors = player.getPosition().getNeighbors();
+        System.out.println("Neighbors of our position: " + startingNeighbors);
+        System.out.println("Let's make: " + startingNeighbors.get(0) + " sticky");
+        ((Pipe) (startingNeighbors.get(0))).setSticky(true);
+        System.out.println("Pipe's sticky status: " + startingNeighbors.get(0).getIsSticky());
+        System.out.println("Let's move to the pipe");
+        player.Move(startingNeighbors.get(0));
+        System.out.println("Our position: " + player.getPosition() + " and player's sticky status: " + player.getGotSticky());
+        System.out.println("Move is called");
+        ArrayList<Container> neighbors = player.getPosition().getNeighbors();
+        System.out.println("If the player gets sticky he wont be able to move from the given pipe for 2 turns, so lets stimulate 3 turns so on the last one the player can actually move");
+        for(int i = 1; i <= 3; i++) {
+            try {
+                player.Move(neighbors.get(0));
+            } catch (MyException e) {
+                System.out.println(e);
+            }
+            System.out.println("Turn numero: " + i);
+        }
+        if(player.getPosition().equals(neighbors.get(0))){
+            System.out.println("At last our hero made it to his destination, the destination was: " + neighbors.get(0));
+        }
+        else
+            System.out.println("Sadly the hero didn't make it to: " + neighbors.get(0) + " but remained on" + player.getPosition());
     }
 
 

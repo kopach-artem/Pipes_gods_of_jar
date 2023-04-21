@@ -14,11 +14,24 @@ public class Pipe extends Container {
 	 * Ez az attribútum jelzi, hogy az adott cső ki van-e lyukasztva vagy sem.
 	 */
 	private boolean isLeaked;
+	private boolean canBeLeaked;
+	private int leakedTimer = 0;
+	private int randomInterval = 0;
 
 	/**
 	 * Ez az attribútum jelzi, hogy valaki éppen az adott csövön közlekedik (tehát foglalt)
 	 */
 	private boolean isOccupied;
+
+	/**
+	 * Ez az attribútum jelzi, hogy a cső az csúszós-e vagy sem
+	 */
+	private boolean isSlippery;
+
+	private int slipperyCounter = 0;
+	private boolean isSticky;
+
+
 
 
 	/**
@@ -82,12 +95,29 @@ public class Pipe extends Container {
 	 * Ha pedig ki volt már lyukasztva kivételt dobunk
 	 */
 	public void puncturePipe() throws MyException {
+
+		if(this.leakedTimer == this.randomInterval){
+			this.canBeLeaked = true;
+			this.leakedTimer = 0;
+		}
+
 		if(!this.isLeaked){
-			this.setLeaked(true);
+			if(this.canBeLeaked) {
+				this.setLeaked(true);
+				this.gotLeaked();
+			}
+			else{
+				this.leakedTimer++;
+				throw new MyException("Pipe cannot be leaked due to: Pipe leaking is on cooldown");
+			}
 		} else
 			throw new MyException("It was already damaged");
 	}
 
+	public void gotLeaked(){
+		this.randomInterval = (int)(Math.random() * 10);
+		this.canBeLeaked = false;
+	}
 
 	/**
 	 * A csőhöz csatlakoztatja hozzá a paraméterként kapott játékos által hordozott pumpát.
@@ -146,6 +176,33 @@ public class Pipe extends Container {
 	@Override
 	public void insertPipe(Player player) throws MyException {
 
+	}
+
+	/**
+	 * Az adott cső csúszóssá válik
+	 */
+	@Override
+	public void pipeGetsSlippery() {
+		this.isSlippery = true;
+	}
+
+	@Override
+	public boolean getIsSlippery() {
+		return this.isSlippery;
+	}
+
+	@Override
+	public void pipeGetsSticky() {
+		this.isSticky = true;
+	}
+
+	@Override
+	public boolean getIsSticky() {
+		return isSticky;
+	}
+
+	public void setSticky(boolean b){
+		this.isSticky = b;
 	}
 
 	/**
@@ -221,10 +278,18 @@ public class Pipe extends Container {
 
 
 	/**
-	 * A Pipe nem valósítja meg ezt a függvényt, ezért erről nem is beszélek többet
+	 * A Pipe csúszós (isSlippery) állapotát változtatja meg egy adott idő után
+	 * @param turnCount
 	 */
 	@Override
 	public void lifeCycle(int turnCount) {
+
+		if(this.slipperyCounter == turnCount){
+			this.isSlippery = false;
+			this.slipperyCounter = 0;
+		}
+		else
+			slipperyCounter++;
 
 	}
 
@@ -325,5 +390,9 @@ public class Pipe extends Container {
 	 */
 	public void setOccupied(boolean isOccupied) {
 		this.isOccupied = isOccupied;
+	}
+
+	public int getRandomInterval(){
+		return randomInterval;
 	}
 }

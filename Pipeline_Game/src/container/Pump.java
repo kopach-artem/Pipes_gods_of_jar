@@ -37,6 +37,7 @@ public class Pump extends Container {
 	 */
 	private int maxPipeAmount;
 
+
 	/**
 	 * Pump konstruktora
 	 * @param maxPipeAmount - Ennyi cső csatlakozthat majd legfeljebb a Pumphoz.
@@ -93,6 +94,28 @@ public class Pump extends Container {
 			player.getCarriedPipes().remove(atPipe);
 		}
 
+	}
+
+	/**
+	 * A Pump nem valósítja meg ezt a függvényt, ezért többet nem is írok róla
+	 */
+	@Override
+	public void pipeGetsSlippery() {
+
+	}
+
+	@Override
+	public boolean getIsSlippery() {
+		return false;
+	}
+
+	@Override
+	public void pipeGetsSticky() {
+	}
+
+	@Override
+	public boolean getIsSticky() {
+		return false;
 	}
 
 	/**

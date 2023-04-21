@@ -118,6 +118,29 @@ public class MountainSpring extends Container {
 	}
 
 	/**
+	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
+	 */
+	@Override
+	public void pipeGetsSlippery() {
+
+	}
+
+	@Override
+	public boolean getIsSlippery() {
+		return false;
+	}
+
+	@Override
+	public void pipeGetsSticky() {
+
+	}
+
+	@Override
+	public boolean getIsSticky() {
+		return false;
+	}
+
+	/**
 	 * A hegyi forráshoz tartozó kiértékelő függvény
 	 * Ez a függvény egyszerűen csak egy feltételben megnézi, hogy van-e benne víz ha van megyünk mélyebbre
 	 * Mélyebben meghívjuk benne a setInputState-et önmagára, illetve csökkentjük a víz tartalmát (mert folyik ki belőle víz)

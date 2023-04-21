@@ -181,6 +181,29 @@ public class Cistern extends Container {
 	/**
 	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
 	 */
+	@Override
+	public void pipeGetsSlippery() {
+
+	}
+
+	@Override
+	public boolean getIsSlippery() {
+		return false;
+	}
+
+	@Override
+	public void pipeGetsSticky() {
+
+	}
+
+	@Override
+	public boolean getIsSticky() {
+		return false;
+	}
+
+	/**
+	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
+	 */
 	public void setInputState() {
 		inputState[1] = true;
 		System.out.println("After: " + this.writeInputState());

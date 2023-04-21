@@ -18,11 +18,10 @@ public class Saboteur extends Player {
 		super(position);
 	}
 
-	
 	/**
-	 * Kilyukasztja azon csövet amelyen éppen áll
+	 * A szabotőrhöz tartozó metódus amely segítségével egy csövet (amelyen éppen áll) csúszóssá tud tenni
 	 */
-	public void LeakPipe() throws MyException {
-		this.getPosition().puncturePipe();
+	public void makePipeSlippery(){
+		this.position.pipeGetsSlippery();
 	}
 }
