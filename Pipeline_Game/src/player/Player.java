@@ -27,12 +27,6 @@ public class Player {
 	 */
 	protected Pump carriedPump;
 
-	protected boolean gotSticky;
-
-	protected int stickyCountdown = 0;
-
-	final int STICKY_TIMER = 2;
-
 	/**
 	 * Player osztály konstruktora.
 	 * @param position - Ebben a pozícióban lesz létrehozva a Player.
@@ -76,47 +70,34 @@ public class Player {
 
 		ArrayList<Container> neighbors = c.getNeighbors();
 
-		if(this.gotSticky){
-			if(this.stickyCountdown == STICKY_TIMER){
-				this.stickyCountdown = 0;
-				this.gotSticky = false;
-			}
-			else{
-				stickyCountdown++;
-				throw new MyException("Player can't move yet due to: Player is Sticky");
-			}
+		if(this.position.getIsSticky()){
+			throw new MyException("Player cannot move due to: Pipe is sticky");
 		}
-
-		if(c.getIsSlippery()){
-			int index = (int)(Math.random() * neighbors.size());
-			if(neighbors.get(index).steppable()) {
-				this.setPosition(neighbors.get(index));
-				c.lifeCycle(3);
-			}
-			else {
-				neighbors.remove(index);
-				if(!neighbors.isEmpty())
-					this.setPosition(neighbors.get(0));
-				else
-					throw new MyException("There is no neighboring steppable container");
-			}
-		}
-
-		else {
-			if (this.position.seeifNeighbors(c)) {
-				if (c.steppable()) {
-					this.position.movedFrom();
-					this.setPosition(c);
-					if(this.position.getIsSticky()){
-						this.gotSticky = true;
-						((Pipe)this.position).setSticky(false);
-					}
-				} else {
-					throw new MyException("The given Container is not steppable");
+		if (this.position.seeifNeighbors(c)) {
+			if(c.getIsSlippery() && c.steppable()){
+				int index = (int)(Math.random() * neighbors.size());
+				if(neighbors.get(index).steppable()) {
+					this.setPosition(neighbors.get(index));
+					return;
 				}
-			} else {
-				throw new MyException("Not even next to it");
+				else {
+					neighbors.remove(index);
+					if(!neighbors.isEmpty()) {
+						this.setPosition(neighbors.get(0));
+						return;
+					}
+					else
+						throw new MyException("There is no neighboring steppable container");
+				}
 			}
+			if (c.steppable()) {
+				this.position.movedFrom();
+				this.setPosition(c);
+			} else {
+				throw new MyException("The given Container is not steppable");
+			}
+		} else {
+			throw new MyException("Not even next to it");
 		}
 	}
 
@@ -223,8 +204,5 @@ public class Player {
 	 */
 	public void setCarriedPipes(ArrayList<Pipe> carriedPipes) {
 		this.carriedPipes = carriedPipes;
-	}
-	public boolean getGotSticky(){
-		return gotSticky;
 	}
 }

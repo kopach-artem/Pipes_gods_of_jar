@@ -1,5 +1,6 @@
 package container;
 
+import controller.Controller;
 import map.Map;
 import player.*;
 import exception.*;
@@ -14,8 +15,8 @@ public class Pipe extends Container {
 	 * Ez az attribútum jelzi, hogy az adott cső ki van-e lyukasztva vagy sem.
 	 */
 	private boolean isLeaked;
-	private boolean canBeLeaked;
-	private int leakedTimer = 0;
+	private boolean canBeLeaked = true;
+	private int leakedTimer;
 	private int randomInterval = 0;
 
 	/**
@@ -28,8 +29,12 @@ public class Pipe extends Container {
 	 */
 	private boolean isSlippery;
 
-	private int slipperyCounter = 0;
+	private int slipperyTimer;
 	private boolean isSticky;
+	private int stickyTimer;
+
+	final int STICKY_TIMER = 2;
+	final int SLIPPERY_TIMER = 2;
 
 
 
@@ -95,28 +100,18 @@ public class Pipe extends Container {
 	 * Ha pedig ki volt már lyukasztva kivételt dobunk
 	 */
 	public void puncturePipe() throws MyException {
-
-		if(this.leakedTimer == this.randomInterval){
-			this.canBeLeaked = true;
-			this.leakedTimer = 0;
-		}
-
 		if(!this.isLeaked){
 			if(this.canBeLeaked) {
 				this.setLeaked(true);
-				this.gotLeaked();
+				this.randomInterval = (int)(Math.random() * 10);
+				this.leakedTimer = Controller.getTurnCount();
+				this.canBeLeaked = false;
 			}
 			else{
-				this.leakedTimer++;
 				throw new MyException("Pipe cannot be leaked due to: Pipe leaking is on cooldown");
 			}
 		} else
 			throw new MyException("It was already damaged");
-	}
-
-	public void gotLeaked(){
-		this.randomInterval = (int)(Math.random() * 10);
-		this.canBeLeaked = false;
 	}
 
 	/**
@@ -130,6 +125,7 @@ public class Pipe extends Container {
 		 * Create new Pipe for the attachement.
 		 */
 		Pipe split1 = new Pipe();
+		Map.addElement(split1);
 
 		/**
 		 * Initialize pumps
@@ -183,6 +179,7 @@ public class Pipe extends Container {
 	 */
 	@Override
 	public void pipeGetsSlippery() {
+		this.slipperyTimer = Controller.getTurnCount();
 		this.isSlippery = true;
 	}
 
@@ -193,6 +190,7 @@ public class Pipe extends Container {
 
 	@Override
 	public void pipeGetsSticky() {
+		this.slipperyTimer = Controller.getTurnCount();
 		this.isSticky = true;
 	}
 
@@ -284,12 +282,24 @@ public class Pipe extends Container {
 	@Override
 	public void lifeCycle(int turnCount) {
 
-		if(this.slipperyCounter == turnCount){
-			this.isSlippery = false;
-			this.slipperyCounter = 0;
+		if(!this.canBeLeaked){
+			if((this.leakedTimer + this.randomInterval) == turnCount){
+				this.canBeLeaked = true;
+				this.leakedTimer = 0;
+			}
 		}
-		else
-			slipperyCounter++;
+		if(this.isSticky){
+			if(this.stickyTimer + STICKY_TIMER == turnCount){
+				this.isSticky = false;
+				this.stickyTimer = 0;
+			}
+		}
+		if(this.isSlippery) {
+			if (this.slipperyTimer + SLIPPERY_TIMER == turnCount) {
+				this.isSlippery = false;
+				this.slipperyTimer = 0;
+			}
+		}
 
 	}
 

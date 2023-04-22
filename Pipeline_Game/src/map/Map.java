@@ -24,7 +24,7 @@ public class Map{
 	/**
 	 * A pályán lévő Containerek ArrayList-je.
 	 */
-	private ArrayList<Container> containers = new ArrayList<Container>();
+	private static ArrayList<Container> containers = new ArrayList<Container>();
 
 	/**
 	 * Map osztály konstruktora.
@@ -67,7 +67,8 @@ public class Map{
 	 * Hozzáad egy Containert a játéktérhez.
 	 * @param c - A hozzáadni kívánt Container
 	 */
-	public void addElement(Container c) {
+	public static void addElement(Container c) {
+		containers.add(c);
 	}
 
 	/**

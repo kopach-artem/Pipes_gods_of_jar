@@ -284,6 +284,10 @@ public class DispatcherSkeleton {
     public void PlayerLeaksPipeFailDueToCooldown() throws MyException {
         Map map = initalizeTable();
 
+        Controller konTroll = Controller.getInstance();
+
+        konTroll.setMap(map);
+
         Player player = new Player(map.getContainers().get(1));
 
         System.out.println("Player leaks pipe fail due to cooldown has started");
@@ -302,16 +306,15 @@ public class DispatcherSkeleton {
         ((Pipe)(player.getPosition())).setLeaked(false);
         System.out.println("Pipe isleaked after repairing it after the first sabotage: " + ((Pipe)player.getPosition()).isLeaked());
         System.out.println("We call LeakPipe again");
-        for(int i = 1; i <= ((Pipe) player.getPosition()).getRandomInterval(); i++) {
+        for(int i = 1; i <= ((Pipe) player.getPosition()).getRandomInterval() + 1; i++) {
             try {
+                System.out.println(((Pipe)player.getPosition()).isLeaked());
+                konTroll.evaluateCycles();
                 player.LeakPipe();
             } catch (MyException e) {
                 System.out.println(e);
-                System.out.println("We must wait " + (((Pipe) player.getPosition()).getRandomInterval() - i) + " turns after we can leak it again");
             }
         }
-        System.out.println("And lastly we try try to leak it again");
-        player.LeakPipe();
         System.out.print("Pipe isleaked after sabotage: ");
         System.out.println(((Pipe)player.getPosition()).isLeaked());
         System.out.println("Pipe leaks pipe has finished");
@@ -506,22 +509,25 @@ public class DispatcherSkeleton {
     {
         Map map = initalizeForChangedMethods();
 
-        Saboteur saboteur = new Saboteur(map.getContainers().get(0));
+        Saboteur saboteur = new Saboteur(map.getContainers().get(1));
 
-        ArrayList<Container> neighbors = saboteur.getPosition().getNeighbors();
+        Player player = new Player(map.getContainers().get(0));
 
-        Container moveTo = neighbors.get(0);
+        Container moveTo = map.getContainers().get(1);
+
+        ArrayList<Container> neighbors = moveTo.getNeighbors();
 
         System.out.println("PlayerMovesOnSlipperyPipe has started");
         System.out.println("Pipe we want to move onto: " + moveTo);
-        System.out.println("Neighbors of this pipe: " + moveTo.getNeighbors());
-        System.out.println("Move is called");
+        System.out.println("Neighbors of this pipe: " + neighbors);
+        System.out.println("Saboteur makes " + moveTo + " Pipe slippery");
         saboteur.makePipeSlippery();
+        saboteur.Move(neighbors.get(0));
         System.out.println("Pipe's slippery status: " + moveTo.getIsSlippery());
-        saboteur.Move(moveTo);
+        player.Move(moveTo);
         System.out.println("Move has returned");
         System.out.println("Player moves successfully ඞ");
-        System.out.println("Player moved onto: " + saboteur.getPosition());
+        System.out.println("Player moved onto: " + player.getPosition());
         System.out.println("PlayerMovesOnPipeSuc has finished");
 
     }
@@ -605,29 +611,38 @@ public class DispatcherSkeleton {
     {
         Map map = initalizeForChangedMethods();
 
+        Controller konTroll = Controller.getInstance();
+
+        konTroll.setMap(map);
+
         Container startingPos = map.getContainers().get(0);
+        Container stickyPipe = map.getContainers().get(1);
+
+        Player susPlayer = new Player(stickyPipe);
 
         Player player = new Player(startingPos);
 
-        System.out.println("Firstly we will move our player to a sticky pipe, so we will set a neigboring pipe to sticky");
+        System.out.println("Firstly we get ourselves a player who makes the pipe sticky");
         ArrayList<Container> startingNeighbors = player.getPosition().getNeighbors();
         System.out.println("Neighbors of our position: " + startingNeighbors);
         System.out.println("Let's make: " + startingNeighbors.get(0) + " sticky");
-        ((Pipe) (startingNeighbors.get(0))).setSticky(true);
+        susPlayer.makePipeSticky();
+        susPlayer.setPosition(stickyPipe.getNeighbors().get(0));
         System.out.println("Pipe's sticky status: " + startingNeighbors.get(0).getIsSticky());
         System.out.println("Let's move to the pipe");
         player.Move(startingNeighbors.get(0));
-        System.out.println("Our position: " + player.getPosition() + " and player's sticky status: " + player.getGotSticky());
-        System.out.println("Move is called");
+        System.out.println("Our position: " + player.getPosition());
+        System.out.println("Let's try to move from this pipe");
         ArrayList<Container> neighbors = player.getPosition().getNeighbors();
         System.out.println("If the player gets sticky he wont be able to move from the given pipe for 2 turns, so lets stimulate 3 turns so on the last one the player can actually move");
         for(int i = 1; i <= 3; i++) {
             try {
+                konTroll.evaluateCycles(); //This method call demonstrates the turn cycles
                 player.Move(neighbors.get(0));
             } catch (MyException e) {
                 System.out.println(e);
             }
-            System.out.println("Turn numero: " + i);
+            System.out.println("Turn numero: " + Controller.getTurnCount());
         }
         if(player.getPosition().equals(neighbors.get(0))){
             System.out.println("At last our hero made it to his destination, the destination was: " + neighbors.get(0));
@@ -708,7 +723,7 @@ public class DispatcherSkeleton {
     public void RandomPumpBreaking() throws MyException, InterruptedException {
         Map map = initalizeTable();
 
-        Controller konTroll = new Controller();
+        Controller konTroll = Controller.getInstance();
         konTroll.setMap(map);
 
         System.out.println("Pump breaking sequence initiated!");
@@ -716,7 +731,7 @@ public class DispatcherSkeleton {
         for(int i=1; i <= 20; i++){
             System.out.println("Current turnCount:" + i);
             konTroll.increaseTurnCount();
-            konTroll.damagePump();
+            konTroll.evaluateCycles();
             sleep(1000);
         }
         System.out.println("Pumps all up and gone!");
@@ -732,7 +747,7 @@ public class DispatcherSkeleton {
     public void CollectingWater() throws MyException {
         Map map = waterFlowingMap();
 
-        Controller konTroll = new Controller();
+        Controller konTroll = Controller.getInstance();
         konTroll.setMap(map);
 
         System.out.println("Water is about to flow!");

@@ -17,25 +17,43 @@ import java.util.ArrayList;
 public class Controller {
 
 	private Map map;
-	private int turnCount;
+	private static Controller controller;
+	private static int turnCount = 0;
+
+	private Controller(){
+	}
+
+	public static Controller getInstance() {
+		if (controller == null) {
+			controller = new Controller();
+		}
+		return controller;
+	}
 
 	/**
 	 * Ebben a függvényben történik meg a pumpák megrontása, avagy elrontása
 	 * Egyszerűen csak végigmegyünk a pálya konténerjein és mindenkire meghívjuk a lifeCycle() függvényt (amely függvényre majd azon példányok felelnek csak akik tudnak)
 	 */
-	public void damagePump(){
+	public void evaluateCycles(){
 		for(Container c : map.getContainers()){
-			c.lifeCycle(turnCount);
+			c.lifeCycle(Controller.getInstance().getTurnCount());
 		}
+		Controller.getInstance().increaseTurnCount();
 	}
+
 
 	public void increaseTurnCount(){
 		turnCount++;
+
+	}
+
+	public static int getTurnCount(){
+		return turnCount;
 	}
 
 	/**
 	 * Vegyünk egy példát:
-			* Legyen egy ilyen összeköttetésünk: MS->PU->CS -ahol MS-Mountain Spring, (->)-Pipe, PU-Pump és végül CS-Cistern
+	 * Legyen egy ilyen összeköttetésünk: MS->PU->CS -ahol MS-Mountain Spring, (->)-Pipe, PU-Pump és végül CS-Cistern
 	 * Mivel a Mountain Springből jön a víz, ennek inputState-je {true, true} addig amíg el nem fogy, ezt mindig a hozzá tartozó setInputState-tel állítjuk be
 	 * FONTOS! Az MS-en kívűl minden más Container inputState-je {false, false} -ként van inicializálva
 	 * Jön a hozzácsatlakozó cső (azaz MS input Pipe-ja), legyen ez a cső 'pipe1'
@@ -62,8 +80,7 @@ public class Controller {
 	 * 		PU setInputState-je meghívja az ő output-án rejlő cső 'pipe2' setInputState-jét (így {false, true} lesz a tartalma) és most már ebben a csőben is megjelenik a víz
 	 * És így megy végig a víz egészen a ciszternáig (CS) ahol is legvégül majd sok kör lefolyása után szintén megjelenik a víz
 	 */
-	public void waterFlow()
-	{
+	public void waterFlow() {
 		ArrayList<Container> containers = map.getContainers();
 
 		for(Container c : containers){
@@ -71,7 +88,7 @@ public class Controller {
 			c.makeHistory();
 		}
 	}
-	
+
 	/**
 	 * Beállítjuk a paraméterben kapott pályát a Controller pályájára
 	 * @param map

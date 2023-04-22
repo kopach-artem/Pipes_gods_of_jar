@@ -38,58 +38,58 @@ public class Main
         while ((n = scanner.nextInt()) != 0) {
             switch (n) {
                 case 1:
-                    skeleton.MechanicRepairsPump();
+                    skeleton.MechanicRepairsPump(); // ඞ
                     break;
                 case 2:
-                    skeleton.MechanicRepairsPipe();
+                    skeleton.MechanicRepairsPipe(); // ඞ
                     break;
                 case 3:
-                    skeleton.PlayerLeaksPipe();
+                    skeleton.PlayerLeaksPipe(); // ඞ
                     break;
                 case 4:
-                    skeleton.PlayerAttachPipe();
+                    skeleton.PlayerAttachPipe(); // ඞ
                     break;
                 case 5:
-                    skeleton.PlayerAttachPump();
+                    skeleton.PlayerAttachPump(); // ඞ
                     break;
                 case 6:
                     skeleton.PlayerDetachPipe();
                     break;
                 case 7:
-                    skeleton.PlayerAdjustPumpInput();
+                    skeleton.PlayerAdjustPumpInput(); // ඞ
                     break;
                 case 8:
-                    skeleton.PlayerAdjustPumpOutput();
+                    skeleton.PlayerAdjustPumpOutput(); // ඞ
                     break;
                 case 9:
-                    skeleton.PlayerMovesToPipe();
+                    skeleton.PlayerMovesToPipe(); // ඞ
                     break;
                 case 10:
-                    skeleton.PlayerMovesToPipeFail();
+                    skeleton.PlayerMovesToPipeFail(); // ඞ
                     break;
                 case 11:
-                    skeleton.PlayerMovesToPump();
+                    skeleton.PlayerMovesToPump(); // ඞ
                     break;
                 case 12:
-                    skeleton.PlayerMovesToCistern();
+                    skeleton.PlayerMovesToCistern(); // ඞ
                     break;
                 case 13:
-                    skeleton.PlayerMovesToMountainSpring();
+                    skeleton.PlayerMovesToMountainSpring(); // ඞ
                     break;
                 case 14:
-                    skeleton.RandomPumpBreaking();
+                    skeleton.RandomPumpBreaking(); // ඞ
                     break;
                 case 15:
-                    skeleton.CollectingWater();
+                    skeleton.CollectingWater(); // ඞ
                     break;
                 case 16:
-                    skeleton.PlayerMovesToSlipperyPipe();
+                    skeleton.PlayerMovesToSlipperyPipe(); // ඞ
                     break;
                 case 17:
-                    skeleton.PlayerTriesToMoveFromStickyPipe();
+                    skeleton.PlayerTriesToMoveFromStickyPipe(); // ඞ
                     break;
                 case 18:
-                    skeleton.PlayerLeaksPipeFailDueToCooldown();
+                    skeleton.PlayerLeaksPipeFailDueToCooldown(); // ඞ
                     break;
             }
         }
