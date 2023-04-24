@@ -2,7 +2,7 @@
 package player;
 
 import container.*;
-import exception.MyException;
+
 
 /**
  * Ez a szabotőr játékos, a szabotőr lyukaszthatja ki a csöveket

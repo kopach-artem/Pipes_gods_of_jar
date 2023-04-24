@@ -29,6 +29,12 @@ public class Main
         System.out.println("[18]. Player fails to leak pipe due to cooldown");
         System.out.println("[0]. Kilépés");
     }
+    
+    /** 
+     * @param args
+     * @throws MyException
+     * @throws InterruptedException
+     */
     public static void main(String[] args) throws MyException, InterruptedException {
         DispatcherSkeleton skeleton = new DispatcherSkeleton();
         System.out.println("Üdvözli önt a Gods of jar csapat skeleton programja!");

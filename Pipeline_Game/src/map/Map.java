@@ -61,6 +61,7 @@ public class Map{
 	 * @param c - Az eltávolítano kívánt Container
 	 */
 	public void removeElement(Container c) {
+		
 	}
 
 	/**

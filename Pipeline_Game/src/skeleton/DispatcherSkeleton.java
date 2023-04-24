@@ -18,6 +18,10 @@ import static java.lang.Thread.sleep;
  */
 public class DispatcherSkeleton {
 
+
+    /*
+     * DispatcherSkeleton konstruktor
+     */
     public DispatcherSkeleton() throws MyException {
     }
 
@@ -77,6 +81,14 @@ public class DispatcherSkeleton {
         return map;
     }
 
+    
+    /** 
+     * @return Map
+     * @throws MyException
+     */
+    /*
+     * Ez a függvény a módosított metódus inicializálója a programban.
+     */
     public static Map initalizeForChangedMethods() throws MyException{
 
         Map map = new Map();
