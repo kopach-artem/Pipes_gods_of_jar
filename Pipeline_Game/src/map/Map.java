@@ -1,5 +1,6 @@
 package map;
 
+import java.io.*;
 import java.util.ArrayList;
 import exception.MyException;
 import player.*;
@@ -8,12 +9,14 @@ import container.*;
 /**
  * A Map osztály felelőssége a pályán elhelyezett pumpák és csövek tárolása.
  */
-public class Map{
+public class Map implements Serializable{
 
 	/**
 	 * Az eddig elfolyt víz értéke.
 	 */
 	private static int leakedWater;
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * A pályán lévő játékosok ArrayList-je.
@@ -25,6 +28,7 @@ public class Map{
 	 * A pályán lévő Containerek ArrayList-je.
 	 */
 	private static ArrayList<Container> containers = new ArrayList<Container>();
+	private static ArrayList<ArrayList<Container>> gameMap = new ArrayList<>();
 
 	/**
 	 * Map osztály konstruktora.
@@ -93,5 +97,42 @@ public class Map{
 	 */
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
+	}
+
+	public void saveToFile(String filename) {
+		try {
+			FileOutputStream fileOut = new FileOutputStream("maps/" + filename);
+			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+			objectOut.writeObject(this);
+			objectOut.close();
+			fileOut.close();
+			System.out.println("Map object saved to " + filename);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Loads a Map object from a text file.
+	 * @param filename The name of the file to load the object from.
+	 * @return The loaded Map object.
+	 */
+	public static Map loadFromFile(String filename) {
+		try {
+			FileInputStream fileIn = new FileInputStream("maps/" + filename);
+			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+			Map map = (Map) objectIn.readObject();
+			objectIn.close();
+			fileIn.close();
+			System.out.println("Map object loaded from " + filename);
+			return map;
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public ArrayList<ArrayList<Container>> getGameMap(){
+		return gameMap;
 	}
 }

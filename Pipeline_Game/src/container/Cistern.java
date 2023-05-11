@@ -45,6 +45,8 @@ public class Cistern extends Container {
 	 */
 	public Cistern(Pipe input) {
         this.input = input;
+		this.neighbors.add(input);
+		input.neighbors.add(this);
         this.collectedWater = 0;
         this.freePump = null;
         this.madePipes = new ArrayList<Pipe>();

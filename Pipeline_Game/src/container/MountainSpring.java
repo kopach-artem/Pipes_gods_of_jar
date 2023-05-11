@@ -19,6 +19,12 @@ public class MountainSpring extends Container {
 	 */
 	private int waterCapac = 50;
 
+	public MountainSpring(Pipe output){
+		this.output = output;
+		this.neighbors.add(output);
+		output.neighbors.add(this);
+	}
+
 	
 	/**
 	 * Mindig false-al tér vissza, ugyanis a MountainSpring-re nem lépheetnek rá a játékosok.

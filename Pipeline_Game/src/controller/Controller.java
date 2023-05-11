@@ -31,7 +31,7 @@ public class Controller {
 	}
 
 	/**
-	 * Ebben a függvényben történik meg a pumpák megrontása, avagy elrontása
+	 * Ebben a függvényben történik meg a pumpák elrontása
 	 * Egyszerűen csak végigmegyünk a pálya konténerjein és mindenkire meghívjuk a lifeCycle() függvényt (amely függvényre majd azon példányok felelnek csak akik tudnak)
 	 */
 	public void evaluateCycles(){
@@ -52,6 +52,7 @@ public class Controller {
 	}
 
 	/**
+	 * A víz folyását megvalósító metódus
 	 * Vegyünk egy példát:
 	 * Legyen egy ilyen összeköttetésünk: MS->PU->CS -ahol MS-Mountain Spring, (->)-Pipe, PU-Pump és végül CS-Cistern
 	 * Mivel a Mountain Springből jön a víz, ennek inputState-je {true, true} addig amíg el nem fogy, ezt mindig a hozzá tartozó setInputState-tel állítjuk be
@@ -67,7 +68,7 @@ public class Controller {
 	 * Ez az eval függvény fogja meghatározni, hogy:
 	 * 		1 - Hogyan folyik a víz? Példaként ha egy csövet nézünk folyhat-e benne tovább víz ha lyukasztva van?
 	 * 		2 - Ő fogja meghívni a következő konténerre a setInputState függvény ezzel beállítva az aktuális körben, hogy mi történt vele
-	 * Maga a példa végigkövetve (fontost, hogy a konténerek sorrendje nem befolyásolja a víz működését tehát itt nincs probléma):
+	 * Maga a példa végigkövetve (fontos, hogy a konténerek sorrendje nem befolyásolja a víz működését tehát itt nincs probléma):
 	 * 		Legyen a 'containers' első eleme MS (hegyi forrás) erre meghívjuk az eval függvényt -> ez beállítja MS inputState-jét {true, true}-ra majd meghívja az outputjára az setInputState-t(jelen helyzetben 'pipe1')
 	 * 		A csőre meghívódik a setInputState(), beállítódik az inputState[1] igazra, azaz, hogy igen is folyik benne víz
 	 * 		Ezt követően a cső-re (tegyük fel ő következik az MS után a konténer listában) meghívódik az eval() azonban itt nem történik még semmi

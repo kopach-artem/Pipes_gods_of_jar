@@ -1,6 +1,7 @@
 
 package player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import container.*;
@@ -10,7 +11,7 @@ import exception.*;
 /**
  * Egy általános játékost megvalósító osztály (Mechanic, Saboteur)
  */
-public class Player {
+public class Player implements Serializable {
 
 	/**
 	 * Ezzel tároljuk, hogy az adott játékos hol helyezkedik el.

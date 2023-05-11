@@ -1,5 +1,6 @@
 package container;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import exception.MyException;
@@ -9,7 +10,7 @@ import player.*;
  * Abstract osztály.
  * Egy általános tárolót valósít meg (Pipe, Pump, Mountain Spring, Cistern)
  */
-public abstract class Container {
+public abstract class Container implements Serializable {
 	/**
 	 * A Container mellett található Containerek ArrayList-je
 	 */

@@ -155,6 +155,12 @@ public class Pipe extends Container {
 		pump2.addPipe(split1);
 		pump2.removePipe(this);
 
+        if(pump2.getInput().equals(this)){
+			atPu.setInput(this);
+			atPu.setOutput(split1);
+			pump2.setInput(split1);
+		}
+
 
 	}
 
