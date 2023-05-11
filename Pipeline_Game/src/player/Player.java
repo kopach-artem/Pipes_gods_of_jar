@@ -48,12 +48,17 @@ public class Player implements Serializable {
 
 	}
 
+	/*
+	 * Új függvény. Ez a függvény csinálni csö, amin Player áll Sticky.
+	 * 
+	 */
+
 	public void makePipeSticky(){
 		this.position.pipeGetsSticky();
 	}
 
 	/**
-	 * Kilyukasztja azon csövet amelyen éppen áll
+	 * Ez a függvény csinálni csö, amin Player áll lyukasztani, mert “Szerelő is tud lyukasztani.”
 	 * @throws MyException
 	 */
 	public void LeakPipe() throws MyException {
@@ -103,7 +108,10 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Hozzáadja a saját maga által cipelt csövet a jelenlegi pozíciójához.
+	 * Változni logiká, mert most attachPipe csak a fűggvény, 
+	 * amelyik csak kezdi eset és néz, 
+	 * hogy Playernek van carriedPipes (!getCarriedPipes.isEmpty()). 
+	 * Meghívni insertPipe(p: Player) : void függvényt.  
 	 * @throws MyException
 	 */
 	public void attachPipe() throws MyException {
@@ -112,7 +120,8 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Elvesz egy szabad csövet a Cistern-től.
+	 * Ha van cső Cisternában, amelyben Player áll, 
+	 * akkor ez függvény tud adni új csöt carriedPipes List-be.
 	 * @param c - A Cistern
 	 */
 	public void takePipe(Cistern c) {

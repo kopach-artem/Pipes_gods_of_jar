@@ -189,6 +189,10 @@ public class Pipe extends Container {
 		this.isSlippery = true;
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean getIsSlippery() {
 		return this.isSlippery;

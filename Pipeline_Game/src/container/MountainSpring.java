@@ -131,6 +131,10 @@ public class MountainSpring extends Container {
 
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean getIsSlippery() {
 		return false;

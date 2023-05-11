@@ -65,6 +65,7 @@ public class Map implements Serializable{
 	 * @param c - Az eltávolítano kívánt Container
 	 */
 	public void removeElement(Container c) {
+		
 	}
 
 	/**

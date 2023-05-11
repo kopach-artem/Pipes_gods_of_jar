@@ -188,6 +188,10 @@ public class Cistern extends Container {
 
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean getIsSlippery() {
 		return false;

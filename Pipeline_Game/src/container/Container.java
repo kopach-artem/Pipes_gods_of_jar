@@ -49,6 +49,10 @@ public abstract class Container implements Serializable {
 
 	}
 
+	
+	/** 
+	 * @param c
+	 */
 	/**
 	 * Ezt a függvényt implementálja a Pump és Cistern osztályok
 	 * A függvény azért felelős, hogy egy adott idő után megtörténjen valami a container objektumunkkal
@@ -128,12 +132,32 @@ public abstract class Container implements Serializable {
 	 */
 	public abstract void insertPipe(Player player) throws MyException;
 
+	/**
+	 * Ezt a függvényt a Pipe osztály valósítja meg. Ez a függvény felelős a cső csúszóssá válik
+	 */
 	public abstract void pipeGetsSlippery();
 
+	/**
+	 * Ezt a függvényt a Pipe (és Pump (false default))osztályok valósulnak meg. Ez a függvény felelős visszaadni csúszóssá-e Pipe (getter)
+	 * @return
+	 */
+
+	/*
+	 * Ezt a függvényt a Pipe osztály valósítja meg.
+	 * Ez a függvény felelős visszaadni csúszóssá-e Pipe (getter)
+	 */
 	public abstract boolean getIsSlippery();
 
+	/*
+	 * Ezt a függvényt a Pipe osztály valósítja meg. 
+	 * Ez a függvény felelős a cső  ragadóssá válik
+	 */
 	public abstract void pipeGetsSticky();
 
+	/*
+	 * Ezt a függvényt a Pipe osztály valósítja meg.
+	 *  Ez a függvény felelős visszaadni ragadóssá-e Pipe (getter)
+	 */
 	public abstract boolean getIsSticky();
 
 	/**
