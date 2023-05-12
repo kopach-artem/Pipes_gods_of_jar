@@ -2,6 +2,8 @@ package map;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
+
 import exception.MyException;
 import player.*;
 import container.*;
@@ -28,7 +30,7 @@ public class Map implements Serializable{
 	 * A pályán lévő Containerek ArrayList-je.
 	 */
 	private static ArrayList<Container> containers = new ArrayList<Container>();
-	private static ArrayList<ArrayList<Container>> gameMap = new ArrayList<>();
+	private static ArrayList<ContainerPos> gameMap = new ArrayList<ContainerPos>();
 
 	/**
 	 * Map osztály konstruktora.
@@ -133,7 +135,7 @@ public class Map implements Serializable{
 		return null;
 	}
 
-	public ArrayList<ArrayList<Container>> getGameMap(){
+	public ArrayList<ContainerPos> getGameMap(){
 		return gameMap;
 	}
 }

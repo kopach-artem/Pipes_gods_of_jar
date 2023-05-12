@@ -181,6 +181,8 @@ public abstract class Container implements Serializable {
 	 */
 	public abstract void setInputState();
 
+	public abstract String consolePrint();
+
 	/**
 	 * Az evaluation-t (kiértékelést) követően az inputState értékeit megváltoztatjuk
 	 */
@@ -205,6 +207,7 @@ public abstract class Container implements Serializable {
 	public void setNeighbors(ArrayList<Container> neighbors) {
 		this.neighbors = neighbors;
 	}
+
 
 
 }

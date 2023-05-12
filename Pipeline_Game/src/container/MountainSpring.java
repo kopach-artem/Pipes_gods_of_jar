@@ -25,6 +25,10 @@ public class MountainSpring extends Container {
 		output.neighbors.add(this);
 	}
 
+	public MountainSpring(){
+		output = null;
+	}
+
 	
 	/**
 	 * Mindig false-al tér vissza, ugyanis a MountainSpring-re nem lépheetnek rá a játékosok.
@@ -174,7 +178,12 @@ public class MountainSpring extends Container {
 		System.out.println("After: "+ this.writeInputState() + " " + "Water remaining in Mountain Spring: " + waterCapac);
 	}
 
-	
+	@Override
+	public String consolePrint() {
+		return "MS\t";
+	}
+
+
 	/**
 	 * Visszatér a waterCapac attribűtum értékével
 	 * @return int - A waterCapac attribútum értéke

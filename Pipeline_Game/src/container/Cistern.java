@@ -52,6 +52,13 @@ public class Cistern extends Container {
         this.madePipes = new ArrayList<Pipe>();
     }
 
+	public Cistern(){
+		input = null;
+		collectedWater = 0;
+		freePump = null;
+		madePipes = new ArrayList<Pipe>();
+	}
+
 	/**
 	 * Ezzel a metódussal tudjuk növelni a ciszternában lévő víz mennyiségét.
 	 */
@@ -213,6 +220,11 @@ public class Cistern extends Container {
 	public void setInputState() {
 		inputState[1] = true;
 		System.out.println("After: " + this.writeInputState());
+	}
+
+	@Override
+	public String consolePrint() {
+		return "CS\t";
 	}
 
 	/**

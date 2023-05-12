@@ -43,7 +43,12 @@ public class Pump extends Container {
 	 * @param maxPipeAmount - Ennyi cső csatlakozthat majd legfeljebb a Pumphoz.
 	 */
 	public Pump(int maxPipeAmount) {
-		this.maxPipeAmount=maxPipeAmount;
+		if(maxPipeAmount > 4){
+			System.out.println("Pump can only be connected to 4 or less pipes");
+			this.maxPipeAmount = 4;
+		}
+		else
+			this.maxPipeAmount=maxPipeAmount;
 		Random rand=new Random();
 		randomDamageValue=rand.nextInt(11) + 10;
 		isDamaged=false;
@@ -257,7 +262,12 @@ public class Pump extends Container {
 			output.setInputState();
 	}
 
-	
+	@Override
+	public String consolePrint() {
+		return "PU\t";
+	}
+
+
 	/**
 	 * Ha teli van a pumpa, vagyis már nem lehet több csövet hozzácstolni, akkor true-val tér vissza.
 	 * @return boolean

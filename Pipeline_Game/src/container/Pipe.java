@@ -368,6 +368,11 @@ public class Pipe extends Container {
 
 	}
 
+	@Override
+	public String consolePrint() {
+		return "PI\t";
+	}
+
 	/**
 	 * Visszatér azzal, hogy a cső egyik vége üresen lóg-e
 	 * @return boolean
