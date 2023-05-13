@@ -229,7 +229,10 @@ public class List
                     if(str.equals("PU\t"))
                     {
                         sum2++;
-                        System.out.println("The pump at X:"+c.getPosX()+" Y: "+c.getPosY()+" will be damaged in turn " +((Pump)c.getContainer()).getRandomDamageValue());
+                        if(((Pump)c.getContainer()).getRandomDamageValue()!=-1)
+                            System.out.println("The pump at X:"+c.getPosX()+" Y: "+c.getPosY()+" will be damaged in turn " +((Pump)c.getContainer()).getRandomDamageValue());
+                        else
+                            System.out.println("The pump at X:"+c.getPosX()+" Y: "+c.getPosY()+" won't be damaged in a random turn, because the random pump breakdown is off");
                     }
 
                 }
