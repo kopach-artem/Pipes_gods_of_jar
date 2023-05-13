@@ -10,22 +10,95 @@
 //
 package controller;
 import container.*;
+import map.Map;
+
 import java.util.ArrayList;
+
 public class Controller {
 
-	public void damagePump(ArrayList<Pump> pumps) {
-		for(Pump p:pumps) {
-			if(turnCount==p.getRandomDamageValue() && !p.isDamaged()) {
-				p.setisDamaged(true);
-			}
+	private Map map;
+	private static Controller controller;
+	private static int turnCount = 0;
+
+	private Controller(){
+	}
+
+	public static Controller getInstance() {
+		if (controller == null) {
+			controller = new Controller();
+		}
+		return controller;
+	}
+
+	/**
+	 * Ebben a függvényben történik meg a pumpák elrontása
+	 * Egyszerűen csak végigmegyünk a pálya konténerjein és mindenkire meghívjuk a lifeCycle() függvényt (amely függvényre majd azon példányok felelnek csak akik tudnak)
+	 */
+	public void evaluateCycles(){
+		for(Container c : map.getContainers()){
+			c.lifeCycle(Controller.getInstance().getTurnCount());
+		}
+		Controller.getInstance().increaseTurnCount();
+	}
+
+
+	public void increaseTurnCount(){
+		turnCount++;
+
+	}
+
+	public static int getTurnCount(){
+		return turnCount;
+	}
+
+	public void setTurnCount(int tC){
+		turnCount = tC;
+	}
+
+	/**
+	 * A víz folyását megvalósító metódus
+	 * Vegyünk egy példát:
+	 * Legyen egy ilyen összeköttetésünk: MS->PU->CS -ahol MS-Mountain Spring, (->)-Pipe, PU-Pump és végül CS-Cistern
+	 * Mivel a Mountain Springből jön a víz, ennek inputState-je {true, true} addig amíg el nem fogy, ezt mindig a hozzá tartozó setInputState-tel állítjuk be
+	 * FONTOS! Az MS-en kívűl minden más Container inputState-je {false, false} -ként van inicializálva
+	 * Jön a hozzácsatlakozó cső (azaz MS input Pipe-ja), legyen ez a cső 'pipe1'
+	 * 'pipe1' cső csatlakozik PU pumpához akinek ő az input csöve lesz
+	 * Ezt követően jön a PU akinek pedig output csöve legyen 'pipe2' aki legvégül csatlakozik a CS ciszternához is akinek az input csöve lesz
+	 * Maga a folyamat:
+	 * 		1.lépés: lekérdezzük a pályához tartozó összes konténert
+	 * 		2.lépés: végigmegyünk az összes konténeren
+	 * 		3.lépés: profit
+	 * A profithoz lehet kell egy kis magyarázat. A for ciklusunk belsejében meghívjuk az adott konténerre a eval() függvényt
+	 * Ez az eval függvény fogja meghatározni, hogy:
+	 * 		1 - Hogyan folyik a víz? Példaként ha egy csövet nézünk folyhat-e benne tovább víz ha lyukasztva van?
+	 * 		2 - Ő fogja meghívni a következő konténerre a setInputState függvény ezzel beállítva az aktuális körben, hogy mi történt vele
+	 * Maga a példa végigkövetve (fontos, hogy a konténerek sorrendje nem befolyásolja a víz működését tehát itt nincs probléma):
+	 * 		Legyen a 'containers' első eleme MS (hegyi forrás) erre meghívjuk az eval függvényt -> ez beállítja MS inputState-jét {true, true}-ra majd meghívja az outputjára az setInputState-t(jelen helyzetben 'pipe1')
+	 * 		A csőre meghívódik a setInputState(), beállítódik az inputState[1] igazra, azaz, hogy igen is folyik benne víz
+	 * 		Ezt követően a cső-re (tegyük fel ő következik az MS után a konténer listában) meghívódik az eval() azonban itt nem történik még semmi
+	 * 		Visszatérünk ide és most történik a fontos dolog. Meghívódik a csőre a makeHistory(), azaz "felcserélődik"(igazából csak az 1. indexen lévő megy át a 0. indexen lévőre) a két értéke az inputState-nek
+	 * 		Tehát 'pipe1' inputState-je a következő lesz {[0]true, [1]false}
+	 * 		Ez után jön egy csomó unalmas semmit mondó függvényhívás (mivel, ugye mindenkinek a setInputState[0] értéke false)
+	 * Ez volt egy kör, de még egy kört megnézve világossá válik mi történt
+	 * 		Következő kör, megint meghívódik elsőnek MS-en az eval ami meghívja 'pipe1' setInputState-jét amiből fakadóan 'pipe1' inputState-je {true, true} lesz
+	 * 		Majd meghívódik az eval 'pipe1'-re, most már fog történni valami itt is azt, hogy mi teljes egészében nem részletezem DE ami fontos, hogy meghívódik 'pipe1'-hez tartozó PU setInputState-je
+	 * 		PU setInputState-je meghívja az ő output-án rejlő cső 'pipe2' setInputState-jét (így {false, true} lesz a tartalma) és most már ebben a csőben is megjelenik a víz
+	 * És így megy végig a víz egészen a ciszternáig (CS) ahol is legvégül majd sok kör lefolyása után szintén megjelenik a víz
+	 */
+	public void waterFlow() {
+		ArrayList<Container> containers = map.getContainers();
+
+		for(Container c : containers){
+			c.eval();
+			c.makeHistory();
 		}
 	}
 
-	public void waterFlow(Pipe p1, Pump pu, Pipe p2)
-	{
-		p1.eval();
-		p2.eval();
-		p1.makeHistory();
-		p2.makeHistory();
+	/**
+	 * Beállítjuk a paraméterben kapott pályát a Controller pályájára
+	 * @param map
+	 */
+	public void setMap(Map map){
+		this.map = map;
 	}
 }

@@ -1,21 +1,35 @@
 package player;
 
 import container.*;
+import exception.MyException;
 
-public class Mechanic extends Player {
-	
-	public void RepairPipe(Pipe p)
-	{
-		if(p.isLeaked())
-		{
-			p.setisLeaked(false);
-		}
+import java.io.Serializable;
+
+/**
+ * Ez a szerelő játékos, a szerelő javíthatja meg a csöveket, pumpákat és állíthatja is azokat.
+ */
+public class Mechanic extends Player implements Serializable {
+
+	/**
+	 * Mechanic konmstruktora
+	 * @param position - Ebben a pozícióban lesz létrehozva a Mechanic
+	 */
+	public Mechanic(Container position) {
+		super(position);
 	}
-	public void RepairPump(Pump pu)
-	{
-		if(pu.getisDamaged())
-		{
-			pu.setisDamaged(false);
-		}
+
+	
+	/**
+	 * Megjavítja a pozíciónál lévő csövet
+	 */
+	public void RepairPipe() throws MyException {
+		this.getPosition().mendPipe();
+	}
+	
+	/**
+	 * Megjavítja a pozíciójánál lévő pumpát
+	 */
+	public void RepairPump() throws MyException {
+		this.getPosition().mendPump();
 	}
 }
