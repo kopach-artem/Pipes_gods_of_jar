@@ -54,6 +54,7 @@ public class List
             if(command.length()==23) //listConnectedContainers
             {
                 int sum=0;
+                int sum2=0;
                 for(ContainerPos c:Map.getInstance().getGameMap())
                 {
                     sum++;
@@ -63,12 +64,15 @@ public class List
                         Container con2=c2.getContainer();
                         if(con.seeifNeighbors(con2) && con!=con2)
                         {
+                            sum2++;
                             System.out.println("The "+ con.consolePrint() +"at X: "+c.getPosX()+ " Y: "+c.getPosY()+" is connected to a "+con2.consolePrint()+"at X:"+ c2.getPosX()+" Y:"+c2.getPosY());
                         }
                     }
                 }
                 if(sum==0)
                     System.out.println("The map is empty");
+                else if(sum2==2)
+                    System.out.println("Nothing is connected on the map");
             }
             else //listConnectedContainersAt <PosX>_<PosY>
             {
@@ -100,13 +104,14 @@ public class List
                             }
 
                         }
-                        if(sum2==0)
-                            System.out.println("There is no container at the given position");
-                        else if(sum3==0)
-                            System.out.println("There is nothing connected to this container");
+
                     }
                     if(sum==0)
                         System.out.println("The map is empty");
+                    else if(sum2==0)
+                        System.out.println("There is no container at the given position");
+                    else if(sum3==0)
+                        System.out.println("There is nothing connected to this container");
                 }
                 else
                 {
@@ -219,24 +224,136 @@ public class List
             if(newcmd.equals("sDamageTurn")) //listPumpsDamageTurn
             {
                 int sum=0;
+                int sum2=0;
                 for(ContainerPos c:Map.getInstance().getGameMap())
                 {
-
+                    sum++;
                     Container con=c.getContainer();
                     String str=con.consolePrint();
                     if(str.equals("PU\t"))
                     {
-                        sum++;
-                        System.out.println("The pump at X:"+c.getPosX()+" Y: "+c.getPosY()+" will be damaged in turn " +((Pump)c.getContainer()).getRandomDamageValue());
+                        sum2++;
+                        if(((Pump)c.getContainer()).getRandomDamageValue()!=-1)
+                            System.out.println("The pump at X:"+c.getPosX()+" Y: "+c.getPosY()+" will be damaged in turn " +((Pump)c.getContainer()).getRandomDamageValue());
+                        else
+                            System.out.println("The pump at X:"+c.getPosX()+" Y: "+c.getPosY()+" won't be damaged in a random turn, because the random pump breakdown is off");
                     }
 
                 }
                 if(sum==0)
+                    System.out.println("The map is empty");
+                else if(sum2==0)
                     System.out.println("There are no pumps on the map");
             }
             else if(newcmd.equals("sDirection")) //listPumpsDirection
             {
-                // TODO
+                int sum=0;
+                int sum2=0;
+
+                int maxX = -1;
+                int maxY = -1;
+
+                // Find the maximum x and y values
+                for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+                    if (containerPos.getPosX() > maxX) {
+                        maxX = containerPos.getPosX();
+                    }
+                    if (containerPos.getPosY() > maxY) {
+                        maxY = containerPos.getPosY();
+                    }
+                }
+
+                // Create a 2D grid to store the containers
+                Container[][] grid = new Container[maxX + 1][maxY + 1];
+
+                // Fill the grid with null
+                for (int i = 0; i <= maxX; i++) {
+                    for (int j = 0; j <= maxY; j++) {
+                        grid[i][j] =null;
+                    }
+                }
+
+                // Place the containers in the grid
+                for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+                    int x = containerPos.getPosX();
+                    int y = containerPos.getPosY();
+                    grid[x][y] = containerPos.getContainer();
+                }
+
+                for(ContainerPos c:Map.getInstance().getGameMap())
+                {
+                    sum++;
+                    if(c.getContainer().consolePrint().equals("PU\t"))
+                    {
+                        Container in=c.getContainer().getInput();
+                        Container out=c.getContainer().getOutput();
+                        String dirin="";
+                        String dirout="";
+                        sum2++;
+                        for (int y = 0; y <= maxY; y++)
+                        {
+                            for (int x = 0; x <= maxX; x++)
+                            {
+                                if(c.getPosX()==x && c.getPosY()==y)
+                                {
+                                    if(x > 0 && grid[x-1][y]!=null)
+                                    {
+                                        if(in==grid[x-1][y])
+                                            dirin="Left";
+                                    }
+
+                                    if(x < maxX && grid[x+1][y]!=null)
+                                    {
+                                        if(in==grid[x+1][y])
+                                            dirin="Right";
+                                    }
+
+                                    if(y > 0 && grid[x][y-1]!=null)
+                                    {
+                                        if(in==grid[x][y-1])
+                                            dirin="Up";
+                                    }
+
+                                    if(y < maxY && grid[x][y+1]!=null)
+                                    {
+                                        if(in==grid[x][y+1])
+                                            dirin="Down";
+                                    }
+
+                                    if(x > 0 && grid[x-1][y]!=null)
+                                    {
+                                        if(out==grid[x-1][y])
+                                            dirout="Left";
+                                    }
+
+                                    if(x < maxX && grid[x+1][y]!=null)
+                                    {
+                                        if(out==grid[x+1][y])
+                                            dirout="Right";
+                                    }
+
+                                    if(y > 0 && grid[x][y-1]!=null)
+                                    {
+                                        if(out==grid[x][y-1])
+                                            dirout="Up";
+                                    }
+
+                                    if(y < maxY && grid[x][y+1]!=null)
+                                    {
+                                        if(out==grid[x][y+1])
+                                            dirout="Down";
+                                    }
+                                }
+                            }
+                        }
+
+                        System.out.println("The pump at X:"+c.getPosX()+" Y: "+c.getPosY()+" is pumping from "+dirin+" to "+dirout);
+                    }
+                }
+                if(sum==0)
+                    System.out.println("The map is empty");
+                else if(sum2==0)
+                    System.out.println("There are no pumps on the map");
             }
             else if(newcmd.startsWith("At"))
             {
