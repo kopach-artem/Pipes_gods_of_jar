@@ -1,33 +1,87 @@
 package console;
 
+import container.Container;
+import container.ContainerPos;
+import map.Map;
+
 public class List
 {
     public static void list(String command)
     {
         if(command.equals("listContainers")) //listContainer
         {
-            // TODO
+            int sum=0;
+            for(ContainerPos c:Map.getInstance().getGameMap())
+            {
+                sum++;
+                Container con=c.getContainer();
+                System.out.println("There is a "+con.consolePrint() +"at X: "+c.getPosX()+ " Y: "+c.getPosY());
+            }
+            if(sum==0)
+                System.out.println("The map is empty");
         }
         else if(command.equals("listDamagedContainers")) //listDamagedContainers
         {
-            // TODO
+            //TODO
         }
         else if(command.startsWith("listConnectedContainers")) //listConnectedContainers
         {
             if(command.length()==23) //listConnectedContainers
             {
-                //TODO
+                int sum=0;
+                for(ContainerPos c:Map.getInstance().getGameMap())
+                {
+                    sum++;
+                    Container con=c.getContainer();
+                    for(ContainerPos c2:Map.getInstance().getGameMap())
+                    {
+                        Container con2=c2.getContainer();
+                        if(con.seeifNeighbors(con2) && con!=con2)
+                        {
+                            System.out.println("The "+ con.consolePrint() +"at X: "+c.getPosX()+ " Y: "+c.getPosY()+" is connected to a "+con2.consolePrint()+"at X:"+ c2.getPosX()+" Y:"+c2.getPosY());
+                        }
+                    }
+                }
+                if(sum==0)
+                    System.out.println("The map is empty");
             }
             else //listConnectedContainersAt <PosX>_<PosY>
             {
-               String newcmd=command.substring(23);
+                int sum=0;
+                int sum2=0;
+                int sum3=0;
+                String newcmd=command.substring(23);
                 if(newcmd.startsWith("At"))
                 {
                     int positions[]= StrFunctions.subPosString(newcmd,"At"); //<PosX>_<PosY>
                     if(positions[0]!=-1 && positions[1]!= -1)
                     {
-                        //TODO
+                        for(ContainerPos c:Map.getInstance().getGameMap())
+                        {
+                            sum++;
+                            if(c.getPosX()==positions[0] && c.getPosY()==positions[1])
+                            {
+                                sum2++;
+                                Container con=c.getContainer();
+                                for(ContainerPos c2:Map.getInstance().getGameMap())
+                                {
+                                    Container con2=c2.getContainer();
+                                    if(con.seeifNeighbors(con2) && con!=con2)
+                                    {
+                                        sum3++;
+                                        System.out.println("The "+ con.consolePrint() +"at X: "+c.getPosX()+ " Y: "+c.getPosY()+" is connected to a "+con2.consolePrint()+"at X:"+ c2.getPosX()+" Y:"+c2.getPosY());
+                                    }
+                                }
+                            }
+
+                        }
+                        if(sum2==0)
+                            System.out.println("There is no container at the given position");
+                        else if(sum3==0)
+                            System.out.println("There is nothing connected to this container");
                     }
+                    if(sum==0)
+                        System.out.println("The map is empty");
                 }
                 else
                 {
