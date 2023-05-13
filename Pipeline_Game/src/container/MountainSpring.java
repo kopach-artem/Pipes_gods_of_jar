@@ -206,7 +206,7 @@ public class MountainSpring extends Container implements Serializable {
 	}
 
 	@Override
-	public Container getOutput() {
+	public Pipe getOutput() {
 		return output;
 	}
 
