@@ -12,6 +12,10 @@ import java.util.ArrayList;
 
 public class List
 {
+    
+    /** 
+     * @param command
+     */
     public static void list(String command)
     {
         if(command.equals("listContainers")) //listContainer

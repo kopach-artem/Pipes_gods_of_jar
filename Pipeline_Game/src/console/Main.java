@@ -8,6 +8,11 @@ import map.Map;
 
 public class Main
 {
+    
+    /** 
+     * @param args
+     * @throws MyException
+     */
     public static void main(String[] args) throws MyException
     {
         Scanner scanner = new Scanner(System.in);

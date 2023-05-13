@@ -11,6 +11,10 @@ import java.util.ArrayList;
 public class Operation
 {
 
+    
+    /** 
+     * @param containerPosList
+     */
     public static void printMap(ArrayList<ContainerPos> containerPosList){
 
             int maxX = -1;

@@ -50,6 +50,10 @@ public abstract class Container implements Serializable {
 	}
 
 	
+	
+	/** 
+	 * @param c
+	 */
 	/** 
 	 * @param c
 	 */
@@ -188,6 +192,8 @@ public abstract class Container implements Serializable {
 
 	public abstract void damageContainer();
 
+	
+
 	public abstract boolean isLooseEnd();
 
 	/**
@@ -219,4 +225,6 @@ public abstract class Container implements Serializable {
 
 	public abstract Container getInput();
 	public abstract Container getOutput();
+
+	public abstract void setBreakOff();
 }

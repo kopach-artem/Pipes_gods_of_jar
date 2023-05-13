@@ -215,6 +215,10 @@ public class Pipe extends Container implements Serializable {
 		this.isSticky = true;
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean getIsSticky() {
 		return isSticky;
@@ -451,5 +455,11 @@ public class Pipe extends Container implements Serializable {
 
 	public int getRandomInterval(){
 		return randomInterval;
+	}
+
+
+	@Override
+	public void setBreakOff() {
+	
 	}
 }

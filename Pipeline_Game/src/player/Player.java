@@ -48,6 +48,10 @@ public class Player implements Serializable {
 		id = generateId();
 	}
 
+	
+	/** 
+	 * @return int
+	 */
 	public static int generateId(){
 		return ++latestId;
 	}

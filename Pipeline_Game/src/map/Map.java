@@ -42,6 +42,10 @@ public class Map implements Serializable{
 
 	}
 
+	
+	/** 
+	 * @return Map
+	 */
 	public static Map getInstance() {
 		if (map == null) {
 			map = new Map();

@@ -134,6 +134,10 @@ public class Pump extends Container implements Serializable {
 	public void pipeGetsSticky() {
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean getIsSticky() {
 		return false;
@@ -392,5 +396,13 @@ public class Pump extends Container implements Serializable {
 	 */
 	public boolean getisDamaged() {
 		return isDamaged;
+	}
+
+	
+
+
+	@Override
+	public void setBreakOff() {
+		randomDamageValue = -1;
 	}
 }

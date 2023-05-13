@@ -23,6 +23,10 @@ public class Controller {
 	private Controller(){
 	}
 
+	
+	/** 
+	 * @return Controller
+	 */
 	public static Controller getInstance() {
 		if (controller == null) {
 			controller = new Controller();

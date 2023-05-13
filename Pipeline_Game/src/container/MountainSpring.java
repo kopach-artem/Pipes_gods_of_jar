@@ -151,6 +151,10 @@ public class MountainSpring extends Container implements Serializable {
 
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean getIsSticky() {
 		return false;
@@ -233,5 +237,10 @@ public class MountainSpring extends Container implements Serializable {
 	 */
 	public void setOutput(Pipe output){
 		this.output = output;
+	}
+
+	@Override
+	public void setBreakOff() {
+		
 	}
 }

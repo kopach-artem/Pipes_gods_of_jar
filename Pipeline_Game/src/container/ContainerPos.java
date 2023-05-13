@@ -3,6 +3,10 @@ package container;
 import java.io.Serializable;
 
 public class ContainerPos implements Serializable {
+    
+    /** 
+     * @return Container
+     */
     public Container getContainer() {
         return container;
     }
@@ -64,5 +68,7 @@ public class ContainerPos implements Serializable {
         }
         return false;
     }
+
+
 
 }

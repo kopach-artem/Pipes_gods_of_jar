@@ -9,6 +9,10 @@ import player.Player;
 
 public class Manual
 {
+    
+    /** 
+     * @param command
+     */
     public static void manual(String command)
     {
         if(command.startsWith("manualCreateContainer")) //manualCreateContainer <Containertype>

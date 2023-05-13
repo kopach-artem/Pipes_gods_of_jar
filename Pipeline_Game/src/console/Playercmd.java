@@ -16,6 +16,11 @@ enum Directions{
 
 public class Playercmd
 {
+    
+    /** 
+     * @param command
+     * @throws MyException
+     */
     public static void player(String command) throws MyException {
         if(command.startsWith("player"))
         {

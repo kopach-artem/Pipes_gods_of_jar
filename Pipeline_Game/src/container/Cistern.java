@@ -213,6 +213,10 @@ public class Cistern extends Container implements Serializable {
 
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean getIsSticky() {
 		return false;
@@ -330,5 +334,10 @@ public class Cistern extends Container implements Serializable {
 	 */
 	public void setMadePipes(ArrayList<Pipe> madePipes) {
 		this.madePipes = madePipes;
+	}
+
+	@Override
+	public void setBreakOff() {
+		
 	}
 }
