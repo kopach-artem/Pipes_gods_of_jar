@@ -402,7 +402,7 @@ public class Pump extends Container implements Serializable {
 
 
 	@Override
-	public void setBreakOff() {
-		randomDamageValue = -1;
+	public void setBreakOff(int rng) {
+		randomDamageValue = rng;
 	}
 }

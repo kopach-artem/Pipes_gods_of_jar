@@ -17,19 +17,17 @@ public class Random
     {
         if(command.equals("randomPumpBreakdownTurnOn"))
         {
-            
+            java.util.Random rand=new java.util.Random();
+            for(ContainerPos c:Map.getInstance().getGameMap())
+            {
+                c.getContainer().setBreakOff(rand.nextInt(11) + 10);
+            }
         }
         else if(command.equals("randomPumpBreakdownTurnOff"))
         {
-            ArrayList<Container> container = Map.getInstance().getContainers();
-            for(Container c : container){
-                if(c.getClass() == Pump.class)
-                {
-                    c.setBreakOff();
-                }
-                else{
-                    continue;
-                }
+            for(ContainerPos c:Map.getInstance().getGameMap())
+            {
+                c.getContainer().setBreakOff(-1);
             }
         }
         else
