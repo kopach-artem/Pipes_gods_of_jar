@@ -87,6 +87,9 @@ public class Operation
             Map.getInstance().connectPumpToPipe(pump1, pipe2);
             Map.getInstance().connectPumpToPipe(pump2, pipe3);
 
+            pump1.setInput(pipe1);
+            pump1.setOutput(pipe2);
+
             Map.getInstance().getGameMap().add(new ContainerPos(ms, 0, 0));
             Map.getInstance().getGameMap().add(new ContainerPos(pipe1, 1, 0));
             Map.getInstance().getGameMap().add(new ContainerPos(pump1, 2, 0));
