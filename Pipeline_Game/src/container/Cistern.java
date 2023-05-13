@@ -1,5 +1,6 @@
 package container;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import exception.MyException;
 import player.Player;
@@ -11,7 +12,7 @@ import player.Type;
  * A Cistern tehát a csőrendszer aktív elemei, amely víztároló tartályként működik.
  * Felelős a csövek készítéséért, a víz tárolásáért és a ciszternában lévő vízszint növeléséért.
  */
-public class Cistern extends Container {
+public class Cistern extends Container implements Serializable {
 
 	/**
 	 * Ez a bemeneti cső, innen érkezik a víz a ciszternába,
@@ -76,6 +77,9 @@ public class Cistern extends Container {
 	{
 		if(turnCount%3==0)
 			madePipes.add(new Pipe());
+		if(turnCount%5 == 0){
+			freePump = new Pump(4);
+		}
 	}
 
 	
@@ -175,7 +179,7 @@ public class Cistern extends Container {
 	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
 	 */
 	@Override
-	public void extractPipe(Player player, Pipe pi) throws MyException {
+	public void extractPipe(Player player, int xCord, int yCord) throws MyException {
 
 	}
 
@@ -225,6 +229,16 @@ public class Cistern extends Container {
 	@Override
 	public String consolePrint() {
 		return "CS\t";
+	}
+
+	@Override
+	public void damageContainer() {
+
+	}
+
+	@Override
+	public boolean isLooseEnd() {
+		return false;
 	}
 
 	/**

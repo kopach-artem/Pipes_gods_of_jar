@@ -3,12 +3,14 @@ package player;
 
 import container.*;
 
+import java.io.Serializable;
+
 
 /**
  * Ez a szabotőr játékos, a szabotőr lyukaszthatja ki a csöveket
  * illetve a szabotőr a szerelőhöz hasonlóan átállíthatja a pumpákat.
  */
-public class Saboteur extends Player {
+public class Saboteur extends Player implements Serializable {
 
 	/**
 	 * SAboteur osztály konstruktora.

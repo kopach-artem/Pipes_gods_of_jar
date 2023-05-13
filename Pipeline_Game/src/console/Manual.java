@@ -1,5 +1,12 @@
 package console;
 
+import container.ContainerPos;
+import container.Pipe;
+import container.Pump;
+import controller.Controller;
+import map.Map;
+import player.Player;
+
 public class Manual
 {
     public static void manual(String command)
@@ -7,22 +14,18 @@ public class Manual
         if(command.startsWith("manualCreateContainer")) //manualCreateContainer <Containertype>
         {
             String newcmd=command.substring(21);
-            if(newcmd.startsWith("PipeAtCistern")) //manualCreateContainerPipeAtCistern
-            {
-                //TODO
-            }
-            else if(newcmd.equals("PumpAtCistern")) //manualCreateContainerPumpAtCistern
-            {
-                //TODO
-            }
-            else if(newcmd.equals("PipeAtPlayer")) //manualCreateContainerPipeAtPlayer<Player>
+            if(newcmd.equals("PipeAtPlayer")) //manualCreateContainerPipeAtPlayer<Player>
             {
                 String playernumber=newcmd.substring(12); //<Player>
                 if(playernumber.length()==1)
                 {
                     if(StrFunctions.isDigit(playernumber.charAt(0)))
                     {
-                        //TODO
+                        for(Player player : Map.getInstance().getPlayers()){
+                            if(player.getId() == Integer.parseInt(playernumber)){
+                                player.getCarriedPipes().add(new Pipe());
+                            }
+                        }
                     }
                     else
                         System.out.println("Give a valid integer for player's number");
@@ -39,7 +42,11 @@ public class Manual
                 {
                     if(StrFunctions.isDigit(playernumber.charAt(0)))
                     {
-                        //TODO
+                        for(Player player : Map.getInstance().getPlayers()){
+                            if(player.getId() == Integer.parseInt(playernumber)){
+                                player.setCarriedPump(new Pump(4));
+                            }
+                        }
                     }
                     else
                         System.out.println("Give a valid integer for player's number");
@@ -53,10 +60,6 @@ public class Manual
             {
                 System.out.println("Invalid use of command");
             }
-        }
-        else if(command.equals("manualFlowWater")) //manualFlowWater
-        {
-            //TODO
         }
         else if(command.startsWith("manualSetTurnCount")) //manualSetTurnCount <Turns>
         {
@@ -73,7 +76,7 @@ public class Manual
             }
             if(!gotchar && turncount!="")
             {
-                //TODO
+                Controller.getInstance().setTurnCount(Integer.parseInt(turncount));
             }
         }
         else if(command.startsWith("manualDamageContainer")) //manualDamageContainerAt <PosX> <PosY>
@@ -84,7 +87,11 @@ public class Manual
                 int positions[]= StrFunctions.subPosString(newcmd,"At"); //<PosX>_<PosY>
                 if(positions[0]!=-1 && positions[1]!= -1)
                 {
-                    //TODO
+                    for(ContainerPos cp : Map.getInstance().getGameMap()){
+                        if(cp.getPosX() == positions[0] && cp.getPosY() == positions[1]){
+                            cp.getContainer().damageContainer();
+                        }
+                    }
                 }
             }
             else
@@ -100,7 +107,11 @@ public class Manual
                 int positions[]= StrFunctions.subPosString(newcmd,"At"); //<PosX>_<PosY>
                 if(positions[0]!=-1 && positions[1]!= -1)
                 {
-                    //TODO
+                    for (ContainerPos cp : Map.getInstance().getGameMap()){
+                        if(cp.getPosX() == positions[0] && cp.getPosY() == positions[1]){
+                            cp.getContainer().pipeGetsSlippery();
+                        }
+                    }
                 }
             }
             else
@@ -116,7 +127,11 @@ public class Manual
                 int positions[]= StrFunctions.subPosString(newcmd,"At"); //<PosX>_<PosY>
                 if(positions[0]!=-1 && positions[1]!= -1)
                 {
-                    //TODO
+                    for (ContainerPos cp : Map.getInstance().getGameMap()){
+                        if(cp.getPosX() == positions[0] && cp.getPosY() == positions[1]){
+                            cp.getContainer().pipeGetsSticky();
+                        }
+                    }
                 }
             }
             else
@@ -137,7 +152,24 @@ public class Manual
                         int positions[]= StrFunctions.subPosString(newcmd,"To"); //<PosX>_<PosY>
                         if(positions[0]!=-1 && positions[1]!= -1)
                         {
-                            //TODO
+                            Player p = new Player();
+                            ContainerPos containerPos = new ContainerPos();
+                            for(Player player : Map.getInstance().getPlayers()){
+                                if(player.getId() == playernumber){
+                                    p = player;
+                                }
+                            }
+                            for(ContainerPos cp : Map.getInstance().getGameMap()){
+                                if(cp.getPosX() == positions[0] && cp.getPosY() == positions[1]){
+                                    containerPos = cp;
+                                }
+                            }
+                            if(p.getPosition() == null || containerPos.getContainer() == null){
+                                System.out.println("There's no valid player with given id, or given X and Y coordinates don't specifiy any Container");
+                            }
+                            else{
+                                p.setPosition(containerPos.getContainer());
+                            }
                         }
                     }
                     else

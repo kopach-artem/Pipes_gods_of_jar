@@ -122,7 +122,7 @@ public abstract class Container implements Serializable {
 	 * @param pi
 	 * @throws MyException
 	 */
-	public abstract void extractPipe(Player player, Pipe pi) throws MyException;
+	public abstract void extractPipe(Player player, int xCord, int yCord) throws MyException;
 
 	/**
 	 * Ezt a függvényt a Pump osztály valósítja meg
@@ -182,6 +182,10 @@ public abstract class Container implements Serializable {
 	public abstract void setInputState();
 
 	public abstract String consolePrint();
+
+	public abstract void damageContainer();
+
+	public abstract boolean isLooseEnd();
 
 	/**
 	 * Az evaluation-t (kiértékelést) követően az inputState értékeit megváltoztatjuk

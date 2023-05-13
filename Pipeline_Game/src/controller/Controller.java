@@ -51,6 +51,10 @@ public class Controller {
 		return turnCount;
 	}
 
+	public void setTurnCount(int tC){
+		turnCount = tC;
+	}
+
 	/**
 	 * A víz folyását megvalósító metódus
 	 * Vegyünk egy példát:

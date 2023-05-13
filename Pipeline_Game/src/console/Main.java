@@ -13,13 +13,6 @@ public class Main
         Scanner scanner = new Scanner(System.in);
         String command="";
 
-        Operation.testMap();
-
-        Map m = Map.loadFromFile("testMap.txt");
-
-        Operation.printMap(m.getGameMap());
-
-        /*
         while (true)
         {
             System.out.print("> ");
@@ -48,12 +41,13 @@ public class Main
             {
                 Random.random(command);
             }
+            else if(command.startsWith("exit")){
+                System.exit(0);
+            }
             else
             {
                 System.out.println("Unknown command");
             }
         }
-
-         */
     }
 }

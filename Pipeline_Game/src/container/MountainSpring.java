@@ -4,10 +4,12 @@ import exception.MyException;
 import player.Player;
 import player.Type;
 
+import java.io.Serializable;
+
 /**
  * Ez a hegyi forrás, ebből származik a víz, amelyért a játékosok versengenek
  */
-public class MountainSpring extends Container {
+public class MountainSpring extends Container implements Serializable {
 
 	/**
 	 * Tárolja azt a csövet, amely kivezeti a vizet a forrásból.
@@ -115,7 +117,7 @@ public class MountainSpring extends Container {
 	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
 	 */
 	@Override
-	public void extractPipe(Player player, Pipe pi) throws MyException {
+	public void extractPipe(Player player, int xCord, int yCord) throws MyException {
 
 	}
 
@@ -181,6 +183,16 @@ public class MountainSpring extends Container {
 	@Override
 	public String consolePrint() {
 		return "MS\t";
+	}
+
+	@Override
+	public void damageContainer() {
+
+	}
+
+	@Override
+	public boolean isLooseEnd() {
+		return false;
 	}
 
 

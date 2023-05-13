@@ -5,11 +5,13 @@ import map.Map;
 import player.*;
 import exception.*;
 
+import java.io.Serializable;
+
 /**
  * Ez a cső, ez felelős a víz szállításához, ennek segítségével szállítódhat a víz a ciszternába
  * (amely a szerelők előnyét jelenti) vagy ezeknek kilyukasztásával kerülhetnek előnybe a szabotőrök.
  */
-public class Pipe extends Container {
+public class Pipe extends Container implements Serializable {
 
 	/**
 	 * Ez az attribútum jelzi, hogy az adott cső ki van-e lyukasztva vagy sem.
@@ -37,8 +39,6 @@ public class Pipe extends Container {
 	final int SLIPPERY_TIMER = 2;
 
 
-
-
 	/**
 	 * Megadja, hogy az adott csőre léphet-e játékos
 	 * @return boolean - Léphet-e ide játékos vagy sem.
@@ -60,7 +60,6 @@ public class Pipe extends Container {
 	public void movedFrom(){
 		setOccupied(false);
 	}
-
 
 
 	/**
@@ -106,8 +105,7 @@ public class Pipe extends Container {
 				this.randomInterval = (int)(Math.random() * 10);
 				this.leakedTimer = Controller.getTurnCount();
 				this.canBeLeaked = false;
-			}
-			else{
+			} else{
 				throw new MyException("Pipe cannot be leaked due to: Pipe leaking is on cooldown");
 			}
 		} else
@@ -121,10 +119,14 @@ public class Pipe extends Container {
 	 */
 	public void insertPump(Player player) throws MyException{
 
+		for(ContainerPos containerPos : Map.getInstance().getGameMap()){
+
+		}
+
 		/**
 		 * Create new Pipe for the attachement.
 		 */
-		Pipe split1 = new Pipe();
+			Pipe split1 = new Pipe();
 		Map.addElement(split1);
 
 		/**
@@ -168,7 +170,7 @@ public class Pipe extends Container {
 	 * A Pipe nem valósítja meg ezt a függvényt, ezért erről nem is beszélek többet
 	 */
 	@Override
-	public void extractPipe(Player player, Pipe pi) throws MyException {
+	public void extractPipe(Player player, int xCord, int yCord) throws MyException {
 
 	}
 
@@ -189,8 +191,8 @@ public class Pipe extends Container {
 		this.isSlippery = true;
 	}
 
-	
-	/** 
+
+	/**
 	 * @return boolean
 	 */
 	@Override
@@ -373,8 +375,14 @@ public class Pipe extends Container {
 		return "PI\t";
 	}
 
+	@Override
+	public void damageContainer() {
+		this.isLeaked = true;
+	}
+
 	/**
 	 * Visszatér azzal, hogy a cső egyik vége üresen lóg-e
+	 *
 	 * @return boolean
 	 */
 	public boolean isLooseEnd() {

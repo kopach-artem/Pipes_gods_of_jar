@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.Controller;
 import exception.MyException;
 import player.*;
 import container.*;
@@ -18,13 +19,15 @@ public class Map implements Serializable{
 	 */
 	private static int leakedWater;
 
+	private static Map map;
+
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * A pályán lévő játékosok ArrayList-je.
 	 */
 
-	private ArrayList<Player> players = new ArrayList<Player>();
+	private static ArrayList<Player> players = new ArrayList<Player>();
 
 	/**
 	 * A pályán lévő Containerek ArrayList-je.
@@ -35,8 +38,15 @@ public class Map implements Serializable{
 	/**
 	 * Map osztály konstruktora.
 	 */
-	public Map(){
-		leakedWater = 0;
+	private Map(){
+
+	}
+
+	public static Map getInstance() {
+		if (map == null) {
+			map = new Map();
+		}
+		return map;
 	}
 
 	/**
@@ -102,37 +112,20 @@ public class Map implements Serializable{
 		this.players = players;
 	}
 
-	public void saveToFile(String filename) {
-		try {
-			FileOutputStream fileOut = new FileOutputStream("maps/" + filename);
-			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-			objectOut.writeObject(this);
-			objectOut.close();
-			fileOut.close();
-			System.out.println("Map object saved to " + filename);
-		} catch (IOException e) {
+	public static void readFromFile(String filePath) {
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("maps/" + filePath))) {
+			map = (Map) ois.readObject();
+		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
-	/**
-	 * Loads a Map object from a text file.
-	 * @param filename The name of the file to load the object from.
-	 * @return The loaded Map object.
-	 */
-	public static Map loadFromFile(String filename) {
-		try {
-			FileInputStream fileIn = new FileInputStream("maps/" + filename);
-			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-			Map map = (Map) objectIn.readObject();
-			objectIn.close();
-			fileIn.close();
-			System.out.println("Map object loaded from " + filename);
-			return map;
-		} catch (IOException | ClassNotFoundException e) {
+	public static void saveToFile(String filePath) {
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("maps/" + filePath))) {
+			oos.writeObject(map);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
 
 	public ArrayList<ContainerPos> getGameMap(){
