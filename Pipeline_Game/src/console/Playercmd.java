@@ -247,9 +247,9 @@ public class Playercmd
                             }
                         }
                     }
-                    else if(newcmd.equals("AttachPipeTo")) //player <Player> AttachPipe
+                    else if(newcmd.startsWith("AttachPipeTo")) //player <Player> AttachPipeTo<PosX>_<PosY> //TODO vmiért nemlehet minden irányba illeszteni lásd lejjebb
                     {
-                        int positions[]= StrFunctions.subPosString(newcmd,"To"); //<PosX>_<PosY>
+                        int positions[]= StrFunctions.subPosString(newcmd,"AttachPipeTo"); //<PosX>_<PosY>
                         if(positions[0]!=-1 && positions[1]!= -1)
                         {
                             for(Player player : Map.getInstance().getPlayers()){
@@ -262,7 +262,7 @@ public class Playercmd
                             }
                         }
                     }
-                    else if(newcmd.equals("AttachPump")) //player <Player> AttachPump
+                    else if(newcmd.equals("AttachPump")) //player <Player> AttachPump //TODO ez még hiányzik
                     {
                         for(Player player : Map.getInstance().getPlayers()){
                             if(player.getId() == playernumber){
@@ -275,6 +275,20 @@ public class Playercmd
                         }
                     }
                     else if(newcmd.startsWith("DetachPipeAt")) //player <Player> DetachPipe <PosX>_<PosY>
+                        /* TODO ez nemteljesen mükődik jól, meg instance of helyett kéne vmi más,
+                            fura mert ha player 2_2-ben egy pipe-t elhelyez 1_2-re, majd azt elveszi
+                            akkor  "No suitable pump to place (aka player carries no pump)" iródik ki, meg ha
+                            utána kirajzoljuk a map-et akkor ottmarad az elhelyezett pipe, de ha megpróbálunk rálépni
+                            exceptiont kapunk:
+                            operationCreateTestMap
+                            manualTeleportPlayer1To2_2
+                            manualCreateContainerPipeAtPlayer1
+                            player1AttachPipeTo1_2 (amugy pl itt player1AttachPipeTo3_2 v player1AttachPipeTo2_3 nemmüködik)
+                            player1DetachPipeAt1_2 -> "No suitable pump to place (aka player carries no pump)"
+                            operationPrintMap -> ottvan a detachelt pipe
+                            player1moveToLeft ->Exception: Not even next to it
+
+                         */
                     {
                         String new2cmd=newcmd.substring(10); //<PosX>_<PosY>
                         if(new2cmd.startsWith("At"))
@@ -290,7 +304,7 @@ public class Playercmd
                                 }
                                 for(Player player : Map.getInstance().getPlayers()){
                                     if(player.getId() == playernumber) {
-                                        if(cp.getContainer() instanceof Pipe)
+                                        if(cp.getContainer() instanceof Pipe) //TODO használd a tricket amit én (consoleprint ==PI\t)
                                             player.detachPipe(cp);
                                         else
                                             System.out.println("Found position is not valid");
@@ -300,7 +314,7 @@ public class Playercmd
                             }
                         }
                     }
-                    else if(newcmd.equals("RepairPipe")) //player <Player> RepairPipe
+                    else if(newcmd.equals("RepairPipe")) //player <Player> RepairPipe //TODO az ilyeneknél kéne kezelni exceptiont, vagy jó az ha lefagy a program? pl ha olyat javit meg ami nem rossz
                     {
                         for(Player player : Map.getInstance().getPlayers()){
                             if(player.getId() == playernumber){

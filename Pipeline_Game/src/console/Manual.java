@@ -18,7 +18,7 @@ public class Manual
         if(command.startsWith("manualCreateContainer")) //manualCreateContainer <Containertype>
         {
             String newcmd=command.substring(21);
-            if(newcmd.equals("PipeAtPlayer")) //manualCreateContainerPipeAtPlayer<Player>
+            if(newcmd.startsWith("PipeAtPlayer")) //manualCreateContainerPipeAtPlayer<Player>
             {
                 String playernumber=newcmd.substring(12); //<Player>
                 if(playernumber.length()==1)

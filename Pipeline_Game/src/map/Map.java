@@ -116,7 +116,7 @@ public class Map implements Serializable{
 		this.players = players;
 	}
 
-	public static String[] readFromFile(String filePath)
+	public static String[] readFromFile(String filePath) //TODO kéne checkelni hogy létezik-e a file
 	{
 		try (BufferedReader br = new BufferedReader(new FileReader("maps/" + filePath))) {
 			List<String> lines = new ArrayList<>();
