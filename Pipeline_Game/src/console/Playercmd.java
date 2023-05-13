@@ -98,7 +98,7 @@ public class Playercmd
                     }
                     else if(newcmd.startsWith("AdjustPumpOutputTo")) //player <Player> AdjustPumpTo <Direction>
                     {
-                        String direction=newcmd.substring(6); // <Direction>
+                        String direction=newcmd.substring(18); // <Direction>
                         Directions dir = Directions.Invalid;
                         if(direction.equals("Left"))
                             dir = Directions.Left;
@@ -167,7 +167,7 @@ public class Playercmd
                     }
                     else if(newcmd.startsWith("AdjustPumpInputTo")) //player <Player> AdjustPumpTo <Direction>
                     {
-                        String direction = newcmd.substring(6); // <Direction>
+                        String direction = newcmd.substring(17); // <Direction>
                         Directions dir = Directions.Invalid;
                         if (direction.equals("Left"))
                             dir = Directions.Left;

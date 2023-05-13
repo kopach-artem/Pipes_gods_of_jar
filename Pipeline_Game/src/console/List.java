@@ -292,43 +292,49 @@ public class List
                             {
                                 if(c.getPosX()==x && c.getPosY()==y)
                                 {
-                                    if(grid[x-1][y]!=null)
+                                    if(x > 0 && grid[x-1][y]!=null)
                                     {
                                         if(in==grid[x-1][y])
                                             dirin="Left";
                                     }
-                                    else if(grid[x+1][y]!=null)
+
+                                    if(x < maxX && grid[x+1][y]!=null)
                                     {
                                         if(in==grid[x+1][y])
                                             dirin="Right";
                                     }
-                                    else if(grid[x][y-1]!=null)
+
+                                    if(y > 0 && grid[x][y-1]!=null)
                                     {
                                         if(in==grid[x][y-1])
                                             dirin="Up";
                                     }
-                                    else if(grid[x][y+1]!=null)
+
+                                    if(y < maxY && grid[x][y+1]!=null)
                                     {
                                         if(in==grid[x][y+1])
                                             dirin="Down";
                                     }
 
-                                    if(grid[x-1][y]!=null)
+                                    if(x > 0 && grid[x-1][y]!=null)
                                     {
                                         if(out==grid[x-1][y])
                                             dirout="Left";
                                     }
-                                    else if(grid[x+1][y]!=null)
+
+                                    if(x < maxX && grid[x+1][y]!=null)
                                     {
                                         if(out==grid[x+1][y])
                                             dirout="Right";
                                     }
-                                    else if(grid[x][y-1]!=null)
+
+                                    if(y > 0 && grid[x][y-1]!=null)
                                     {
                                         if(out==grid[x][y-1])
                                             dirout="Up";
                                     }
-                                    else if(grid[x][y+1]!=null)
+
+                                    if(y < maxY && grid[x][y+1]!=null)
                                     {
                                         if(out==grid[x][y+1])
                                             dirout="Down";
@@ -336,7 +342,8 @@ public class List
                                 }
                             }
                         }
-                        System.out.println("The pump at X:"+c.getPosX()+" Y: "+c.getPosY()+" is pumping from "+dirin+" to"+dirout);
+
+                        System.out.println("The pump at X:"+c.getPosX()+" Y: "+c.getPosY()+" is pumping from "+dirin+" to "+dirout);
                     }
                 }
                 if(sum==0)
