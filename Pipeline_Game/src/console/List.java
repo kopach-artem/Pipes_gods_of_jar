@@ -28,7 +28,22 @@ public class List
         }
         else if(command.equals("listDamagedContainers")) //listDamagedContainers
         {
-            //TODO
+            int sum=0;
+            int sum2=0;
+            for(ContainerPos c:Map.getInstance().getGameMap())
+            {
+                sum++;
+                Container con=c.getContainer();
+                if(con.isDamaged())
+                {
+                    sum2++;
+                    System.out.println("There is a damaged "+con.consolePrint() +"at X: "+c.getPosX()+ " Y: "+c.getPosY());
+                }
+            }
+            if(sum==0)
+                System.out.println("The map is empty");
+            else if(sum2==0)
+                System.out.println("There are no damaged containers on the map");
         }
         else if(command.startsWith("listConnectedContainers")) //listConnectedContainers
         {
@@ -97,11 +112,41 @@ public class List
         }
         else if(command.equals("listSlipperyPipes")) //listSlipperyPipes
         {
-            // TODO
+            int sum=0;
+            int sum2=0;
+            for(ContainerPos c:Map.getInstance().getGameMap())
+            {
+                sum++;
+                Container con=c.getContainer();
+                if(con.getIsSlippery())
+                {
+                    sum2++;
+                    System.out.println("There is a slippery pipe at X: "+c.getPosX()+ " Y: "+c.getPosY());
+                }
+            }
+            if(sum==0)
+                System.out.println("The map is empty");
+            else if(sum2==0)
+                System.out.println("There are no slippery pipes on the map");
         }
         else if(command.equals("listStickyPipes")) //listStickyPipes
         {
-            // TODO
+            int sum=0;
+            int sum2=0;
+            for(ContainerPos c:Map.getInstance().getGameMap())
+            {
+                sum++;
+                Container con=c.getContainer();
+                if(con.getIsSticky())
+                {
+                    sum2++;
+                    System.out.println("There is a sticky pipe at X: "+c.getPosX()+ " Y: "+c.getPosY());
+                }
+            }
+            if(sum==0)
+                System.out.println("The map is empty");
+            else if(sum2==0)
+                System.out.println("There are no sticky pipes on the map");
         }
         else if(command.startsWith("listPlayer"))
         {
