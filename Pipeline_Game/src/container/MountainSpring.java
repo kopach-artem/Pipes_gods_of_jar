@@ -125,7 +125,7 @@ public class MountainSpring extends Container implements Serializable {
 	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
 	 */
 	@Override
-	public void insertPipe(Player player) throws MyException {
+	public void insertPipe(Player player, int xCord, int yCord) throws MyException {
 
 	}
 
@@ -192,6 +192,11 @@ public class MountainSpring extends Container implements Serializable {
 
 	@Override
 	public boolean isLooseEnd() {
+		return false;
+	}
+
+	@Override
+	public boolean isDamaged() {
 		return false;
 	}
 

@@ -178,7 +178,7 @@ public class Pipe extends Container implements Serializable {
 	 * A Pipe nem valósítja meg ezt a függvényt, ezért erről nem is beszélek többet
 	 */
 	@Override
-	public void insertPipe(Player player) throws MyException {
+	public void insertPipe(Player player, int xCord, int yCord) throws MyException {
 
 	}
 
@@ -391,6 +391,11 @@ public class Pipe extends Container implements Serializable {
 			return true;
 		else
 			return false;
+	}
+
+	@Override
+	public boolean isDamaged() {
+		return isLeaked;
 	}
 
 	/**
