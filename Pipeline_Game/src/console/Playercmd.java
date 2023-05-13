@@ -31,7 +31,7 @@ public class Playercmd
                 {
                     int playernumber=Character.getNumericValue(command.charAt(6)); //<Player>
                     String newcmd=command.substring(7);
-                    if(newcmd.startsWith("moveTo")) //player <Player> moveTo <Direction>
+                    if(newcmd.startsWith("moveTo")) //player <Player> moveTo <Direction> //TODO The given Container is not steppable exception
                     {
                         String direction=newcmd.substring(6); // <Direction>
                         Directions dir = Directions.Invalid;
