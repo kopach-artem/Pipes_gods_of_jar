@@ -105,7 +105,7 @@ public class Operation
             Map.getInstance().getPlayers().add(new Mechanic(cs));
             Map.getInstance().getPlayers().add(new Saboteur(cs));
 
-            Map.saveToFile("first.txt");
+            Map.saveToFile("testMap.txt");
 
             System.out.println("Test map has successfully been created as 'testMap.txt', you can load it with command 'operationLoadMaptest.txt'");
         }
@@ -118,7 +118,34 @@ public class Operation
             else
             {
                 String filename = command.substring(16); // <Filename>.txt
-                Map.readFromFile(filename);
+                String commands[]=Map.readFromFile(filename);
+                for(int i=0; i<commands.length; i++)
+                {
+                    if(commands[i].startsWith("operation"))
+                    {
+                        Operation.operation(commands[i]);
+                    }
+                    else if(commands[i].startsWith("player"))
+                    {
+                        Playercmd.player(commands[i]);
+                    }
+                    else if(commands[i].startsWith("manual"))
+                    {
+                        Manual.manual(commands[i]);
+                    }
+                    else if(commands[i].startsWith("list"))
+                    {
+                        List.list(commands[i]);
+                    }
+                    else if(commands[i].startsWith("random"))
+                    {
+                        Random.random(commands[i]);
+                    }
+                    else
+                    {
+                        System.out.println("Unknown command");
+                    }
+                }
                 if(Map.getInstance() != null)
                     System.out.println("Loading map from file: " + filename);
             }
@@ -140,7 +167,7 @@ public class Operation
                     System.out.println("Constructed map is empty");
             }
         }
-        else if(command.startsWith("operationPrintMap")) {
+        else if(command.equals("operationPrintMap")) {
 
             if(!Map.getInstance().getGameMap().isEmpty()) {
                 Operation.printMap(Map.getInstance().getGameMap());
