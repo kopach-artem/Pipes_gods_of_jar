@@ -200,6 +200,16 @@ public class MountainSpring extends Container implements Serializable {
 		return false;
 	}
 
+	@Override
+	public Container getInput() {
+		return null;
+	}
+
+	@Override
+	public Container getOutput() {
+		return output;
+	}
+
 
 	/**
 	 * Visszatér a waterCapac attribűtum értékével

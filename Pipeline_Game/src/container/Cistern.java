@@ -254,6 +254,11 @@ public class Cistern extends Container implements Serializable {
 		return input;
 	}
 
+	@Override
+	public Container getOutput() {
+		return null;
+	}
+
 	/**
 	 * Beállítja a Cistern bemeneti csövét
 	 * @param input - A beállítani kívánt cső

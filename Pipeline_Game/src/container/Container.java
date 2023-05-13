@@ -216,4 +216,7 @@ public abstract class Container implements Serializable {
 	}
 
 	public abstract boolean isDamaged();
+
+	public abstract Container getInput();
+	public abstract Container getOutput();
 }
