@@ -153,14 +153,18 @@ public class Playercmd
                             }
                         }
                     }
-                    else if(newcmd.equals("AttachPipe")) //player <Player> AttachPipe
+                    else if(newcmd.equals("AttachPipeTo")) //player <Player> AttachPipe
                     {
-                        for(Player player : Map.getInstance().getPlayers()){
-                            if(player.getId() == playernumber){
-                                if(!player.getCarriedPipes().isEmpty())
-                                    player.attachPipe();
-                                else
-                                    System.out.println("No suitable pipe to place (aka player carries no pipe)");
+                        int positions[]= StrFunctions.subPosString(newcmd,"To"); //<PosX>_<PosY>
+                        if(positions[0]!=-1 && positions[1]!= -1)
+                        {
+                            for(Player player : Map.getInstance().getPlayers()){
+                                if(player.getId() == playernumber){
+                                    if(!player.getCarriedPipes().isEmpty())
+                                        player.attachPipe(positions[0], positions[1]);
+                                    else
+                                        System.out.println("No suitable pipe to place (aka player carries no pipe)");
+                                }
                             }
                         }
                     }
@@ -187,7 +191,7 @@ public class Playercmd
                                 ContainerPos cp = new ContainerPos();
                                 for(ContainerPos containerPos : Map.getInstance().getGameMap()) {
                                     if(containerPos.getPosX() == positions[0] && containerPos.getPosY() == positions[1]) {
-                                        containerPos = cp;
+                                        cp = containerPos;
                                     }
                                 }
                                 for(Player player : Map.getInstance().getPlayers()){

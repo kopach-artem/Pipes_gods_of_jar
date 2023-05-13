@@ -187,7 +187,7 @@ public class Cistern extends Container implements Serializable {
 	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
 	 */
 	@Override
-	public void insertPipe(Player player) throws MyException {
+	public void insertPipe(Player player, int xCord, int yCord) throws MyException {
 
 	}
 
@@ -238,6 +238,11 @@ public class Cistern extends Container implements Serializable {
 
 	@Override
 	public boolean isLooseEnd() {
+		return false;
+	}
+
+	@Override
+	public boolean isDamaged() {
 		return false;
 	}
 
