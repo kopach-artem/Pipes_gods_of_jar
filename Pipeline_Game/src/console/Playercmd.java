@@ -5,6 +5,7 @@ import container.Pipe;
 import exception.MyException;
 import map.Map;
 import player.Player;
+import player.Type;
 
 enum Directions{
     Left,
@@ -95,7 +96,7 @@ public class Playercmd
                             }
                         }
                     }
-                    else if(newcmd.startsWith("AdjustPumpTo")) //player <Player> AdjustPumpTo <Direction>
+                    else if(newcmd.startsWith("AdjustPumpOutputTo")) //player <Player> AdjustPumpTo <Direction>
                     {
                         String direction=newcmd.substring(6); // <Direction>
                         Directions dir = Directions.Invalid;
@@ -126,24 +127,112 @@ public class Playercmd
                             }
                         }
 
-                        switch(dir){
-                            case Left :{
-
+                        switch(dir) {
+                            case Left: {
+                                for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+                                    if ((containerPos.getPosX() == cp.getPosX() - 1) && containerPos.getPosY() == cp.getPosY()) {
+                                        p.adjustPump((Pipe) containerPos.getContainer(), Type.Output);
+                                    }
+                                }
+                                break;
                             }
-                            case Right:{
-
+                            case Right: {
+                                for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+                                    if ((containerPos.getPosX() == cp.getPosX() + 1) && containerPos.getPosY() == cp.getPosY()) {
+                                        p.adjustPump((Pipe) containerPos.getContainer(), Type.Output);
+                                    }
+                                }
+                                break;
                             }
-                            case Up:{
-
+                            case Up: {
+                                for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+                                    if ((containerPos.getPosY() == cp.getPosY() - 1) && containerPos.getPosX() == cp.getPosX()) {
+                                        p.adjustPump((Pipe) containerPos.getContainer(), Type.Output);
+                                    }
+                                }
+                                break;
                             }
-                            case Down:{
-
+                            case Down: {
+                                for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+                                    if ((containerPos.getPosY() == cp.getPosY() + 1) && containerPos.getPosX() == cp.getPosX()) {
+                                        p.adjustPump((Pipe) containerPos.getContainer(), Type.Output);
+                                    }
+                                }
+                                break;
                             }
-                            case Invalid:{
+                            default: {
+                                break;
+                            }
+                        }
+                    }
+                    else if(newcmd.startsWith("AdjustPumpInputTo")) //player <Player> AdjustPumpTo <Direction>
+                    {
+                        String direction = newcmd.substring(6); // <Direction>
+                        Directions dir = Directions.Invalid;
+                        if (direction.equals("Left"))
+                            dir = Directions.Left;
+                        else if (direction.equals("Right"))
+                            dir = Directions.Right;
+                        else if (direction.equals("Up"))
+                            dir = Directions.Up;
+                        else if (direction.equals("Down"))
+                            dir = Directions.Down;
+                        else {
+                            System.out.println("Invalid direction");
+                        }
 
+                        Player p = new Player();
+                        ContainerPos cp = new ContainerPos();
+
+                        for (Player player : Map.getInstance().getPlayers()) {
+                            if (player.getId() == playernumber) {
+                                p = player;
+                            }
+                        }
+                        for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+                            if (cp.getContainer() == p.getPosition()) {
+                                cp = containerPos;
                             }
                         }
 
+                        switch (dir) {
+                            case Left: {
+                                for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+                                    if ((containerPos.getPosX() == cp.getPosX() - 1) && containerPos.getPosY() == cp.getPosY()) {
+                                        p.adjustPump((Pipe) containerPos.getContainer(), Type.Input);
+                                    }
+                                }
+                                break;
+                            }
+                            case Right: {
+                                for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+                                    if ((containerPos.getPosX() == cp.getPosX() + 1) && containerPos.getPosY() == cp.getPosY()) {
+                                        p.adjustPump((Pipe) containerPos.getContainer(), Type.Input);
+                                    }
+                                }
+                                break;
+                            }
+                            case Up: {
+                                for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+                                    if ((containerPos.getPosY() == cp.getPosY() - 1) && containerPos.getPosX() == cp.getPosX()) {
+                                        p.adjustPump((Pipe) containerPos.getContainer(), Type.Input);
+                                    }
+                                }
+                                break;
+                            }
+                            case Down: {
+                                for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+                                    if ((containerPos.getPosY() == cp.getPosY() + 1) && containerPos.getPosX() == cp.getPosX()) {
+                                        p.adjustPump((Pipe) containerPos.getContainer(), Type.Input);
+                                    }
+                                }
+                                break;
+                            }
+                            default: {
+                                break;
+                            }
+
+                        }
                     }
                     else if(newcmd.equals("LeakPipe")) //player <Player> LeakPipe
                     {
