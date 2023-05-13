@@ -1,6 +1,8 @@
 package container;
 
-public class ContainerPos {
+import java.io.Serializable;
+
+public class ContainerPos implements Serializable {
     public Container getContainer() {
         return container;
     }

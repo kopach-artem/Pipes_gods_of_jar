@@ -5,108 +5,104 @@ import exception.MyException;
 import map.Map;
 import player.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Operation
 {
-    public static Map map = new Map();
-    public static Map constructedMap = new Map();
 
+    public static void printMap(ArrayList<ContainerPos> containerPosList){
 
-    public static void printMap(ArrayList<ContainerPos> containerPosList) {
-        int maxX = -1;
-        int maxY = -1;
+            int maxX = -1;
+            int maxY = -1;
 
-        // Find the maximum x and y values
-        for (ContainerPos containerPos : containerPosList) {
-            if (containerPos.getPosX() > maxX) {
-                maxX = containerPos.getPosX();
+            // Find the maximum x and y values
+            for (ContainerPos containerPos : containerPosList) {
+                if (containerPos.getPosX() > maxX) {
+                    maxX = containerPos.getPosX();
+                }
+                if (containerPos.getPosY() > maxY) {
+                    maxY = containerPos.getPosY();
+                }
             }
-            if (containerPos.getPosY() > maxY) {
-                maxY = containerPos.getPosY();
+
+            // Create a 2D grid to store the container symbols
+            String[][] grid = new String[maxX + 1][maxY + 1];
+
+            // Fill the grid with ' ' (empty spaces)
+            for (int i = 0; i <= maxX; i++) {
+                for (int j = 0; j <= maxY; j++) {
+                    grid[i][j] = " \t";
+                }
             }
-        }
 
-        // Create a 2D grid to store the container symbols
-        String[][] grid = new String[maxX + 1][maxY + 1];
-
-        // Fill the grid with ' ' (empty spaces)
-        for (int i = 0; i <= maxX; i++) {
-            for (int j = 0; j <= maxY; j++) {
-                grid[i][j] = " \t";
+            // Place the container symbols in the grid
+            for (ContainerPos containerPos : containerPosList) {
+                int x = containerPos.getPosX();
+                int y = containerPos.getPosY();
+                Container c = containerPos.getContainer();
+                grid[x][y] = c.consolePrint();
             }
-        }
 
-        // Place the container symbols in the grid
-        for (ContainerPos containerPos : containerPosList) {
-            int x = containerPos.getPosX();
-            int y = containerPos.getPosY();
-            Container c = containerPos.getContainer();
-            grid[x][y] = c.consolePrint();
-        }
-
-        // Print the grid
-        for (int y = 0; y <= maxY; y++) {
-            for (int x = 0; x <= maxX; x++) {
-                System.out.print(grid[x][y]);
+            // Print the grid
+            for (int y = 0; y <= maxY; y++) {
+                for (int x = 0; x <= maxX; x++) {
+                    System.out.print(grid[x][y]);
+                }
+                System.out.println();
             }
-            System.out.println();
-        }
     }
 
-    /**
-     * Ez a metódus hoz létre nekünk egy teszt Map-ot amelyet elment a testMap.txt néven
-     * A következő páylát hozza létre
-     * MS - PU -  C
-     * |
-     * PU
-     */
-    public static void testMap() throws MyException {
-
-        //Szükséges elemek létrehozása, inicializálása
-
-        //Első sor változói
-        Pipe pipe1 = new Pipe();
-        Pump pump1 = new Pump(3);
-        Pipe pipe2 = new Pipe();
-        MountainSpring ms = new MountainSpring(pipe1);
-        Cistern cs = new Cistern(pipe2);
-
-        //Második sor változói
-        Pipe pipe3 = new Pipe();
-
-        //Harmadik sor változói
-        Pump pump2 = new Pump(3);
-
-        //Változók hozzáadása Map-hoz
-        map.getContainers().add(pipe1);
-        map.getContainers().add(pipe2);
-        map.getContainers().add(pipe3);
-        map.getContainers().add(pump1);
-        map.getContainers().add(pump2);
-        map.getContainers().add(ms);
-        map.getContainers().add(cs);
-
-        //Változók inicializálása
-        map.connectPumpToPipe(pump1, pipe1);
-        map.connectPumpToPipe(pump1, pipe2);
-        map.connectPumpToPipe(pump2, pipe3);
-
-        map.getGameMap().add(new ContainerPos(ms, 0, 0));
-        map.getGameMap().add(new ContainerPos(pipe1, 1, 0));
-        map.getGameMap().add(new ContainerPos(pump1, 2, 0));
-        map.getGameMap().add(new ContainerPos(pipe2, 3, 0));
-        map.getGameMap().add(new ContainerPos(cs, 4, 0));
-        map.getGameMap().add(new ContainerPos(pipe3, 2, 1));
-        map.getGameMap().add(new ContainerPos(pump2, 2, 2));
-
-        map.getPlayers().add(new Mechanic(cs));
-        map.getPlayers().add(new Saboteur(cs));
-
-        map.saveToFile("testMap.txt");
-    }
     public static void operation(String command) throws MyException {
-        if(command.startsWith("operationLoadMap")) //operationLoadMap <Filename>.txt
+        if(command.startsWith("operationCreateTestMap")){
+
+            System.out.println("Map creation started, will be saved as testMap.txt");
+
+            //Szükséges elemek létrehozása, inicializálása
+
+            //Első sor változói
+            Pipe pipe1 = new Pipe();
+            Pump pump1 = new Pump(3);
+            Pipe pipe2 = new Pipe();
+            MountainSpring ms = new MountainSpring(pipe1);
+            Cistern cs = new Cistern(pipe2);
+
+            //Második sor változói
+            Pipe pipe3 = new Pipe();
+
+            //Harmadik sor változói
+            Pump pump2 = new Pump(3);
+
+            //Változók hozzáadása Map-hoz
+            Map.getInstance().getContainers().add(pipe1);
+            Map.getInstance().getContainers().add(pipe2);
+            Map.getInstance().getContainers().add(pipe3);
+            Map.getInstance().getContainers().add(pump1);
+            Map.getInstance().getContainers().add(pump2);
+            Map.getInstance().getContainers().add(ms);
+            Map.getInstance().getContainers().add(cs);
+
+            //Változók inicializálása
+            Map.getInstance().connectPumpToPipe(pump1, pipe1);
+            Map.getInstance().connectPumpToPipe(pump1, pipe2);
+            Map.getInstance().connectPumpToPipe(pump2, pipe3);
+
+            Map.getInstance().getGameMap().add(new ContainerPos(ms, 0, 0));
+            Map.getInstance().getGameMap().add(new ContainerPos(pipe1, 1, 0));
+            Map.getInstance().getGameMap().add(new ContainerPos(pump1, 2, 0));
+            Map.getInstance().getGameMap().add(new ContainerPos(pipe2, 3, 0));
+            Map.getInstance().getGameMap().add(new ContainerPos(cs, 4, 0));
+            Map.getInstance().getGameMap().add(new ContainerPos(pipe3, 2, 1));
+            Map.getInstance().getGameMap().add(new ContainerPos(pump2, 2, 2));
+
+            Map.getInstance().getPlayers().add(new Mechanic(cs));
+            Map.getInstance().getPlayers().add(new Saboteur(cs));
+
+            Map.saveToFile("first.txt");
+
+            System.out.println("Test map has successfully been created as 'testMap.txt', you can load it with command 'operationLoadMaptest.txt'");
+        }
+        else if(command.startsWith("operationLoadMap")) //operationLoadMap <Filename>.txt
         {
             if (!command.endsWith(".txt"))
             {
@@ -115,8 +111,9 @@ public class Operation
             else
             {
                 String filename = command.substring(16); // <Filename>.txt
-                map = Map.loadFromFile(filename);
-                System.out.println("Loading map from file: " + filename);
+                Map.readFromFile(filename);
+                if(Map.getInstance() != null)
+                    System.out.println("Loading map from file: " + filename);
             }
         }
         else if(command.startsWith("operationSaveMap")) //operationSaveMap <Filename>.txt
@@ -128,14 +125,21 @@ public class Operation
             else
             {
                 String filename = command.substring(16); // <Filename>.txt
-                map.saveToFile(filename);
-                System.out.println("Saving map into file: " + filename);
+                if(Map.getInstance() != null) {
+                    Map.getInstance().saveToFile(filename);
+                    System.out.println("Saving map into file: " + filename);
+                }
+                else
+                    System.out.println("Constructed map is empty");
             }
         }
-        else if(command.equals("operationCreateMap")) //operationCreateMap
-        {
-            //Előre megadott pálya elkészítése
-            Operation.testMap();
+        else if(command.startsWith("operationPrintMap")) {
+
+            if(!Map.getInstance().getGameMap().isEmpty()) {
+                Operation.printMap(Map.getInstance().getGameMap());
+            }
+            else
+                System.out.println("Command is not acceptable due to the map being empty");
         }
         else if(command.startsWith("operationCreateContainer")) //operationCreateContainer<ContainerType>At <PosX>_<PosY>
         {
@@ -145,23 +149,23 @@ public class Operation
                 int positions[]= StrFunctions.subPosString(container,"CisternAt"); //<PosX>_<PosY>
                 if(positions[0]!=-1 && positions[1]!= -1)
                 {
-                    if(!constructedMap.getGameMap().isEmpty())
+                    if(!Map.getInstance().getGameMap().isEmpty())
                     {
-                        for(ContainerPos cp : constructedMap.getGameMap()){
+                        for(ContainerPos cp : Map.getInstance().getGameMap()){
                             if(cp.getPosX() == positions[0] && cp.getPosY() == positions[1]){
                                 System.out.println("There's already a container stationed at:" + positions[0] + ',' + positions[1] + " position");
                             }
                             else{
                                 Cistern cs = new Cistern();
-                                constructedMap.getContainers().add(cs);
-                                constructedMap.getGameMap().add(new ContainerPos(cs, positions[0], positions[1]));
+                                Map.getInstance().getContainers().add(cs);
+                                Map.getInstance().getGameMap().add(new ContainerPos(cs, positions[0], positions[1]));
                             }
                         }
                     }
                     else {
                         Cistern cs = new Cistern();
-                        constructedMap.getContainers().add(cs);
-                        constructedMap.getGameMap().add(new ContainerPos(cs, positions[0], positions[1]));
+                        Map.getInstance().getContainers().add(cs);
+                        Map.getInstance().getGameMap().add(new ContainerPos(cs, positions[0], positions[1]));
                     }
                 }
             }
@@ -170,23 +174,23 @@ public class Operation
                 int positions[]= StrFunctions.subPosString(container,"MountainSpringAt"); //<PosX>_<PosY>
                 if(positions[0]!=-1 && positions[1]!= -1)
                 {
-                    if(!constructedMap.getGameMap().isEmpty())
+                    if(!Map.getInstance().getGameMap().isEmpty())
                     {
-                        for(ContainerPos cp : constructedMap.getGameMap()){
+                        for(ContainerPos cp : Map.getInstance().getGameMap()){
                             if(cp.getPosX() == positions[0] && cp.getPosY() == positions[1]){
                                 System.out.println("There's already a container stationed at:" + positions[0] + ',' + positions[1] + " position");
                             }
                             else{
                                 MountainSpring ms = new MountainSpring();
-                                constructedMap.getContainers().add(ms);
-                                constructedMap.getGameMap().add(new ContainerPos(ms, positions[0], positions[1]));
+                                Map.getInstance().getContainers().add(ms);
+                                Map.getInstance().getGameMap().add(new ContainerPos(ms, positions[0], positions[1]));
                             }
                         }
                     }
                     else {
                         MountainSpring ms = new MountainSpring();
-                        constructedMap.getContainers().add(ms);
-                        constructedMap.getGameMap().add(new ContainerPos(ms, positions[0], positions[1]));
+                        Map.getInstance().getContainers().add(ms);
+                        Map.getInstance().getGameMap().add(new ContainerPos(ms, positions[0], positions[1]));
                     }
                 }
             }
@@ -195,23 +199,23 @@ public class Operation
                 int positions[]= StrFunctions.subPosString(container,"PipeAt"); //<PosX>_<PosY>
                 if(positions[0]!=-1 && positions[1]!= -1)
                 {
-                    if(!constructedMap.getGameMap().isEmpty())
+                    if(!Map.getInstance().getGameMap().isEmpty())
                     {
-                        for(ContainerPos cp : constructedMap.getGameMap()){
+                        for(ContainerPos cp : Map.getInstance().getGameMap()){
                             if(cp.getPosX() == positions[0] && cp.getPosY() == positions[1]){
                                 System.out.println("There's already a container stationed at:" + positions[0] + ',' + positions[1] + " position");
                             }
                             else{
                                 Pipe pipe = new Pipe();
-                                constructedMap.getContainers().add(pipe);
-                                constructedMap.getGameMap().add(new ContainerPos(pipe, positions[0], positions[1]));
+                                Map.getInstance().getContainers().add(pipe);
+                                Map.getInstance().getGameMap().add(new ContainerPos(pipe, positions[0], positions[1]));
                             }
                         }
                     }
                     else {
                         Pipe pipe = new Pipe();
-                        constructedMap.getContainers().add(pipe);
-                        constructedMap.getGameMap().add(new ContainerPos(pipe, positions[0], positions[1]));
+                        Map.getInstance().getContainers().add(pipe);
+                        Map.getInstance().getGameMap().add(new ContainerPos(pipe, positions[0], positions[1]));
                     }
                 }
             }
@@ -220,23 +224,23 @@ public class Operation
                 int positions[]= StrFunctions.subPosString(container,"PumpAt"); //<PosX>_<PosY>
                 if(positions[0]!=-1 && positions[1]!= -1)
                 {
-                    if(!constructedMap.getGameMap().isEmpty())
+                    if(!Map.getInstance().getGameMap().isEmpty())
                     {
-                        for(ContainerPos cp : constructedMap.getGameMap()){
+                        for(ContainerPos cp : Map.getInstance().getGameMap()){
                             if(cp.getPosX() == positions[0] && cp.getPosY() == positions[1]){
                                 System.out.println("There's already a container stationed at:" + positions[0] + ',' + positions[1] + " position");
                             }
                             else{
                                 Pump pump = new Pump(4);
-                                constructedMap.getContainers().add(pump);
-                                constructedMap.getGameMap().add(new ContainerPos(pump, positions[0], positions[1]));
+                                Map.getInstance().getContainers().add(pump);
+                                Map.getInstance().getGameMap().add(new ContainerPos(pump, positions[0], positions[1]));
                             }
                         }
                     }
                     else {
                         Pump pump = new Pump(4);
-                        constructedMap.getContainers().add(pump);
-                        constructedMap.getGameMap().add(new ContainerPos(pump, positions[0], positions[1]));
+                        Map.getInstance().getContainers().add(pump);
+                        Map.getInstance().getGameMap().add(new ContainerPos(pump, positions[0], positions[1]));
                     }
                 }
             }
@@ -253,13 +257,13 @@ public class Operation
                 int positions[]= StrFunctions.subPosString(container,"At"); //<PosX>_<PosY>
                 if(positions[0]!=-1 && positions[1]!= -1)
                 {
-                    if(!constructedMap.getGameMap().isEmpty())
-                        for(ContainerPos cp : constructedMap.getGameMap()) {
+                    if(!Map.getInstance().getGameMap().isEmpty())
+                        for(ContainerPos cp : Map.getInstance().getGameMap()) {
                             if(cp.getPosX() == positions[0] && cp.getPosY() == positions[1]){
-                                if(constructedMap.getContainers().contains(cp.getContainer())){
-                                    constructedMap.getContainers().remove(cp.getContainer());
+                                if(Map.getInstance().getContainers().contains(cp.getContainer())){
+                                    Map.getInstance().getContainers().remove(cp.getContainer());
                                 }
-                                constructedMap.getGameMap().remove(cp);
+                                Map.getInstance().getGameMap().remove(cp);
                                 break;
                             }
                         }
@@ -277,8 +281,8 @@ public class Operation
             {
                 if(StrFunctions.isDigit(playernumber.charAt(0)))
                 {
-                    if(!map.getPlayers().isEmpty()){
-                        map.getPlayers().remove(playernumber);
+                    if(!Map.getInstance().getPlayers().isEmpty()){
+                        Map.getInstance().getPlayers().remove(playernumber);
                     }
                 }
                 else
@@ -298,10 +302,10 @@ public class Operation
                 int positions[]= StrFunctions.subPosString(playerpos,"MechanicAt"); //<PosX>_<PosY>
                 if(positions[0]!=-1 && positions[1]!= -1)
                 {
-                    if(!constructedMap.getGameMap().isEmpty()) {
-                        for (ContainerPos cp : constructedMap.getGameMap()) {
+                    if(!Map.getInstance().getGameMap().isEmpty()) {
+                        for (ContainerPos cp : Map.getInstance().getGameMap()) {
                             if (cp.getPosX() == positions[0] && cp.getPosY() == positions[1]) {
-                                constructedMap.getPlayers().add(new Mechanic(cp.getContainer()));
+                                Map.getInstance().getPlayers().add(new Mechanic(cp.getContainer()));
                                 break;
                             }
                         }
@@ -315,10 +319,10 @@ public class Operation
                 int positions[]= StrFunctions.subPosString(playerpos,"SaboteurAt"); //<PosX>_<PosY>
                 if(positions[0]!=-1 && positions[1]!= -1)
                 {
-                    if(!constructedMap.getGameMap().isEmpty()) {
-                        for (ContainerPos cp : constructedMap.getGameMap()) {
+                    if(!Map.getInstance().getGameMap().isEmpty()) {
+                        for (ContainerPos cp : Map.getInstance().getGameMap()) {
                             if (cp.getPosX() == positions[0] && cp.getPosY() == positions[1]) {
-                                constructedMap.getPlayers().add(new Saboteur(cp.getContainer()));
+                                Map.getInstance().getPlayers().add(new Saboteur(cp.getContainer()));
                                 break;
                             }
                         }
@@ -380,7 +384,7 @@ public class Operation
                             System.out.println("The two given positions are one and the same");
                         }
                         else {
-                            for (ContainerPos cp : constructedMap.getGameMap()) {
+                            for (ContainerPos cp : Map.getInstance().getGameMap()) {
                                 if (cp.getPosX() == positions1[0] && cp.getPosY() == positions1[1]) {
                                     firstCon = cp;
                                 }

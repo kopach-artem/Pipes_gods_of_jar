@@ -1,14 +1,16 @@
 package container;
 import exception.MyException;
+import map.Map;
 import player.Player;
 import player.Type;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  * Ez a Pump osztály, ez teszi lehetővé a csövek közötti összeköttetést
  */
-public class Pump extends Container {
+public class Pump extends Container implements Serializable {
 
 	/**
 	 * Ebben tároljuk, hogy a pumpában melyik cső a bemeneti cső
@@ -46,15 +48,14 @@ public class Pump extends Container {
 		if(maxPipeAmount > 4){
 			System.out.println("Pump can only be connected to 4 or less pipes");
 			this.maxPipeAmount = 4;
-		}
-		else
+		} else
 			this.maxPipeAmount=maxPipeAmount;
 		Random rand=new Random();
 		randomDamageValue=rand.nextInt(11) + 10;
 		isDamaged=false;
 	}
 
-	
+
 	/**
 	 * Ez a függvény valósítja meg a pumpa megjavítását
 	 * Megnézzük, hogy a pumpa el van-e romolva amennyiben igen elvégezzük a javítást más esetben kivételt dobunk
@@ -63,8 +64,7 @@ public class Pump extends Container {
 	public void mendPump() throws MyException {
 		if(this.isDamaged){
 			this.setDamaged(false);
-		}
-		else
+		} else
 			throw new MyException("Wasn't even a scratch on it");
 	}
 
@@ -91,11 +91,11 @@ public class Pump extends Container {
 	 */
 	public void insertPipe(Player player) throws MyException{
 
-		Pipe atPipe = player.getCarriedPipes().get(0);
+		Container atPipe = player.getCarriedPipes().get(0);
 
 		if(!isAllConnected()){
-			this.addPipe(atPipe);
-			atPipe.addPump(this, 0);
+			this.getNeighbors().add(atPipe);
+			atPipe.getNeighbors().add(0, this);
 			player.getCarriedPipes().remove(atPipe);
 		}
 
@@ -109,8 +109,8 @@ public class Pump extends Container {
 
 	}
 
-	
-	/** 
+
+	/**
 	 * @return boolean
 	 */
 	@Override
@@ -142,8 +142,7 @@ public class Pump extends Container {
 			if(t == Type.Input){
 				if(this.getOutput() != pi){
 					this.setInput(pi);
-				}
-				else
+				} else
 					throw new MyException("Input pipe cannot be changed once water is flowing through it");
 			}
 			if(t == Type.Output){
@@ -170,18 +169,23 @@ public class Pump extends Container {
 	 * @param pi - Az elvételre kijelölt cső.
 	 * @throws MyException
 	 */
-	public void extractPipe(Player player, Pipe pi) throws MyException {
-
-		if(this.seeifNeighbors(pi)){
-			if(pi.isLooseEnd()){
-				pi.removePump(this);
-				this.removePipe(pi);
-				player.getCarriedPipes().add(pi);
+	public void extractPipe(Player player, int xCord, int yCord) throws MyException {
+		ContainerPos cp = new ContainerPos();
+		for(ContainerPos containerPos : Map.getInstance().getGameMap()){
+			if(containerPos.getPosX() == xCord && containerPos.getPosY() == yCord){
+				cp = containerPos;
+			}
+		}
+		if(this.seeifNeighbors(cp.getContainer())){
+			if(cp.getContainer().isLooseEnd()){
+				cp.getContainer().getNeighbors().remove(this);
+				this.getNeighbors().remove(cp.getContainer());
+				player.getCarriedPipes().add(cp.getContainer());
 			}
 		}
 	}
 
-	
+
 	/**
 	 * Mindig true-val tér vissza, ugyanis a Pump-ra akárhány játékos léphet.
 	 * @return boolean
@@ -190,7 +194,7 @@ public class Pump extends Container {
 		return true;
 	}
 
-	
+
 	/**
 	 * Elrontja a pumpát a randomDamageValue és a paraméterül kapott érték alapján
 	 * @param turnCount - Ha egyenéő a randomDamageValue-val és működik a pumpa, akkor elrontja.
@@ -202,7 +206,7 @@ public class Pump extends Container {
 		}
 	}
 
-	
+
 	/**
 	 * Csatlakoztatja a paraméterül kapott csövet a pumpához.
 	 * @param pi
@@ -214,7 +218,7 @@ public class Pump extends Container {
 
 	}
 
-	
+
 	/**
 	 * Leszedi a paraméterül kapott csövet a pumpáról.
 	 * @param pi
@@ -267,6 +271,16 @@ public class Pump extends Container {
 		return "PU\t";
 	}
 
+	@Override
+	public void damageContainer() {
+		this.isDamaged = true;
+	}
+
+	@Override
+	public boolean isLooseEnd() {
+		return false;
+	}
+
 
 	/**
 	 * Ha teli van a pumpa, vagyis már nem lehet több csövet hozzácstolni, akkor true-val tér vissza.
@@ -279,7 +293,7 @@ public class Pump extends Container {
 			return false;
 	}
 
-	
+
 	/**
 	 * Vissaztér a randomDamageValue attribútum értékével.
 	 * @return int

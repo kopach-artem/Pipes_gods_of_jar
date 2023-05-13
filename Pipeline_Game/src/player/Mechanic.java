@@ -3,10 +3,12 @@ package player;
 import container.*;
 import exception.MyException;
 
+import java.io.Serializable;
+
 /**
  * Ez a szerelő játékos, a szerelő javíthatja meg a csöveket, pumpákat és állíthatja is azokat.
  */
-public class Mechanic extends Player {
+public class Mechanic extends Player implements Serializable {
 
 	/**
 	 * Mechanic konmstruktora

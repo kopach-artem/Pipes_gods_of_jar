@@ -18,10 +18,14 @@ public class Player implements Serializable {
 	 */
 	protected Container position;
 
+	protected static int latestId = 0;
+
+	protected int id;
+
 	/**
 	 * A játékos által hordozott csövek listája.
 	 */
-	protected ArrayList<Pipe> carriedPipes = new ArrayList<Pipe>();
+	protected ArrayList<Container> carriedPipes = new ArrayList<Container>();
 
 	/**
 	 * Ez tartalmazza a játékos által hordozott pumpát.
@@ -35,6 +39,21 @@ public class Player implements Serializable {
 	public Player(Container position) {
 		this.position=position;
 		carriedPump = null;
+		id = generateId();
+	}
+
+	public Player() {
+		this.position=null;
+		carriedPump = null;
+		id = generateId();
+	}
+
+	public static int generateId(){
+		return ++latestId;
+	}
+
+	public int getId(){
+		return id;
 	}
 
 	/**
@@ -107,6 +126,17 @@ public class Player implements Serializable {
 		}
 	}
 
+	public void RepairPipe() throws MyException {
+
+	}
+
+	public void RepairPump() throws MyException {
+
+	}
+	public void makePipeSlippery(){
+
+	}
+
 	/**
 	 * Változni logiká, mert most attachPipe csak a fűggvény, 
 	 * amelyik csak kezdi eset és néz, 
@@ -162,9 +192,9 @@ public class Player implements Serializable {
 	 * @param pi - A felvenni kívánt cső
 	 * @throws MyException
 	 */
-	public void detachPipe(Pipe pi) throws MyException {
+	public void detachPipe(ContainerPos container) throws MyException {
 
-		position.extractPipe(this, pi);
+		position.extractPipe(this, container.getPosX(), container.getPosY());
 
 	}
 
@@ -204,7 +234,7 @@ public class Player implements Serializable {
 	 * Visszatér a carriedPipes attribútum értékével.
 	 * @return ArrayList
 	 */
-	public ArrayList<Pipe> getCarriedPipes() {
+	public ArrayList<Container> getCarriedPipes() {
 		return carriedPipes;
 	}
 
@@ -212,7 +242,7 @@ public class Player implements Serializable {
 	 * Beállítja a carriedPipes attribútum értékét a paraméterül kapottra.
 	 * @param carriedPipes - A beállítani kívánt ArrayList
 	 */
-	public void setCarriedPipes(ArrayList<Pipe> carriedPipes) {
+	public void setCarriedPipes(ArrayList<Container> carriedPipes) {
 		this.carriedPipes = carriedPipes;
 	}
 }
