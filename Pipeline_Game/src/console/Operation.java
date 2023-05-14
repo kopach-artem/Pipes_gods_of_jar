@@ -5,6 +5,8 @@ import exception.MyException;
 import map.Map;
 import player.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -104,7 +106,19 @@ public class Operation
 
             Map.getInstance().getPlayers().add(new Mechanic(cs));
             Map.getInstance().getPlayers().add(new Saboteur(cs));
-
+            
+            try {
+                File file = new File("maps/testMap.txt");
+                file.getParentFile().mkdirs();
+                if (file.createNewFile()) {
+                  System.out.println("File created: " + file.getName());
+                } else {
+                  System.out.println("File already exists.");
+                }
+              } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+              }
             Map.saveToFile("testMap.txt");
 
             System.out.println("Test map has successfully been created as 'testMap.txt', you can load it with command 'operationLoadMaptest.txt'");
