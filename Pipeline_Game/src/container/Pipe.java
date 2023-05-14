@@ -112,6 +112,23 @@ public class Pipe extends Container implements Serializable {
 			throw new MyException("It was already damaged");
 	}
 
+	public boolean isVertical(){
+		ContainerPos cp = new ContainerPos();
+		for(ContainerPos containerPos : Map.getInstance().getGameMap()){
+			if(containerPos.getContainer().equals(this)){
+				cp = containerPos;
+			}
+		}
+
+		for(ContainerPos containerPos : Map.getInstance().getGameMap()){
+			if(containerPos.getPosY() - 1 >= 0)
+				if((containerPos.getPosX() == cp.getPosX()) && (containerPos.getPosY() - 1 == cp.getPosY()) && containerPos.getContainer().seeifNeighbors(cp.getContainer())){
+					return true;
+				}
+		}
+		return false;
+	}
+
 	/**
 	 * A csőhöz csatlakoztatja hozzá a paraméterként kapott játékos által hordozott pumpát.
 	 * @param player - A játékos
@@ -135,44 +152,83 @@ public class Pipe extends Container implements Serializable {
 					cp = containerPos;
 				}
 			}
-			for(ContainerPos containerPos : Map.getInstance().getGameMap()){
-				if((containerPos.getPosX() + 1 == cp.getPosX()) && (containerPos.getPosY() == cp.getPosY())){
-					nextContainer = containerPos;
+			if(!isVertical()) {
+				for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+					if ((containerPos.getPosX() - 1 == cp.getPosX()) && (containerPos.getPosY() == cp.getPosY())) {
+						nextContainer = containerPos;
+					}
 				}
-			}
 
-			//If pipe was input
-			if(amInput(nextContainer.getContainer())){
-				nextContainer.getContainer().setInput(newPipe);
-				newPump.setInput(this);
-				newPump.setOutput(newPipe);
-			}
-
-			//Shift everything by X = 2
-			for(ContainerPos containerPos : Map.getInstance().getGameMap()){
-				if(containerPos.getPosX() > cp.getPosX()){
-					int x = containerPos.getPosX() + 2;
-					containerPos.setPosY(x);
+				//If pipe was input
+				if (amInput(nextContainer.getContainer())) {
+					nextContainer.getContainer().setInput(newPipe);
+					newPump.setInput(this);
+					newPump.setOutput(newPipe);
 				}
+
+				//Shift everything by X = 2
+				for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+					if (containerPos.getPosX() > cp.getPosX()) {
+						int x = containerPos.getPosX() + 2;
+						containerPos.setPosX(x);
+					}
+				}
+
+				//Adding everything to map
+				Map.getInstance().getContainers().add(newPump);
+				Map.getInstance().getContainers().add(newPipe);
+				Map.getInstance().getGameMap().add(new ContainerPos(newPump, cp.getPosX() + 1, cp.getPosY()));
+				Map.getInstance().getGameMap().add(new ContainerPos(newPipe, cp.getPosX() + 2, cp.getPosY()));
+
+				//Remove the next Container from Pipe's neigbors
+				this.getNeighbors().remove(nextContainer.getContainer());
+				nextContainer.getContainer().getNeighbors().remove(this);
+
+				this.getNeighbors().add(newPump);
+				newPump.getNeighbors().add(this);
+				newPump.getNeighbors().add(newPipe);
+				newPipe.getNeighbors().add(newPump);
+				newPipe.getNeighbors().add(nextContainer.getContainer());
 			}
+			else{
+				for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+					if ((containerPos.getPosX() == cp.getPosX()) && (containerPos.getPosY() - 1 == cp.getPosY())) {
+						nextContainer = containerPos;
+					}
+				}
 
-			//Adding everything to map
-			Map.getInstance().getContainers().add(newPump);
-			Map.getInstance().getContainers().add(newPipe);
-			Map.getInstance().getGameMap().add(new ContainerPos(newPump, cp.getPosX() + 1, cp.getPosY()));
-			Map.getInstance().getGameMap().add(new ContainerPos(newPipe, cp.getPosX() + 2, cp.getPosY()));
+				//If pipe was input
+				if (amInput(nextContainer.getContainer())) {
+					nextContainer.getContainer().setInput(newPipe);
+					newPump.setInput(this);
+					newPump.setOutput(newPipe);
+				}
 
-			//Remove the next Container from Pipe's neigbors
-			this.getNeighbors().remove(nextContainer.getContainer());
-			nextContainer.getContainer().getNeighbors().remove(this);
+				//Shift everything by X = 2
+				for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+					if (containerPos.getPosX() > cp.getPosX()) {
+						int y = containerPos.getPosY() + 2;
+						containerPos.setPosY(y);
+					}
+				}
 
-			this.getNeighbors().add(newPump);
-			newPump.getNeighbors().add(this);
-			newPump.getNeighbors().add(newPipe);
-			newPipe.getNeighbors().add(newPump);
-			newPipe.getNeighbors().add(nextContainer.getContainer());
-		}
-		else
+				//Adding everything to map
+				Map.getInstance().getContainers().add(newPump);
+				Map.getInstance().getContainers().add(newPipe);
+				Map.getInstance().getGameMap().add(new ContainerPos(newPump, cp.getPosX(), cp.getPosY() + 1));
+				Map.getInstance().getGameMap().add(new ContainerPos(newPipe, cp.getPosX(), cp.getPosY() + 2));
+
+				//Remove the next Container from Pipe's neigbors
+				this.getNeighbors().remove(nextContainer.getContainer());
+				nextContainer.getContainer().getNeighbors().remove(this);
+
+				this.getNeighbors().add(newPump);
+				newPump.getNeighbors().add(this);
+				newPump.getNeighbors().add(newPipe);
+				newPipe.getNeighbors().add(newPump);
+				newPipe.getNeighbors().add(nextContainer.getContainer());
+			}
+		} else
 			System.out.println("Player has no pumps at his disposal");
 	}
 
