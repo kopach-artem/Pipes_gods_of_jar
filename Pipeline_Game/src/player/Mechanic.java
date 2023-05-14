@@ -32,4 +32,6 @@ public class Mechanic extends Player implements Serializable {
 	public void RepairPump() throws MyException {
 		this.getPosition().mendPump();
 	}
+
+	public String consolePrint(){ return "ME\t";}
 }

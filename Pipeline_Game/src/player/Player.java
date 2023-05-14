@@ -193,7 +193,7 @@ public class Player implements Serializable {
 
 	/**
 	 * Felveszi a paraméterül kapott csövet a jelenlegi pozíciójából.
-	 * @param pi - A felvenni kívánt cső
+	 * @param container - A felvenni kívánt cső
 	 * @throws MyException
 	 */
 	public void detachPipe(ContainerPos container) throws MyException {
@@ -249,4 +249,7 @@ public class Player implements Serializable {
 	public void setCarriedPipes(ArrayList<Container> carriedPipes) {
 		this.carriedPipes = carriedPipes;
 	}
+
+	public String consolePrint(){ return "";}
 }
+

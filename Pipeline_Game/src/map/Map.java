@@ -116,9 +116,14 @@ public class Map implements Serializable{
 		this.players = players;
 	}
 
-	public static String[] readFromFile(String filePath) //TODO kéne checkelni hogy létezik-e a file
-	{
-		try (BufferedReader br = new BufferedReader(new FileReader("maps/" + filePath))) {
+	public static String[] readFromFile(String filePath) {
+		File file = new File("maps/" + filePath);
+		if (!file.exists()) {
+			System.err.println("File not found: " + filePath);
+			return null;
+		}
+
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 			List<String> lines = new ArrayList<>();
 			String line;
 			while ((line = br.readLine()) != null) {
@@ -260,18 +265,22 @@ public class Map implements Serializable{
 
 						for(int i=0; i<players.size(); i++)
 						{
-							if(grid[x][y]==players.get(i).getPosition())
+							if(players.get(i).consolePrint().equals("ME\t"))
 							{
-								bw.write("operationCreatePlayerMechanicAt"+x+'_'+y);
-								bw.newLine();
+								if(grid[x][y]==players.get(i).getPosition())
+								{
+									bw.write("operationCreatePlayerMechanicAt"+x+'_'+y);
+									bw.newLine();
+								}
 							}
-							/*
-							else if()
+							else if(players.get(i).consolePrint().equals("SA\t"))
 							{
-								//TODO kell vmi abstract cucc hogy tudjuk, hogy mechanic/saboteur hozunk létre
+								if(grid[x][y]==players.get(i).getPosition())
+								{
+									bw.write("operationCreatePlayerSaboteurAt"+x+'_'+y);
+									bw.newLine();
+								}
 							}
-							*/
-
 						}
 					}
 				}
