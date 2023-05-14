@@ -219,11 +219,13 @@ public class Operation
                         for(ContainerPos cp : Map.getInstance().getGameMap()){
                             if(cp.getPosX() == positions[0] && cp.getPosY() == positions[1]){
                                 System.out.println("There's already a container stationed at:" + positions[0] + ',' + positions[1] + " position");
+                                break;
                             }
                             else{
                                 Cistern cs = new Cistern();
                                 Map.getInstance().getContainers().add(cs);
                                 Map.getInstance().getGameMap().add(new ContainerPos(cs, positions[0], positions[1]));
+                                break;
                             }
                         }
                     }
@@ -244,11 +246,13 @@ public class Operation
                         for(ContainerPos cp : Map.getInstance().getGameMap()){
                             if(cp.getPosX() == positions[0] && cp.getPosY() == positions[1]){
                                 System.out.println("There's already a container stationed at:" + positions[0] + ',' + positions[1] + " position");
+                                break;
                             }
                             else{
                                 MountainSpring ms = new MountainSpring();
                                 Map.getInstance().getContainers().add(ms);
                                 Map.getInstance().getGameMap().add(new ContainerPos(ms, positions[0], positions[1]));
+                                break;
                             }
                         }
                     }
