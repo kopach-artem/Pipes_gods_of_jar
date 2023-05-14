@@ -136,7 +136,7 @@ public class Pipe extends Container implements Serializable {
 				}
 			}
 			for(ContainerPos containerPos : Map.getInstance().getGameMap()){
-				if((containerPos.getPosX() - 1 == cp.getPosX()) && (containerPos.getPosY() == cp.getPosY())){
+				if((containerPos.getPosX() + 1 == cp.getPosX()) && (containerPos.getPosY() == cp.getPosY())){
 					nextContainer = containerPos;
 				}
 			}
