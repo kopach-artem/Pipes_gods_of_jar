@@ -26,4 +26,6 @@ public class Saboteur extends Player implements Serializable {
 	public void makePipeSlippery(){
 		this.position.pipeGetsSlippery();
 	}
+
+	public String consolePrint(){ return "SA\t";}
 }

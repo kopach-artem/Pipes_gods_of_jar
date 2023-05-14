@@ -337,7 +337,7 @@ public class Cistern extends Container implements Serializable {
 	}
 
 	@Override
-	public void setBreakOff() {
+	public void setBreakOff(int rng) {
 		
 	}
 }

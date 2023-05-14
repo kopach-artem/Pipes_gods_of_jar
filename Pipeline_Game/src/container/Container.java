@@ -226,5 +226,5 @@ public abstract class Container implements Serializable {
 	public abstract Container getInput();
 	public abstract Container getOutput();
 
-	public abstract void setBreakOff();
+	public abstract void setBreakOff(int rng);
 }
