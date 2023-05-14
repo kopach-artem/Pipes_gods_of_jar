@@ -3,8 +3,6 @@ package console;
 import exception.MyException;
 
 import java.util.Scanner;
-import container.*;
-import map.Map;
 
 public class Main
 {

@@ -1,10 +1,6 @@
 package console;
 
-import java.util.ArrayList;
-
-import container.Container;
 import container.ContainerPos;
-import container.Pump;
 import map.Map;
 
 public class Random

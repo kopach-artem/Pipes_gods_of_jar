@@ -4,8 +4,6 @@ import container.*;
 import exception.MyException;
 import map.Map;
 import player.*;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 /**
  * Az operation parancsokat megvalósító osztály.
