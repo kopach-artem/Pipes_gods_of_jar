@@ -61,8 +61,8 @@ public class Map implements Serializable{
 	 */
 	public void connectPumpToPipe(Pump pu, Pipe pi) throws MyException {
 
-		pu.addPipe(pi);
-		pi.addPump(pu);
+		pu.getNeighbors().add(pi);
+		pi.getNeighbors().add(pu);
 
 	}
 
