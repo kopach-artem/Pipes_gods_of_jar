@@ -7,10 +7,15 @@ import player.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-
+/**
+ * Az operation parancsokat megvalósító osztály.
+ */
 public class Operation
 {
 
+    /**
+     * Csinál egy kis őályát
+     */
     public static void makeSmallMap(){
         MountainSpring ms = new MountainSpring();
         Pipe pipe = new Pipe();
@@ -27,9 +32,10 @@ public class Operation
         Map.saveToFile("smallMap.txt");
     }
 
-    
-    /** 
-     * @param containerPosList
+
+    /**
+     * A printMap metódus kirajzolja a jelenleg betöltött pályát a console-ra.
+     * @param containerPosList - A pályán található Containerek listája.
      */
     public static void printMap(ArrayList<ContainerPos> containerPosList){
 
@@ -73,7 +79,16 @@ public class Operation
             }
     }
 
+    /**
+     * A parancsok feldolgozása itt történik.
+     * @param command - A parancs String formában.
+     * @throws MyException
+     */
     public static void operation(String command) throws MyException {
+        /**
+         * Ha a parancs operationCreateTestMap, akkor létrehozunk egy teszt pályát,
+         * és kiírjuk a testMap.txt fájlba
+         */
         if(command.startsWith("operationCreateTestMap")){
 
             System.out.println("Map creation started, will be saved as testMap.txt");
@@ -125,6 +140,10 @@ public class Operation
 
             System.out.println("Test map has successfully been created as 'testMap.txt', you can load it with command 'operationLoadMaptestMap.txt'");
         }
+        /**
+         * Ha a parancs operationLodaMap, akkor egy korábban elkészített pályát betöltünk
+         * a megadott .txt fájlból.
+         */
         else if(command.startsWith("operationLoadMap")) //operationLoadMap <Filename>.txt
         {
             if (!command.endsWith(".txt"))
@@ -181,6 +200,10 @@ public class Operation
                     System.out.println("Loading map from file: " + filename);
             }
         }
+        /**
+         * Ha a parancs opeartionSaveMap, akkor a jelenlegi pályaállapotot elmentjük a megadott nevű
+         * .txt fájlba.
+         */
         else if(command.startsWith("operationSaveMap")) //operationSaveMap <Filename>.txt
         {
             if (!command.endsWith(".txt"))
@@ -198,6 +221,9 @@ public class Operation
                     System.out.println("Constructed map is empty");
             }
         }
+        /**
+         * Ha a parancs operationPrintMap, akkor kirajzoljuk a jelenlegi pályaállapotot a consoleba.
+         */
         else if(command.startsWith("operationPrintMap")) {
 
             if(!Map.getInstance().getGameMap().isEmpty()) {
@@ -206,9 +232,16 @@ public class Operation
             else
                 System.out.println("Command is not acceptable due to the map being empty");
         }
+        /**
+         * Ha a parancs operationCreateContainer, akkor léterhozunk egy kívánt típusú Containert
+         * a kívánt pozícióba
+         */
         else if(command.startsWith("operationCreateContainer")) //operationCreateContainer<ContainerType>At <PosX>_<PosY>
         {
             String container=command.substring(24);
+            /**
+             * Létrehozunk egy Cistern-t.
+             */
             if(container.startsWith("CisternAt")) //operationCreateContainerCisternAt
             {
                 int positions[]= StrFunctions.subPosString(container,"CisternAt"); //<PosX>_<PosY>
@@ -239,6 +272,9 @@ public class Operation
                     }
                 }
             }
+            /**
+             * Létrehozunk egy MountainSpring-et.
+             */
             else if(container.startsWith("MountainSpringAt")) //operationCreateContainerMountainSpringAt <PosX>_<PosY>
             {
                 int positions[]= StrFunctions.subPosString(container,"MountainSpringAt"); //<PosX>_<PosY>
@@ -268,6 +304,9 @@ public class Operation
                     }
                 }
             }
+            /**
+             * Létrehozunk egy Pipe-ot.
+             */
             else if(container.startsWith("PipeAt")) //operationCreateContainerPipeAt <PosX>_<PosY>
             {
                 int positions[]= StrFunctions.subPosString(container,"PipeAt"); //<PosX>_<PosY>
@@ -297,6 +336,9 @@ public class Operation
                     }
                 }
             }
+            /**
+             * Léterhozunk egy Pump-ot.
+             */
             else if(container.startsWith("PumpAt")) //operationCreateContainerPumpAt <PosX>_<PosY>
             {
                 int positions[]= StrFunctions.subPosString(container,"PumpAt"); //<PosX>_<PosY>
@@ -331,6 +373,10 @@ public class Operation
                 System.out.println("Invalid type of container");
             }
         }
+        /**
+         * Ha a parancs operationDeleteContainer, akkor a megadott pozícióból kitöröljük
+         * az ott lévő Container-t, ha nem üres a pozíció.
+         */
         else if(command.startsWith("operationDeleteContainer")) //operationDeleteContainerAt <PosX>_<PosY>
         {
             String container=command.substring(24);
@@ -357,6 +403,10 @@ public class Operation
                 System.out.println("Invalid use of command");
             }
         }
+        /**
+         * Ha a parancs operationDeletePlayer, akkor kitöröljük a megadott azonosítójú
+         * játékost a pájáról, ha érvényes azonosítót adtunk meg.
+         */
         else if(command.startsWith("operationDeletePlayer")) //operationDeletePlayer<Playernumber>
         {
             String playernumber=command.substring(21); //<Playernumber>
@@ -383,10 +433,17 @@ public class Operation
                 System.out.println("The interval of a player's number is 0-9");
             }
         }
+        /**
+         * Ha a parancs operationCreatePlayer, akkor létrehozzuk a megadott típuső játékost
+         * a megadott pozícióban.
+         */
         else if(command.startsWith("operationCreatePlayer")) //operationCreatePlayer <Playertype> At <PosX>_<PosY>
 
         {
             String playerpos=command.substring(21);
+            /**
+             * Létrehozunk egy Mechanic-ot
+             */
             if(playerpos.startsWith("MechanicAt")) //operationCreatePlayerMechanicAt <PosX>_<PosY>
             {
                 int positions[]= StrFunctions.subPosString(playerpos,"MechanicAt"); //<PosX>_<PosY>
@@ -404,6 +461,9 @@ public class Operation
                         System.out.println("There's no Container where Mechanic could be created");
                 }
             }
+            /**
+             * Léterhozunk egy Saboteur-t.
+             */
             else  if(playerpos.startsWith("SaboteurAt")) //operationCreatePlayerSaboteurAt <PosX>_<PosY>
             {
                 int positions[]= StrFunctions.subPosString(playerpos,"SaboteurAt"); //<PosX>_<PosY>
@@ -426,6 +486,10 @@ public class Operation
                 System.out.println("Invalid type of player");
             }
         }
+        /**
+         * Ha a parancs operationConnectContainerAt, akkor megadott Container-t a másik megadott
+         * Container-hez csatlakoztajuk, ha az lehetséges.
+         */
         else if(command.startsWith("operationConnectContainerAt")) //operationConnectContainerAt<Pos1X>_<Pos1Y>ToContainerAt<Pos2X>_<Pos2Y>
         {
             boolean first_=false;
