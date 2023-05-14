@@ -134,7 +134,49 @@ public class Operation
             else
             {
                 String filename = command.substring(16); // <Filename>.txt
-                Map.loadFromFile(filename);
+                String commands[]=Map.readFromFile(filename);
+                for(int i=0; i<commands.length; i++)
+                {
+                    if(commands[i].startsWith("operation"))
+                    {
+                        try
+                        {
+                            Operation.operation(commands[i]);
+                        }
+                        catch (MyException e)
+                        {
+                            System.out.println(e.getMessage());
+
+                        }
+                    }
+                    else if(commands[i].startsWith("player"))
+                    {
+                        try
+                        {
+                            Playercmd.player(commands[i]);
+                        }
+                        catch (MyException e)
+                        {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    else if(commands[i].startsWith("manual"))
+                    {
+                        Manual.manual(commands[i]);
+                    }
+                    else if(commands[i].startsWith("list"))
+                    {
+                        List.list(commands[i]);
+                    }
+                    else if(commands[i].startsWith("random"))
+                    {
+                        Random.random(commands[i]);
+                    }
+                    else
+                    {
+                        System.out.println("Unknown command");
+                    }
+                }
                 if(Map.getInstance() != null)
                     System.out.println("Loading map from file: " + filename);
             }

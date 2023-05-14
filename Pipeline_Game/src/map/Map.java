@@ -116,71 +116,182 @@ public class Map implements Serializable{
 		this.players = players;
 	}
 
-	/*
-	public static void readFromFile(String filePath) {
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("maps/" + filePath))) {
-			map = (Map) ois.readObject();
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
+	public static String[] readFromFile(String filePath) {
+		File file = new File("maps/" + filePath);
+		if (!file.exists()) {
+			System.err.println("File not found: " + filePath);
+			return null;
 		}
-	}
 
-	 */
-
-	public static synchronized void saveToFile(String filename){
-		FileOutputStream fos = null;
-		ObjectOutputStream out = null;
-		try{
-			fos = new FileOutputStream("maps/" + filename);
-			out = new ObjectOutputStream(fos);
-			out.writeObject(getInstance());
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+			List<String> lines = new ArrayList<>();
+			String line;
+			while ((line = br.readLine()) != null) {
+				lines.add(line);
+			}
+			return lines.toArray(new String[0]);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}finally{
-			try {
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			return null;
 		}
 	}
 
-	public static synchronized void loadFromFile(String filename){
-		FileInputStream fis = null;
-		ObjectInputStream in = null;
-		try{
-			fis = new FileInputStream("maps/" + filename);
-			in = new ObjectInputStream(fis);
-			map = (Map) in.readObject();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (OptionalDataException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally{
-			try {
-				in.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	/*
 	public static void saveToFile(String filePath) {
-		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("maps/" + filePath))) {
-			oos.writeObject(map);
-		} catch (IOException e) {
+		try (BufferedWriter bw = new BufferedWriter (new FileWriter("maps/" + filePath)))
+		{
+			int maxX = -1;
+			int maxY = -1;
+
+			// Find the maximum x and y values
+			for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+				if (containerPos.getPosX() > maxX) {
+					maxX = containerPos.getPosX();
+				}
+				if (containerPos.getPosY() > maxY) {
+					maxY = containerPos.getPosY();
+				}
+			}
+
+			// Create a 2D grid to store the containers
+			Container[][] grid = new Container[maxX + 1][maxY + 1];
+
+			// Fill the grid with null
+			for (int i = 0; i <= maxX; i++) {
+				for (int j = 0; j <= maxY; j++) {
+					grid[i][j] =null;
+				}
+			}
+
+			// Place the containers in the grid
+			for (ContainerPos containerPos : getInstance().getGameMap()) {
+				int x = containerPos.getPosX();
+				int y = containerPos.getPosY();
+				grid[x][y] = containerPos.getContainer();
+			}
+
+			//Make commands to create containers
+			for (int y = 0; y <= maxY; y++)
+			{
+				for (int x = 0; x <= maxX; x++)
+				{
+					if(grid[x][y]!=null)
+					{
+						if(grid[x][y].consolePrint().equals("CS\t"))
+						{
+							bw.write("operationCreateContainerCisternAt"+x+'_'+y);
+							bw.newLine();
+						}
+						else if(grid[x][y].consolePrint().equals("MS\t"))
+						{
+							bw.write("operationCreateContainerMountainSpringAt"+x+'_'+y);
+							bw.newLine();
+						}
+						else if(grid[x][y].consolePrint().equals("PI\t"))
+						{
+							bw.write("operationCreateContainerPipeAt"+x+'_'+y);
+							bw.newLine();
+						}
+						else if(grid[x][y].consolePrint().equals("PU\t"))
+						{
+							bw.write("operationCreateContainerPumpAt"+x+'_'+y);
+							bw.newLine();
+						}
+					}
+				}
+			}
+
+			//Make commands to create connections between containers
+			for (int y = 0; y <= maxY; y++)
+			{
+				for (int x = 0; x <= maxX; x++)
+				{
+					if(grid[x][y]!=null)
+					{
+						if(grid[x][y].consolePrint().equals("CS\t"))
+						{
+							for(ContainerPos con: getInstance().getGameMap())
+							{
+								if(grid[x][y].seeifNeighbors(con.getContainer()) && grid[x][y]!=con.getContainer())
+								{
+									bw.write("operationConnectContainerAt"+x+'_'+y+"ToContainerAt"+con.getPosX()+'_'+con.getPosY());
+									bw.newLine();
+								}
+							}
+						}
+						else if(grid[x][y].consolePrint().equals("MS\t"))
+						{
+							for(ContainerPos con: getInstance().getGameMap())
+							{
+								if(grid[x][y].seeifNeighbors(con.getContainer()) && grid[x][y]!=con.getContainer())
+								{
+									bw.write("operationConnectContainerAt"+x+'_'+y+"ToContainerAt"+con.getPosX()+'_'+con.getPosY());
+									bw.newLine();
+								}
+							}
+						}
+						else if(grid[x][y].consolePrint().equals("PI\t"))
+						{
+							for(ContainerPos con: getInstance().getGameMap())
+							{
+								if(grid[x][y].seeifNeighbors(con.getContainer()) && grid[x][y]!=con.getContainer())
+								{
+									bw.write("operationConnectContainerAt"+x+'_'+y+"ToContainerAt"+con.getPosX()+'_'+con.getPosY());
+									bw.newLine();
+								}
+							}
+						}
+						else if(grid[x][y].consolePrint().equals("PU\t"))
+						{
+							for(ContainerPos con: getInstance().getGameMap())
+							{
+								if(grid[x][y].seeifNeighbors(con.getContainer()) && grid[x][y]!=con.getContainer())
+								{
+									bw.write("operationConnectContainerAt"+x+'_'+y+"ToContainerAt"+con.getPosX()+'_'+con.getPosY());
+									bw.newLine();
+								}
+							}
+						}
+					}
+				}
+			}
+
+			//Make commands to create players
+			for (int y = 0; y <= maxY; y++)
+			{
+				for (int x = 0; x <= maxX; x++)
+				{
+					if(grid[x][y]!=null)
+					{
+
+						for(int i=0; i<players.size(); i++)
+						{
+							if(players.get(i).consolePrint().equals("ME\t"))
+							{
+								if(grid[x][y]==players.get(i).getPosition())
+								{
+									bw.write("operationCreatePlayerMechanicAt"+x+'_'+y);
+									bw.newLine();
+								}
+							}
+							else if(players.get(i).consolePrint().equals("SA\t"))
+							{
+								if(grid[x][y]==players.get(i).getPosition())
+								{
+									bw.write("operationCreatePlayerSaboteurAt"+x+'_'+y);
+									bw.newLine();
+								}
+							}
+						}
+					}
+				}
+			}
+
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}
-	*/
-
 	public ArrayList<ContainerPos> getGameMap(){
 		return gameMap;
 	}

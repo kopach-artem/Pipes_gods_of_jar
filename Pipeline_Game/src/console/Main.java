@@ -8,11 +8,9 @@ import map.Map;
 
 public class Main
 {
-    
+
     /**
-     * A prototípus main osztálya. Itt történik a bemenet beolvsasáa,
-     * illetve a metódushívások is itt történnek.
-     * @param args - String[]
+     * @param args
      * @throws MyException
      */
     public static void main(String[] args) throws MyException
@@ -20,9 +18,6 @@ public class Main
         Scanner scanner = new Scanner(System.in);
         String command="";
 
-        /**
-         * Végtelen ciklus, itt várjuk a parancsokat. exit paranccsal tudunk kilépni a programból.
-         */
         while (true)
         {
             System.out.print("> ");
@@ -31,9 +26,6 @@ public class Main
                 continue;
             }
 
-            /**
-             * Az operation műveletek itt kezdődnek.
-             */
             if(command.startsWith("operation"))
             {
                 try
@@ -47,10 +39,6 @@ public class Main
                 }
 
             }
-
-            /**
-             * A player parancsokhoz tartozó metódushívás itt történik.
-             */
             else if(command.startsWith("player"))
             {
                 try
@@ -63,42 +51,22 @@ public class Main
                 }
 
             }
-
-            /**
-             * A manual parancsokhoz tartozó metódushívás itt található.
-             */
             else if(command.startsWith("manual"))
             {
 
-                    Manual.manual(command);
+                Manual.manual(command);
             }
-
-            /**
-             * A list parancsokhoz tartozó metódushívás itt található.
-             */
             else if(command.startsWith("list"))
             {
-                    List.list(command);
+                List.list(command);
             }
-
-            /**
-             * A random pumpaelromlás itt kapcsolható ki és be.
-             */
             else if(command.startsWith("random"))
             {
-                    Random.random(command);
+                Random.random(command);
             }
-
-            /**
-             * Kiléphetünk a programból.
-             */
             else if(command.startsWith("exit")){
                 System.exit(0);
             }
-
-            /**
-             * Érvénytelen parancs.
-             */
             else
             {
                 System.out.println("Unknown command");
