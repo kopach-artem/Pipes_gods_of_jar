@@ -13,11 +13,15 @@ import java.util.ArrayList;
 public class List
 {
     
-    /** 
-     * @param command
+    /**
+     * A pályán lévő játékelemek kilistázásáért felelős osztály
+     * @param command - A parancsok String formában
      */
     public static void list(String command)
     {
+        /**
+         * Ha a parancs listContainers, akkor kilistázzuk a pályán lévő összes Container-t
+         */
         if(command.equals("listContainers")) //listContainer
         {
             int sum=0;
@@ -30,6 +34,10 @@ public class List
             if(sum==0)
                 System.out.println("The map is empty");
         }
+        /**
+         * Ha a parancs listDamagedContainers, akkor kilistázzuk a pályán lévő összes olyan Container-t,
+         * amely sérült állapotban van.
+         */
         else if(command.equals("listDamagedContainers")) //listDamagedContainers
         {
             int sum=0;
@@ -49,6 +57,11 @@ public class List
             else if(sum2==0)
                 System.out.println("There are no damaged containers on the map");
         }
+
+        /**
+         * Ha a parancs listConnectedContainers, akkor azokat a Containereket listázzuk ki,
+         * amelyek csatlakoztatva vannak más Containerekhez.
+         */
         else if(command.startsWith("listConnectedContainers")) //listConnectedContainers
         {
             if(command.length()==23) //listConnectedContainers
@@ -119,6 +132,11 @@ public class List
                 }
             }
         }
+
+        /**
+         * Ha a parancs listSlipperyPipes, akkor azokat a csöveket listázzuk ki,
+         * amelyek épp csúszósak.
+         */
         else if(command.equals("listSlipperyPipes")) //listSlipperyPipes
         {
             int sum=0;
@@ -138,6 +156,11 @@ public class List
             else if(sum2==0)
                 System.out.println("There are no slippery pipes on the map");
         }
+
+        /**
+         * Ha a parancs listStickyPipes, akkor azokat a csöveket listázzuk ki,
+         * amelyek épp ragadósak.
+         */
         else if(command.equals("listStickyPipes")) //listStickyPipes
         {
             int sum=0;
@@ -157,6 +180,11 @@ public class List
             else if(sum2==0)
                 System.out.println("There are no sticky pipes on the map");
         }
+
+        /**
+         * Ha a parancs listPlayer, akkor kilistázzuk a pályán található
+         * összes játékost.
+         */
         else if(command.startsWith("listPlayer"))
         {
 
@@ -214,13 +242,24 @@ public class List
                 System.out.println("Invalid use of command");
 
         }
+
+        /**
+         * Ha a parncs listCurrentTurn, akkor kiírjuk a turnCount értékét.
+         */
         else if(command.equals("listCurrentTurn")) //listCurrentTurn
         {
             System.out.println(Controller.getTurnCount());
         }
+
+        /**
+         * Ha a parancs listPump, akkor kilistázzuk a pályán található összes csövet.
+         */
         else if(command.startsWith("listPump"))
         {
             String newcmd=command.substring(8);
+            /**
+             * Ilyenkor kiírjuk, hogy melyik körben lesznek elrontva a pumpák.
+             */
             if(newcmd.equals("sDamageTurn")) //listPumpsDamageTurn
             {
                 int sum=0;
@@ -245,6 +284,9 @@ public class List
                 else if(sum2==0)
                     System.out.println("There are no pumps on the map");
             }
+            /**
+             * Kiírjuk, hogy melyik irányba vannak állítva a pumpák.
+             */
             else if(newcmd.equals("sDirection")) //listPumpsDirection
             {
                 int sum=0;
@@ -355,6 +397,10 @@ public class List
                 else if(sum2==0)
                     System.out.println("There are no pumps on the map");
             }
+
+            /**
+             * Ekkor csak a megadott koordinátában lévő pumpát írjuk ki.
+             */
             else if(newcmd.startsWith("At"))
             {
                 boolean first_=false;
@@ -387,7 +433,9 @@ public class List
                         }
                     }
                 }
-
+                /**
+                 * Kiírjuk, hogy melyik körben lesz elrontva a pumpa.
+                 */
                 if(str2.equals("DamageTurn") && str1.startsWith("At")) //listPumpAt <PosX>_<PosY> DamageTurn
                 {
                     int positions[]= StrFunctions.subPosString(str1,"At"); //<PosX>_<PosY>
@@ -410,6 +458,10 @@ public class List
                             System.out.println("There is no pump on the map, with the given position");
                     }
                 }
+
+                /**
+                 * Kiírjuk,  hogy a pumpa folyása melyik irányba van állítva.
+                 */
                 else if(str2.equals("Direction") && str1.startsWith("At")) //listPumpAt <PosX>_<PosY> Direction
                 {
                     int positions[]= StrFunctions.subPosString(str1,"At"); //<PosX>_<PosY>
