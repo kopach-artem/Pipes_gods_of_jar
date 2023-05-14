@@ -112,6 +112,10 @@ public class Pipe extends Container implements Serializable {
 			throw new MyException("It was already damaged");
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	public boolean isVertical(){
 		ContainerPos cp = new ContainerPos();
 		for(ContainerPos containerPos : Map.getInstance().getGameMap()){

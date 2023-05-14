@@ -312,6 +312,10 @@ public class Pump extends Container implements Serializable {
 		this.isDamaged = true;
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean isLooseEnd() {
 		return false;

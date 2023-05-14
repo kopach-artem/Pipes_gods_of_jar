@@ -139,6 +139,10 @@ public class Map implements Serializable{
 		}
 	}
 
+	
+	/** 
+	 * @param filePath
+	 */
 	public static void saveToFile(String filePath) {
 		try (BufferedWriter bw = new BufferedWriter (new FileWriter("maps/" + filePath)))
 		{

@@ -134,6 +134,10 @@ public class Player implements Serializable {
 		}
 	}
 
+	
+	/** 
+	 * @throws MyException
+	 */
 	public void RepairPipe() throws MyException {
 
 	}
