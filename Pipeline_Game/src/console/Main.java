@@ -18,6 +18,8 @@ public class Main
         Scanner scanner = new Scanner(System.in);
         String command="";
 
+        Operation.makeSmallMap();
+
         while (true)
         {
             System.out.print("> ");

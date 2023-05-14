@@ -116,6 +116,7 @@ public class Map implements Serializable{
 		this.players = players;
 	}
 
+	/*
 	public static void readFromFile(String filePath) {
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("maps/" + filePath))) {
 			map = (Map) ois.readObject();
@@ -124,6 +125,53 @@ public class Map implements Serializable{
 		}
 	}
 
+	 */
+
+	public static synchronized void saveToFile(String filename){
+		FileOutputStream fos = null;
+		ObjectOutputStream out = null;
+		try{
+			fos = new FileOutputStream("maps/" + filename);
+			out = new ObjectOutputStream(fos);
+			out.writeObject(getInstance());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static synchronized void loadFromFile(String filename){
+		FileInputStream fis = null;
+		ObjectInputStream in = null;
+		try{
+			fis = new FileInputStream("maps/" + filename);
+			in = new ObjectInputStream(fis);
+			map = (Map) in.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (OptionalDataException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/*
 	public static void saveToFile(String filePath) {
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("maps/" + filePath))) {
 			oos.writeObject(map);
@@ -131,6 +179,7 @@ public class Map implements Serializable{
 			e.printStackTrace();
 		}
 	}
+	*/
 
 	public ArrayList<ContainerPos> getGameMap(){
 		return gameMap;

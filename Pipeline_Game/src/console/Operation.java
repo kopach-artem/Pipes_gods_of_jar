@@ -11,6 +11,22 @@ import java.util.ArrayList;
 public class Operation
 {
 
+    public static void makeSmallMap(){
+        MountainSpring ms = new MountainSpring();
+        Pipe pipe = new Pipe();
+        Pump pump = new Pump(4);
+
+        Map.getInstance().getContainers().add(ms);
+        Map.getInstance().getContainers().add(pipe);
+        Map.getInstance().getContainers().add(pump);
+
+        Map.getInstance().getGameMap().add(new ContainerPos(ms, 0, 0));
+        Map.getInstance().getGameMap().add(new ContainerPos(pipe, 1, 0));
+        Map.getInstance().getGameMap().add(new ContainerPos(pump, 2, 0));
+
+        Map.saveToFile("smallMap.txt");
+    }
+
     
     /** 
      * @param containerPosList
@@ -105,9 +121,9 @@ public class Operation
             Map.getInstance().getPlayers().add(new Mechanic(cs));
             Map.getInstance().getPlayers().add(new Saboteur(cs));
 
-            Map.saveToFile("first.txt");
+            Map.saveToFile("testMap.txt");
 
-            System.out.println("Test map has successfully been created as 'testMap.txt', you can load it with command 'operationLoadMaptest.txt'");
+            System.out.println("Test map has successfully been created as 'testMap.txt', you can load it with command 'operationLoadMaptestMap.txt'");
         }
         else if(command.startsWith("operationLoadMap")) //operationLoadMap <Filename>.txt
         {
@@ -118,7 +134,7 @@ public class Operation
             else
             {
                 String filename = command.substring(16); // <Filename>.txt
-                Map.readFromFile(filename);
+                Map.loadFromFile(filename);
                 if(Map.getInstance() != null)
                     System.out.println("Loading map from file: " + filename);
             }
@@ -211,11 +227,13 @@ public class Operation
                         for(ContainerPos cp : Map.getInstance().getGameMap()){
                             if(cp.getPosX() == positions[0] && cp.getPosY() == positions[1]){
                                 System.out.println("There's already a container stationed at:" + positions[0] + ',' + positions[1] + " position");
+                                break;
                             }
                             else{
                                 Pipe pipe = new Pipe();
                                 Map.getInstance().getContainers().add(pipe);
                                 Map.getInstance().getGameMap().add(new ContainerPos(pipe, positions[0], positions[1]));
+                                break;
                             }
                         }
                     }
@@ -236,11 +254,13 @@ public class Operation
                         for(ContainerPos cp : Map.getInstance().getGameMap()){
                             if(cp.getPosX() == positions[0] && cp.getPosY() == positions[1]){
                                 System.out.println("There's already a container stationed at:" + positions[0] + ',' + positions[1] + " position");
+                                break;
                             }
                             else{
                                 Pump pump = new Pump(4);
                                 Map.getInstance().getContainers().add(pump);
                                 Map.getInstance().getGameMap().add(new ContainerPos(pump, positions[0], positions[1]));
+                                break;
                             }
                         }
                     }
@@ -288,8 +308,15 @@ public class Operation
             {
                 if(StrFunctions.isDigit(playernumber.charAt(0)))
                 {
+                    Player p = new Player();
+                    for(Player player : Map.getInstance().getPlayers()){
+                        if(player.getId() == Integer.parseInt(playernumber)){
+                            p = player;
+                            break;
+                        }
+                    }
                     if(!Map.getInstance().getPlayers().isEmpty()){
-                        Map.getInstance().getPlayers().remove(playernumber);
+                        Map.getInstance().getPlayers().remove(p);
                     }
                 }
                 else
