@@ -299,6 +299,10 @@ public class Map implements Serializable{
 			e.printStackTrace();
 		}
 	}
+	
+	/** 
+	 * @param cp
+	 */
 	public static void addNeighbors(ContainerPos cp){
 		if(!Map.getInstance().getGameMap().isEmpty()) {
 			for (ContainerPos containerPos : Map.getInstance().getGameMap()) {

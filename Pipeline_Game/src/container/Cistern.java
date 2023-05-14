@@ -253,6 +253,10 @@ public class Cistern extends Container implements Serializable {
 		return false;
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean isDamaged() {
 		return false;
