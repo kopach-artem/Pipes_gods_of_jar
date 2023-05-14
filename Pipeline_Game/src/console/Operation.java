@@ -137,11 +137,26 @@ public class Operation
                 {
                     if(commands[i].startsWith("operation"))
                     {
-                        Operation.operation(commands[i]);
+                        try
+                        {
+                            Operation.operation(commands[i]);
+                        }
+                        catch (MyException e)
+                        {
+                            System.out.println(e.getMessage());
+
+                        }
                     }
                     else if(commands[i].startsWith("player"))
                     {
-                        Playercmd.player(commands[i]);
+                        try
+                        {
+                            Playercmd.player(commands[i]);
+                        }
+                        catch (MyException e)
+                        {
+                            System.out.println(e.getMessage());
+                        }
                     }
                     else if(commands[i].startsWith("manual"))
                     {

@@ -28,23 +28,41 @@ public class Main
 
             if(command.startsWith("operation"))
             {
-                Operation.operation(command);
+                try
+                {
+                    Operation.operation(command);
+                }
+                catch (MyException e)
+                {
+                    System.out.println(e.getMessage());
+
+                }
+
             }
             else if(command.startsWith("player"))
             {
-                Playercmd.player(command);
+                try
+                {
+                    Playercmd.player(command);
+                }
+                catch (MyException e)
+                {
+                    System.out.println(e.getMessage());
+                }
+
             }
             else if(command.startsWith("manual"))
             {
-                Manual.manual(command);
+
+                    Manual.manual(command);
             }
             else if(command.startsWith("list"))
             {
-                List.list(command);
+                    List.list(command);
             }
             else if(command.startsWith("random"))
             {
-                Random.random(command);
+                    Random.random(command);
             }
             else if(command.startsWith("exit")){
                 System.exit(0);
