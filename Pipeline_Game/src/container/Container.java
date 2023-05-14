@@ -50,6 +50,10 @@ public abstract class Container implements Serializable {
 	}
 
 	
+	
+	/** 
+	 * @param c
+	 */
 	/** 
 	 * @param c
 	 */
@@ -127,10 +131,13 @@ public abstract class Container implements Serializable {
 	/**
 	 * Ezt a függvényt a Pump osztály valósítja meg
 	 * Ez a függvény felelős a cső pumpához illesztéséért
+	 *
 	 * @param player
+	 * @param xCord
+	 * @param yCord
 	 * @throws MyException
 	 */
-	public abstract void insertPipe(Player player) throws MyException;
+	public abstract void insertPipe(Player player, int xCord, int yCord) throws MyException;
 
 	/**
 	 * Ezt a függvényt a Pipe osztály valósítja meg. Ez a függvény felelős a cső csúszóssá válik
@@ -185,6 +192,8 @@ public abstract class Container implements Serializable {
 
 	public abstract void damageContainer();
 
+	
+
 	public abstract boolean isLooseEnd();
 
 	/**
@@ -212,6 +221,10 @@ public abstract class Container implements Serializable {
 		this.neighbors = neighbors;
 	}
 
+	public abstract boolean isDamaged();
 
+	public abstract Container getInput();
+	public abstract Container getOutput();
 
+	public abstract void setBreakOff(int rng);
 }

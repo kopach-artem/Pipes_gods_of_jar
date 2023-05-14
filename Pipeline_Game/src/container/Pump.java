@@ -89,16 +89,28 @@ public class Pump extends Container implements Serializable {
 	 * @param player - A játékos
 	 * @throws MyException
 	 */
-	public void insertPipe(Player player) throws MyException{
+	public void insertPipe(Player player, int xCord, int yCord) throws MyException{
 
-		Container atPipe = player.getCarriedPipes().get(0);
+		if(!Map.getInstance().getGameMap().isEmpty()){
 
-		if(!isAllConnected()){
-			this.getNeighbors().add(atPipe);
-			atPipe.getNeighbors().add(0, this);
-			player.getCarriedPipes().remove(atPipe);
+			ContainerPos cp = new ContainerPos();
+
+			for(ContainerPos containerPos : Map.getInstance().getGameMap()){
+
+				if(containerPos.getContainer().equals(player.getPosition())){
+					cp = containerPos;
+				}
+			}
+			if(!isAllConnected() && cp.isOnNeighboringTile(xCord, yCord)){
+				this.getNeighbors().add(player.getCarriedPipes().get(0));
+				player.getCarriedPipes().get(0).getNeighbors().add(0, this);
+
+				Map.getInstance().getContainers().add(player.getCarriedPipes().get(0));
+				Map.getInstance().getGameMap().add(new ContainerPos(player.getCarriedPipes().get(0), xCord, yCord));
+
+				player.getCarriedPipes().remove(player.getCarriedPipes().get(0));
+			}
 		}
-
 	}
 
 	/**
@@ -122,6 +134,10 @@ public class Pump extends Container implements Serializable {
 	public void pipeGetsSticky() {
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean getIsSticky() {
 		return false;
@@ -380,5 +396,13 @@ public class Pump extends Container implements Serializable {
 	 */
 	public boolean getisDamaged() {
 		return isDamaged;
+	}
+
+	
+
+
+	@Override
+	public void setBreakOff(int rng) {
+		randomDamageValue = rng;
 	}
 }

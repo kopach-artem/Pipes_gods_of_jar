@@ -5,12 +5,18 @@ import exception.MyException;
 import map.Map;
 import player.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Operation
 {
 
+    
+    /** 
+     * @param containerPosList
+     */
     public static void printMap(ArrayList<ContainerPos> containerPosList){
 
             int maxX = -1;
@@ -87,6 +93,9 @@ public class Operation
             Map.getInstance().connectPumpToPipe(pump1, pipe2);
             Map.getInstance().connectPumpToPipe(pump2, pipe3);
 
+            pump1.setInput(pipe1);
+            pump1.setOutput(pipe2);
+
             Map.getInstance().getGameMap().add(new ContainerPos(ms, 0, 0));
             Map.getInstance().getGameMap().add(new ContainerPos(pipe1, 1, 0));
             Map.getInstance().getGameMap().add(new ContainerPos(pump1, 2, 0));
@@ -97,8 +106,20 @@ public class Operation
 
             Map.getInstance().getPlayers().add(new Mechanic(cs));
             Map.getInstance().getPlayers().add(new Saboteur(cs));
-
-            Map.saveToFile("first.txt");
+            
+            try {
+                File file = new File("maps/testMap.txt");
+                file.getParentFile().mkdirs();
+                if (file.createNewFile()) {
+                  System.out.println("File created: " + file.getName());
+                } else {
+                  System.out.println("File already exists.");
+                }
+              } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+              }
+            Map.saveToFile("testMap.txt");
 
             System.out.println("Test map has successfully been created as 'testMap.txt', you can load it with command 'operationLoadMaptest.txt'");
         }
@@ -111,7 +132,49 @@ public class Operation
             else
             {
                 String filename = command.substring(16); // <Filename>.txt
-                Map.readFromFile(filename);
+                String commands[]=Map.readFromFile(filename);
+                for(int i=0; i<commands.length; i++)
+                {
+                    if(commands[i].startsWith("operation"))
+                    {
+                        try
+                        {
+                            Operation.operation(commands[i]);
+                        }
+                        catch (MyException e)
+                        {
+                            System.out.println(e.getMessage());
+
+                        }
+                    }
+                    else if(commands[i].startsWith("player"))
+                    {
+                        try
+                        {
+                            Playercmd.player(commands[i]);
+                        }
+                        catch (MyException e)
+                        {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    else if(commands[i].startsWith("manual"))
+                    {
+                        Manual.manual(commands[i]);
+                    }
+                    else if(commands[i].startsWith("list"))
+                    {
+                        List.list(commands[i]);
+                    }
+                    else if(commands[i].startsWith("random"))
+                    {
+                        Random.random(commands[i]);
+                    }
+                    else
+                    {
+                        System.out.println("Unknown command");
+                    }
+                }
                 if(Map.getInstance() != null)
                     System.out.println("Loading map from file: " + filename);
             }
@@ -133,7 +196,7 @@ public class Operation
                     System.out.println("Constructed map is empty");
             }
         }
-        else if(command.startsWith("operationPrintMap")) {
+        else if(command.equals("operationPrintMap")) {
 
             if(!Map.getInstance().getGameMap().isEmpty()) {
                 Operation.printMap(Map.getInstance().getGameMap());

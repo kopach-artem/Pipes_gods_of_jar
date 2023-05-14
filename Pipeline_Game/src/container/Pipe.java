@@ -119,14 +119,19 @@ public class Pipe extends Container implements Serializable {
 	 */
 	public void insertPump(Player player) throws MyException{
 
+		ContainerPos cp = new ContainerPos();
+
 		for(ContainerPos containerPos : Map.getInstance().getGameMap()){
 
+			if(containerPos.getContainer().equals(player.getPosition())){
+				cp = containerPos;
+			}
 		}
 
 		/**
 		 * Create new Pipe for the attachement.
 		 */
-			Pipe split1 = new Pipe();
+		Pipe split1 = new Pipe();
 		Map.addElement(split1);
 
 		/**
@@ -162,8 +167,6 @@ public class Pipe extends Container implements Serializable {
 			atPu.setOutput(split1);
 			pump2.setInput(split1);
 		}
-
-
 	}
 
 	/**
@@ -178,7 +181,7 @@ public class Pipe extends Container implements Serializable {
 	 * A Pipe nem valósítja meg ezt a függvényt, ezért erről nem is beszélek többet
 	 */
 	@Override
-	public void insertPipe(Player player) throws MyException {
+	public void insertPipe(Player player, int xCord, int yCord) throws MyException {
 
 	}
 
@@ -188,6 +191,9 @@ public class Pipe extends Container implements Serializable {
 	@Override
 	public void pipeGetsSlippery() {
 		this.slipperyTimer = Controller.getTurnCount();
+		if(this.isSticky){
+			this.isSticky = false;
+		}
 		this.isSlippery = true;
 	}
 
@@ -202,10 +208,17 @@ public class Pipe extends Container implements Serializable {
 
 	@Override
 	public void pipeGetsSticky() {
-		this.slipperyTimer = Controller.getTurnCount();
+		this.stickyTimer = Controller.getTurnCount();
+		if(this.isSlippery){
+			this.isSlippery = false;
+		}
 		this.isSticky = true;
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean getIsSticky() {
 		return isSticky;
@@ -393,6 +406,21 @@ public class Pipe extends Container implements Serializable {
 			return false;
 	}
 
+	@Override
+	public boolean isDamaged() {
+		return isLeaked;
+	}
+
+	@Override
+	public Container getInput() {
+		return null;
+	}
+
+	@Override
+	public Container getOutput() {
+		return null;
+	}
+
 	/**
 	 * Vissaztér az isLeaked attribútum értékével
 	 * @return boolean
@@ -427,5 +455,11 @@ public class Pipe extends Container implements Serializable {
 
 	public int getRandomInterval(){
 		return randomInterval;
+	}
+
+
+	@Override
+	public void setBreakOff(int rng) {
+	
 	}
 }

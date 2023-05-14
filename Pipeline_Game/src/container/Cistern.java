@@ -187,7 +187,7 @@ public class Cistern extends Container implements Serializable {
 	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
 	 */
 	@Override
-	public void insertPipe(Player player) throws MyException {
+	public void insertPipe(Player player, int xCord, int yCord) throws MyException {
 
 	}
 
@@ -213,6 +213,10 @@ public class Cistern extends Container implements Serializable {
 
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean getIsSticky() {
 		return false;
@@ -241,12 +245,22 @@ public class Cistern extends Container implements Serializable {
 		return false;
 	}
 
+	@Override
+	public boolean isDamaged() {
+		return false;
+	}
+
 	/**
 	 * Vissaztér a Cistern bemeneti csövével
 	 * @return - A bemeneti cső
 	 */
 	public Pipe getInput() {
 		return input;
+	}
+
+	@Override
+	public Container getOutput() {
+		return null;
 	}
 
 	/**
@@ -320,5 +334,10 @@ public class Cistern extends Container implements Serializable {
 	 */
 	public void setMadePipes(ArrayList<Pipe> madePipes) {
 		this.madePipes = madePipes;
+	}
+
+	@Override
+	public void setBreakOff(int rng) {
+		
 	}
 }

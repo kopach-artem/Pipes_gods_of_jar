@@ -125,7 +125,7 @@ public class MountainSpring extends Container implements Serializable {
 	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
 	 */
 	@Override
-	public void insertPipe(Player player) throws MyException {
+	public void insertPipe(Player player, int xCord, int yCord) throws MyException {
 
 	}
 
@@ -151,6 +151,10 @@ public class MountainSpring extends Container implements Serializable {
 
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean getIsSticky() {
 		return false;
@@ -195,6 +199,21 @@ public class MountainSpring extends Container implements Serializable {
 		return false;
 	}
 
+	@Override
+	public boolean isDamaged() {
+		return false;
+	}
+
+	@Override
+	public Container getInput() {
+		return null;
+	}
+
+	@Override
+	public Pipe getOutput() {
+		return output;
+	}
+
 
 	/**
 	 * Visszatér a waterCapac attribűtum értékével
@@ -218,5 +237,10 @@ public class MountainSpring extends Container implements Serializable {
 	 */
 	public void setOutput(Pipe output){
 		this.output = output;
+	}
+
+	@Override
+	public void setBreakOff(int rng) {
+		
 	}
 }

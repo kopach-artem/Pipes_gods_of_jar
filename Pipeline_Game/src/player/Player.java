@@ -48,6 +48,10 @@ public class Player implements Serializable {
 		id = generateId();
 	}
 
+	
+	/** 
+	 * @return int
+	 */
 	public static int generateId(){
 		return ++latestId;
 	}
@@ -144,9 +148,9 @@ public class Player implements Serializable {
 	 * Meghívni insertPipe(p: Player) : void függvényt.  
 	 * @throws MyException
 	 */
-	public void attachPipe() throws MyException {
+	public void attachPipe(int xCord, int yCord) throws MyException {
 		if (!getCarriedPipes().isEmpty())
-			this.position.insertPipe(this);
+			this.position.insertPipe(this, xCord, yCord);
 	}
 
 	/**
