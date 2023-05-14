@@ -21,6 +21,8 @@ public class Playercmd
     /** 
      * @param command
      * @throws MyException
+     * a player irányításáért felelős düggvény amely a bemeneti kommandokat olvasva
+     * dönti el, hogy a játékos merre mezogjon, illetve milyen tevékenységet vigyen végbe(DetachPipe, AdjustPump, stb...)
      */
     public static void player(String command) throws MyException {
         if(command.startsWith("player"))
@@ -239,6 +241,8 @@ public class Playercmd
 
                         }
                     }
+
+                    //Cső kilyukasztása
                     else if(newcmd.equals("LeakPipe")) //player <Player> LeakPipe
                     {
                         for(Player player : Map.getInstance().getPlayers()){
@@ -247,6 +251,8 @@ public class Playercmd
                             }
                         }
                     }
+
+                    //Cső csatlakoztatása pumpához
                     else if(newcmd.startsWith("AttachPipeTo")) //player <Player> AttachPipeTo<PosX>_<PosY> //TODO vmiért nemlehet minden irányba illeszteni lásd lejjebb
                     {
                         int positions[]= StrFunctions.subPosString(newcmd,"AttachPipeTo"); //<PosX>_<PosY>
@@ -262,6 +268,7 @@ public class Playercmd
                             }
                         }
                     }
+
                     else if(newcmd.equals("AttachPump")) //player <Player> AttachPump //TODO ez még hiányzik
                     {
                         for(Player player : Map.getInstance().getPlayers()){
@@ -314,6 +321,7 @@ public class Playercmd
                             }
                         }
                     }
+                    //Cső javítása
                     else if(newcmd.equals("RepairPipe")) //player <Player> RepairPipe
                     {
                         for(Player player : Map.getInstance().getPlayers()){
@@ -322,6 +330,7 @@ public class Playercmd
                             }
                         }
                     }
+                    //Pumpa javításq
                     else if(newcmd.equals("RepairPump")) //player <Player> RepairPump
                     {
                         for(Player player : Map.getInstance().getPlayers()){
@@ -330,6 +339,7 @@ public class Playercmd
                             }
                         }
                     }
+                    //Cső csúszóssá tétele
                     else if(newcmd.equals("MakePipeSlippery")) //player <Player> MakePipeSlippery
                     {
                         for(Player player : Map.getInstance().getPlayers()){
@@ -338,6 +348,7 @@ public class Playercmd
                             }
                         }
                     }
+                    //Cső ragadóssá tétele
                     else if(newcmd.equals("MakePipeSticky")) //player <Player> MakePipeSticky
                     {
                         for(Player player : Map.getInstance().getPlayers()){

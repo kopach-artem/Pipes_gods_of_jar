@@ -12,6 +12,9 @@ public class Random
     
     /** 
      * @param command
+     * A pumpa véletlenszerű elromlását leíró függvény
+     * Végigmegyünk a Map osztály konténer listájában lévő összes Pump elemen
+     * és amely elemnek a randomDamageValue-ja megegyezik az eltelt körök számával akkor az adott pumpa elromlik
      */
     public static void random(String command)
     {

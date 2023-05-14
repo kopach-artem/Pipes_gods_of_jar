@@ -69,6 +69,7 @@ public interface StrFunctions
         {
             System.out.println("There must be a '_' character between posX and posY");
         }
+        //pozíció egy tömbben tárolása
         int[] positions=new int[2];
         positions[0]=posX;
         positions[1]=posY;
