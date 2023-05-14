@@ -31,7 +31,7 @@ public class Playercmd
                 {
                     int playernumber=Character.getNumericValue(command.charAt(6)); //<Player>
                     String newcmd=command.substring(7);
-                    if(newcmd.startsWith("moveTo")) //player <Player> moveTo <Direction> //TODO The given Container is not steppable exception
+                    if(newcmd.startsWith("moveTo")) //player <Player> moveTo <Direction>
                     {
                         String direction=newcmd.substring(6); // <Direction>
                         Directions dir = Directions.Invalid;
@@ -314,7 +314,7 @@ public class Playercmd
                             }
                         }
                     }
-                    else if(newcmd.equals("RepairPipe")) //player <Player> RepairPipe //TODO az ilyeneknél kéne kezelni exceptiont, vagy jó az ha lefagy a program? pl ha olyat javit meg ami nem rossz
+                    else if(newcmd.equals("RepairPipe")) //player <Player> RepairPipe
                     {
                         for(Player player : Map.getInstance().getPlayers()){
                             if(player.getId() == playernumber){
