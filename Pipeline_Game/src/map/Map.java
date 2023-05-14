@@ -3,8 +3,6 @@ package map;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import controller.Controller;
 import exception.MyException;
 import player.*;
 import container.*;
@@ -116,6 +114,11 @@ public class Map implements Serializable{
 		this.players = players;
 	}
 
+	
+	/** 
+	 * @param filePath
+	 * @return String[]
+	 */
 	public static String[] readFromFile(String filePath) {
 		File file = new File("maps/" + filePath);
 		if (!file.exists()) {

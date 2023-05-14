@@ -231,6 +231,10 @@ public class Pipe extends Container implements Serializable {
 		return isSticky;
 	}
 
+	
+	/** 
+	 * @param b
+	 */
 	public void setSticky(boolean b){
 		this.isSticky = b;
 	}

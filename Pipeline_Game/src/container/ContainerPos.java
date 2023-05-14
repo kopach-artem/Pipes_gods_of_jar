@@ -1,6 +1,5 @@
 package container;
 
-import map.Map;
 
 import java.io.Serializable;
 
@@ -13,6 +12,10 @@ public class ContainerPos implements Serializable {
         return container;
     }
 
+    
+    /** 
+     * @param container
+     */
     public void setContainer(Container container) {
         this.container = container;
     }
