@@ -57,15 +57,15 @@ public class ContainerPos implements Serializable {
                 return true;
             }
         }
-        else if(this.posY - 1 >= 0){
+        if(this.posY - 1 >= 0){
             if(xCord == this.posX && yCord == this.posY - 1){
                 return true;
             }
         }
-        else if(xCord == this.posX + 1 && yCord == this.posY){
+        if(xCord == this.posX + 1 && yCord == this.posY){
             return true;
         }
-        else if(xCord == this.posX && yCord == this.posY) {
+        if(xCord == this.posX && yCord == this.posY + 1) {
             return true;
         }
         return false;
