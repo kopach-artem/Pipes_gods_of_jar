@@ -192,13 +192,24 @@ public class Pump extends Container implements Serializable {
 				cp = containerPos;
 			}
 		}
-		if(this.seeifNeighbors(cp.getContainer())){
-			if(cp.getContainer().isLooseEnd()){
-				cp.getContainer().getNeighbors().remove(this);
-				this.getNeighbors().remove(cp.getContainer());
-				player.getCarriedPipes().add(cp.getContainer());
+		if(cp.getContainer().amIGettingDeatched()) {
+			if (this.seeifNeighbors(cp.getContainer())) {
+				if (cp.getContainer().isLooseEnd()) {
+					if (this.getInput().equals(cp.getContainer())) {
+						this.setInput(null);
+					} else if (this.getOutput().equals(cp.getContainer())) {
+						this.setOutput(null);
+					}
+					cp.getContainer().getNeighbors().remove(this);
+					this.getNeighbors().remove(cp.getContainer());
+					player.getCarriedPipes().add(cp.getContainer());
+					Map.getInstance().getGameMap().remove(cp);
+					Map.getInstance().getContainers().remove(cp.getContainer());
+				}
 			}
 		}
+		else
+			System.out.println("Got'cha little man! You thought you could detach something other than a Pipe?");
 	}
 
 
@@ -380,6 +391,11 @@ public class Pump extends Container implements Serializable {
 	 */
 	public void setInput(Pipe input) {
 		this.input = input;
+	}
+
+	@Override
+	public boolean amIGettingDeatched() {
+		return false;
 	}
 
 	/**

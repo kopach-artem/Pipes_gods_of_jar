@@ -119,54 +119,61 @@ public class Pipe extends Container implements Serializable {
 	 */
 	public void insertPump(Player player) throws MyException{
 
-		ContainerPos cp = new ContainerPos();
+		if(player.getCarriedPump() != null) {
 
-		for(ContainerPos containerPos : Map.getInstance().getGameMap()){
+			ContainerPos cp = new ContainerPos();
+			ContainerPos nextContainer = new ContainerPos();
 
-			if(containerPos.getContainer().equals(player.getPosition())){
-				cp = containerPos;
+			Pipe newPipe = new Pipe();
+			Pump newPump = player.getCarriedPump();
+
+			player.setCarriedPump(null);
+
+			//Iterate through gameMap to find Containers
+			for(ContainerPos containerPos : Map.getInstance().getGameMap()) {
+				if (containerPos.getContainer().equals(this)) {
+					cp = containerPos;
+				}
 			}
+			for(ContainerPos containerPos : Map.getInstance().getGameMap()){
+				if((containerPos.getPosX() - 1 == cp.getPosX()) && (containerPos.getPosY() == cp.getPosY())){
+					nextContainer = containerPos;
+				}
+			}
+
+			//If pipe was input
+			if(amInput(nextContainer.getContainer())){
+				nextContainer.getContainer().setInput(newPipe);
+				newPump.setInput(this);
+				newPump.setOutput(newPipe);
+			}
+
+			//Shift everything by X = 2
+			for(ContainerPos containerPos : Map.getInstance().getGameMap()){
+				if(containerPos.getPosX() > cp.getPosX()){
+					int x = containerPos.getPosX() + 2;
+					containerPos.setPosY(x);
+				}
+			}
+
+			//Adding everything to map
+			Map.getInstance().getContainers().add(newPump);
+			Map.getInstance().getContainers().add(newPipe);
+			Map.getInstance().getGameMap().add(new ContainerPos(newPump, cp.getPosX() + 1, cp.getPosY()));
+			Map.getInstance().getGameMap().add(new ContainerPos(newPipe, cp.getPosX() + 2, cp.getPosY()));
+
+			//Remove the next Container from Pipe's neigbors
+			this.getNeighbors().remove(nextContainer.getContainer());
+			nextContainer.getContainer().getNeighbors().remove(this);
+
+			this.getNeighbors().add(newPump);
+			newPump.getNeighbors().add(this);
+			newPump.getNeighbors().add(newPipe);
+			newPipe.getNeighbors().add(newPump);
+			newPipe.getNeighbors().add(nextContainer.getContainer());
 		}
-
-		/**
-		 * Create new Pipe for the attachement.
-		 */
-		Pipe split1 = new Pipe();
-		Map.addElement(split1);
-
-		/**
-		 * Initialize pumps
-		 */
-		Pump atPu = player.getCarriedPump();
-		player.setCarriedPump(null);
-		Pump pump2 = (Pump) this.neighbors.get(0);
-
-		/**
-		 * Adding pumps to split Pipe
-		 */
-		split1.addPump(pump2);
-		split1.addPump(atPu);
-
-		/**
-		 * Removing the Pump that now connects to split1 Pipe but was connected to the base Pipe, and Adding the new Pump
-		 */
-		this.removePump(pump2);
-		this.addPump(atPu);
-
-		/**
-		 * Add Pipes to Pumps too
-		 */
-		atPu.addPipe(split1);
-		atPu.addPipe(this);
-
-		pump2.addPipe(split1);
-		pump2.removePipe(this);
-
-        if(pump2.getInput().equals(this)){
-			atPu.setInput(this);
-			atPu.setOutput(split1);
-			pump2.setInput(split1);
-		}
+		else
+			System.out.println("Player has no pumps at his disposal");
 	}
 
 	/**
@@ -215,8 +222,8 @@ public class Pipe extends Container implements Serializable {
 		this.isSticky = true;
 	}
 
-	
-	/** 
+
+	/**
 	 * @return boolean
 	 */
 	@Override
@@ -289,6 +296,16 @@ public class Pipe extends Container implements Serializable {
 			throw new MyException("Remove Pump failed");
 	}
 
+
+	@Override
+	public void setInput(Pipe pipe) {
+
+	}
+
+	@Override
+	public boolean amIGettingDeatched() {
+		return true;
+	}
 
 	/**
 	 * Az inputState-hez tartozó kiírást valósítja meg, ez különösebben csak a víz mozgásának "grafikus" szemléltetésére kell
@@ -460,6 +477,6 @@ public class Pipe extends Container implements Serializable {
 
 	@Override
 	public void setBreakOff(int rng) {
-	
+
 	}
 }

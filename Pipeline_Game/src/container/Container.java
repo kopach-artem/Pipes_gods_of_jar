@@ -38,6 +38,10 @@ public abstract class Container implements Serializable {
 		return this.neighbors.contains(neighbor);
 	}
 
+	public abstract void setInput(Pipe pipe);
+
+	public abstract boolean amIGettingDeatched();
+
 	
 	/**
 	 * Ez a függvény felelős a waterFlow() függvényhez kapcsolódó kiiratásokra

@@ -271,6 +271,11 @@ public class Cistern extends Container implements Serializable {
 		this.input = input;
 	}
 
+	@Override
+	public boolean amIGettingDeatched() {
+		return false;
+	}
+
 	/**
 	 * Visszatér a CollectedWater attribútum,
 	 * vagyis a Cistern által gyűjtött víz értékével.

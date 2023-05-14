@@ -15,7 +15,7 @@ public class ContainerPos implements Serializable {
         this.container = container;
     }
 
-    Container container;
+    private Container container;
 
     public int getPosX() {
         return posX;
@@ -25,7 +25,7 @@ public class ContainerPos implements Serializable {
         this.posX = posX;
     }
 
-    int posX;
+    private int posX;
 
     public int getPosY() {
         return posY;
@@ -35,7 +35,7 @@ public class ContainerPos implements Serializable {
         this.posY = posY;
     }
 
-    int posY;
+    private int posY;
 
     public ContainerPos(Container c, int x, int y){
         container = c;

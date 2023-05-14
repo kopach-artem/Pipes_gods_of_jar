@@ -47,8 +47,18 @@ public class MountainSpring extends Container implements Serializable {
 		waterCapac--;
 	}
 
-	
-	/** 
+
+	@Override
+	public void setInput(Pipe pipe) {
+
+	}
+
+	@Override
+	public boolean amIGettingDeatched() {
+		return false;
+	}
+
+	/**
 	 * @return String
 	 */
 	public String writeInputState(){
