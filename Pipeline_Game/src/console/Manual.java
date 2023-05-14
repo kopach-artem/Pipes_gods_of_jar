@@ -7,17 +7,32 @@ import controller.Controller;
 import map.Map;
 import player.Player;
 
+/**
+ * Ez az osztály a pályaelemek manuális
+ * létrehozásáért felelős.
+ */
 public class Manual
 {
     
-    /** 
-     * @param command
+    /**
+     * Az osztály egyetlen metódusa, itt történik a manual...
+     * parancsok feldolgozása
+     * @param command - A parancs String formában
      */
     public static void manual(String command)
     {
         if(command.startsWith("manualCreateContainer")) //manualCreateContainer <Containertype>
         {
+            /**
+             * Levágjuk a string elejét, hogy csak az innentől szükséges
+             * részek maradjanak meg. (manualCreateCOntainer-t levágjuk
+             */
             String newcmd=command.substring(21);
+
+            /**
+             * Ha PipeAtPlayer a parancs, akkor a kívánt azonosítójú
+             * játékosnál létrehozunk egy csövet
+             */
             if(newcmd.startsWith("PipeAtPlayer")) //manualCreateContainerPipeAtPlayer<Player>
             {
                 String playernumber=newcmd.substring(12); //<Player>
@@ -39,6 +54,11 @@ public class Manual
                     System.out.println("The interval of players number is 0-9");
                 }
             }
+
+            /**
+             * Ha PumpAtPlayer a parancs, akkor létrehozunk egy új pumpát
+             * a megadott azonosítójú játékosnál, persze ha érvényes az azonosító (létezik az a játékos).
+             */
             else if(newcmd.startsWith("PumpAtPlayer")) //manualCreateContainerPumpAtPlayer<Player>
             {
                 String playernumber=newcmd.substring(12); //<Player>
@@ -65,6 +85,11 @@ public class Manual
                 System.out.println("Invalid use of command");
             }
         }
+
+        /**
+         * Ha manualSetTurnCount a parancs, akkor beállítjuk a turnCount-ot a Controller osztályban
+         * Ellenőrizni kell, hogy integer-t adott-e meg a felhasználó
+         */
         else if(command.startsWith("manualSetTurnCount")) //manualSetTurnCount <Turns>
         {
             String turncount=command.substring(18); //<Turns>
@@ -83,6 +108,11 @@ public class Manual
                 Controller.getInstance().setTurnCount(Integer.parseInt(turncount));
             }
         }
+
+        /**
+         * Ha a parancs manualDamageContainer, akkor a megadott pozícióban
+         * lévő Container-t elrontjuk, persze ha érvényes pozíciót adtunk meg.
+         */
         else if(command.startsWith("manualDamageContainer")) //manualDamageContainerAt <PosX> <PosY>
         {
             String newcmd=command.substring(21);
@@ -103,6 +133,11 @@ public class Manual
                 System.out.println("Invalid use of command");
             }
         }
+
+        /**
+         * Ha a parancs manualMakePipeSlippery, akkor a megadott pozícióban lévő csövet
+         * csúszóssá teszzük, ha érvényes pozíciót adtunk meg.
+         */
         else if(command.startsWith("manualMakePipeSlippery")) //manualMakePipeSlipperyAt <PosX> <PosY>
         {
             String newcmd=command.substring(22);
@@ -123,6 +158,11 @@ public class Manual
                 System.out.println("Invalid use of command");
             }
         }
+
+        /**
+         * Ha a parancs manualMakePipeSticky, akkor a megadott pozícióban lévő csövet
+         * ragadóssá teszzük, ha érvényes pozíciót adtunk meg.
+         */
         else if(command.startsWith("manualMakePipeSticky")) //manualMakePipeStickyAt <PosX> <PosY>
         {
             String newcmd=command.substring(20);
@@ -143,6 +183,12 @@ public class Manual
                 System.out.println("Invalid use of command");
             }
         }
+
+        /**
+         * Ha a parancs manualTeleportPlayer, akkor a kívánt játékost
+         * áthelyezzük a megadott pozícióba, ha létezik a játékos, érvényes pozíciót adtunk meg,
+         * és lehet épp az adott pozícióba lépni.
+         */
         else if(command.startsWith("manualTeleportPlayer")) //manualTeleportPlayer<Player>To <PosX> <PosY>
         {
             if(command.length()>20)
