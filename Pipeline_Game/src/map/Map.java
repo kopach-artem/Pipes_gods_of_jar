@@ -139,6 +139,10 @@ public class Map implements Serializable{
 		}
 	}
 
+	
+	/** 
+	 * @param filePath
+	 */
 	public static void saveToFile(String filePath) {
 		try (BufferedWriter bw = new BufferedWriter (new FileWriter("maps/" + filePath)))
 		{
@@ -295,6 +299,10 @@ public class Map implements Serializable{
 			e.printStackTrace();
 		}
 	}
+	
+	/** 
+	 * @param cp
+	 */
 	public static void addNeighbors(ContainerPos cp){
 		if(!Map.getInstance().getGameMap().isEmpty()) {
 			for (ContainerPos containerPos : Map.getInstance().getGameMap()) {

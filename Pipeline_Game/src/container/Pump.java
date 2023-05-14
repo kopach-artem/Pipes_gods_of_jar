@@ -312,6 +312,10 @@ public class Pump extends Container implements Serializable {
 		this.isDamaged = true;
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean isLooseEnd() {
 		return false;
@@ -402,6 +406,10 @@ public class Pump extends Container implements Serializable {
 		this.input = input;
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean amIGettingDeatched() {
 		return false;

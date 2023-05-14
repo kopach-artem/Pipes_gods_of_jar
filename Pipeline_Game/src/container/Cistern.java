@@ -244,11 +244,19 @@ public class Cistern extends Container implements Serializable {
 
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean isLooseEnd() {
 		return false;
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean isDamaged() {
 		return false;

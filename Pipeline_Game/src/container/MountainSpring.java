@@ -57,6 +57,10 @@ public class MountainSpring extends Container implements Serializable {
 
 	}
 
+	
+	/** 
+	 * @return boolean
+	 */
 	@Override
 	public boolean amIGettingDeatched() {
 		return false;
@@ -198,6 +202,10 @@ public class MountainSpring extends Container implements Serializable {
 		System.out.println("After: "+ this.writeInputState() + " " + "Water remaining in Mountain Spring: " + waterCapac);
 	}
 
+	
+	/** 
+	 * @return String
+	 */
 	@Override
 	public String consolePrint() {
 		return "MS\t";

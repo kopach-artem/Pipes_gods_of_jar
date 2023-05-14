@@ -22,6 +22,10 @@ public class ContainerPos implements Serializable {
 
     private Container container;
 
+    
+    /** 
+     * @return int
+     */
     public int getPosX() {
         return posX;
     }

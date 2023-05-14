@@ -59,6 +59,10 @@ public class Controller {
 		return turnCount;
 	}
 
+	
+	/** 
+	 * @param tC
+	 */
 	public void setTurnCount(int tC){
 		turnCount = tC;
 	}
