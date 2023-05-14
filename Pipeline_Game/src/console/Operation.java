@@ -553,15 +553,24 @@ public class Operation
                             }
                         }
                     }
+                    /**
+                     * Ha az egyik pozíciót rosszul adtuk meg.
+                     */
                     else
                         System.out.println("One of the positions are incorrect");
                 }
+                /**
+                 * Ha rosszul adtuk meg a parancsa paramétereit.
+                 */
                 else
                 {
                     System.out.println("Invalid use of command");
                 }
             }
         }
+        /**
+         * Ha rossz parancsot adtunk meg.
+         */
         else
         {
             System.out.println("Unknown command");
