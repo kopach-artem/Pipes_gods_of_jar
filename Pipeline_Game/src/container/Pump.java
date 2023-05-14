@@ -195,10 +195,15 @@ public class Pump extends Container implements Serializable {
 		if(cp.getContainer().amIGettingDeatched()) {
 			if (this.seeifNeighbors(cp.getContainer())) {
 				if (cp.getContainer().isLooseEnd()) {
-					if (this.getInput().equals(cp.getContainer())) {
-						this.setInput(null);
-					} else if (this.getOutput().equals(cp.getContainer())) {
-						this.setOutput(null);
+					if(this.getInput() != null){
+						if (this.getInput().equals(cp.getContainer())) {
+							this.setInput(null);
+						}
+					}
+					if(this.getOutput() != null){
+						if(this.getOutput().equals((cp.getContainer()))){
+							this.setOutput(null);
+						}
 					}
 					cp.getContainer().getNeighbors().remove(this);
 					this.getNeighbors().remove(cp.getContainer());
