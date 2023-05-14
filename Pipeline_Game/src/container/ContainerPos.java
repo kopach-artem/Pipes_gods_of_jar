@@ -1,5 +1,7 @@
 package container;
 
+import map.Map;
+
 import java.io.Serializable;
 
 public class ContainerPos implements Serializable {
@@ -68,7 +70,4 @@ public class ContainerPos implements Serializable {
         }
         return false;
     }
-
-
-
 }

@@ -292,6 +292,31 @@ public class Map implements Serializable{
 			e.printStackTrace();
 		}
 	}
+	public static void addNeighbors(ContainerPos cp){
+		if(!Map.getInstance().getGameMap().isEmpty()) {
+			for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+				if (containerPos.isOnNeighboringTile(cp.getPosX(), cp.getPosY())) {
+					if (!(containerPos.getContainer().getNeighbors().contains(cp.getContainer()))) {
+						cp.getContainer().getNeighbors().add(containerPos.getContainer());
+						containerPos.getContainer().getNeighbors().add(cp.getContainer());
+					}
+				}
+			}
+		}
+	}
+
+	public static void removeNeighbors(ContainerPos cp){
+		if(!Map.getInstance().getGameMap().isEmpty()) {
+			for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+				if (containerPos.isOnNeighboringTile(cp.getPosX(), cp.getPosY())) {
+					if (!(containerPos.getContainer().getNeighbors().contains(cp.getContainer()))) {
+						cp.getContainer().getNeighbors().remove(containerPos.getContainer());
+						containerPos.getContainer().getNeighbors().remove(cp.getContainer());
+					}
+				}
+			}
+		}
+	}
 	public ArrayList<ContainerPos> getGameMap(){
 		return gameMap;
 	}

@@ -224,7 +224,10 @@ public class Operation
                             else{
                                 Cistern cs = new Cistern();
                                 Map.getInstance().getContainers().add(cs);
-                                Map.getInstance().getGameMap().add(new ContainerPos(cs, positions[0], positions[1]));
+                                ContainerPos containerPos = new ContainerPos(cs, positions[0], positions[1]);
+                                Map.getInstance().getGameMap().add(containerPos);
+                                Map.addNeighbors(containerPos);
+
                                 break;
                             }
                         }
@@ -251,7 +254,9 @@ public class Operation
                             else{
                                 MountainSpring ms = new MountainSpring();
                                 Map.getInstance().getContainers().add(ms);
-                                Map.getInstance().getGameMap().add(new ContainerPos(ms, positions[0], positions[1]));
+                                ContainerPos containerPos = new ContainerPos(ms, positions[0], positions[1]);
+                                Map.getInstance().getGameMap().add(containerPos);
+                                Map.addNeighbors(containerPos);
                                 break;
                             }
                         }
@@ -278,7 +283,9 @@ public class Operation
                             else{
                                 Pipe pipe = new Pipe();
                                 Map.getInstance().getContainers().add(pipe);
-                                Map.getInstance().getGameMap().add(new ContainerPos(pipe, positions[0], positions[1]));
+                                ContainerPos containerPos = new ContainerPos(pipe, positions[0], positions[1]);
+                                Map.getInstance().getGameMap().add(containerPos);
+                                Map.addNeighbors(containerPos);
                                 break;
                             }
                         }
@@ -305,7 +312,9 @@ public class Operation
                             else{
                                 Pump pump = new Pump(4);
                                 Map.getInstance().getContainers().add(pump);
-                                Map.getInstance().getGameMap().add(new ContainerPos(pump, positions[0], positions[1]));
+                                ContainerPos containerPos = new ContainerPos(pump, positions[0], positions[1]);
+                                Map.getInstance().getGameMap().add(containerPos);
+                                Map.addNeighbors(containerPos);
                                 break;
                             }
                         }
@@ -337,6 +346,7 @@ public class Operation
                                     Map.getInstance().getContainers().remove(cp.getContainer());
                                 }
                                 Map.getInstance().getGameMap().remove(cp);
+                                Map.removeNeighbors(cp);
                                 break;
                             }
                         }
