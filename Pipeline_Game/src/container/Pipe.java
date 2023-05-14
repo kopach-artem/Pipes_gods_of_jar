@@ -206,7 +206,7 @@ public class Pipe extends Container implements Serializable {
 
 				//Shift everything by X = 2
 				for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
-					if (containerPos.getPosX() > cp.getPosX()) {
+					if (containerPos.getPosY() > cp.getPosY()) {
 						int y = containerPos.getPosY() + 2;
 						containerPos.setPosY(y);
 					}
