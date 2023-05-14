@@ -51,6 +51,10 @@ public class Controller {
 
 	}
 
+	
+	/** 
+	 * @return int
+	 */
 	public static int getTurnCount(){
 		return turnCount;
 	}

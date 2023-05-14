@@ -230,6 +230,10 @@ public class Cistern extends Container implements Serializable {
 		System.out.println("After: " + this.writeInputState());
 	}
 
+	
+	/** 
+	 * @return String
+	 */
 	@Override
 	public String consolePrint() {
 		return "CS\t";

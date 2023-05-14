@@ -298,6 +298,10 @@ public class Pump extends Container implements Serializable {
 			output.setInputState();
 	}
 
+	
+	/** 
+	 * @return String
+	 */
 	@Override
 	public String consolePrint() {
 		return "PU\t";
