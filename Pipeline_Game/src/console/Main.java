@@ -13,8 +13,7 @@ public class Main
      * @param args - String[]
      * @throws MyException
      */
-    public static void main(String[] args) throws MyException
-    {
+    public static void main(String[] args) throws MyException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
         String command="";
 

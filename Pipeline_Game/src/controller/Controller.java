@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class Controller {
 
-	private Map map;
+	private Map map = Map.getInstance();
 	private static Controller controller;
 	private static int turnCount = 0;
 
@@ -103,11 +103,11 @@ public class Controller {
 	 * És így megy végig a víz egészen a ciszternáig (CS) ahol is legvégül majd sok kör lefolyása után szintén megjelenik a víz
 	 */
 	public void waterFlow() {
-		ArrayList<Container> containers = map.getContainers();
+		ArrayList<ContainerPos> containers = map.getGameMap();
 
-		for(Container c : containers){
-			c.eval();
-			c.makeHistory();
+		for(ContainerPos c : containers){
+			c.getContainer().eval();
+			c.getContainer().makeHistory();
 		}
 	}
 

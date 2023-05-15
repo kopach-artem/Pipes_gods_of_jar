@@ -196,7 +196,7 @@ public class Manual
                     }
                 }
 
-                if (allDigit && newcmd.length() > 0 && newcmd.length() < 3) {
+                if (allDigit && newcmd.length() > 0 && newcmd.length() < 3 && Integer.parseInt(newcmd) <= 50) {
                     for (int i = 0; i < Integer.parseInt(newcmd); i++) {
                         Controller.getInstance().waterFlow();
                         Operation.printWaterMap(Map.getInstance().getGameMap());

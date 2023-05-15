@@ -126,7 +126,7 @@ public class Operation
      * @param command - A parancs String formában.
      * @throws MyException
      */
-    public static void operation(String command) throws MyException {
+    public static void operation(String command) throws MyException, InterruptedException {
         /**
          * Ha a parancs operationCreateTestMap, akkor létrehozunk egy teszt pályát,
          * és kiírjuk a testMap.txt fájlba
