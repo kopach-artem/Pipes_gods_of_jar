@@ -221,6 +221,10 @@ public abstract class Container implements Serializable {
 		inputState[1] = false;
 	}
 
+	public boolean isWaterFlowing(){
+		return inputState[0];
+	}
+
 	/**
 	 * Visszatér a neighbors attribúmmal
 	 * @return ArrayList - neighbors attribútum
