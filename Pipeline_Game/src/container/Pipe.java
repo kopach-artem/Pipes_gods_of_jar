@@ -547,4 +547,14 @@ public class Pipe extends Container implements Serializable {
 	public void setBreakOff(int rng) {
 
 	}
+
+	@Override
+	public int queryCistern() {
+		return -1;
+	}
+
+	@Override
+	public int mountainSpringQuery() {
+		return -1;
+	}
 }

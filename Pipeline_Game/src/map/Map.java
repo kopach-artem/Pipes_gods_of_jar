@@ -328,6 +328,11 @@ public class Map implements Serializable{
 			}
 		}
 	}
+
+	public static int getLeakedWater() {
+		return leakedWater;
+	}
+
 	public ArrayList<ContainerPos> getGameMap(){
 		return gameMap;
 	}

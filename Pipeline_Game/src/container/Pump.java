@@ -438,4 +438,14 @@ public class Pump extends Container implements Serializable {
 	public void setBreakOff(int rng) {
 		randomDamageValue = rng;
 	}
+
+	@Override
+	public int queryCistern() {
+		return -1;
+	}
+
+	@Override
+	public int mountainSpringQuery() {
+		return -1;
+	}
 }
