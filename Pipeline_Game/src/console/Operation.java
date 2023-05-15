@@ -612,6 +612,41 @@ public class Operation
                 }
             }
         }
+        else if(command.equals("operationMsConnect"))
+        {
+
+            ContainerPos cp = new ContainerPos();
+            ContainerPos ms = new ContainerPos();
+
+            for(ContainerPos containerPos : Map.getInstance().getGameMap()){
+                if(containerPos.getPosX() == 1 && containerPos.getPosY() == 0){
+                    cp = containerPos;
+                }
+                if(containerPos.getPosX() == 0 && containerPos.getPosY() == 0){
+                    ms = containerPos;
+                }
+            }
+
+            ((MountainSpring)(ms.getContainer())).setOutput((Pipe) cp.getContainer());
+
+        }
+        else if(command.equals("operationCsConnect"))
+        {
+            ContainerPos cp = new ContainerPos();
+            ContainerPos cs = new ContainerPos();
+
+            for(ContainerPos containerPos : Map.getInstance().getGameMap()){
+                if(containerPos.getPosX() == 3 && containerPos.getPosY() == 0){
+                    cp = containerPos;
+                }
+                if(containerPos.getPosX() == 4 && containerPos.getPosY() == 0){
+                    cs = containerPos;
+                }
+            }
+
+            ((Cistern)(cs.getContainer())).setInput((Pipe)cp.getContainer());
+        }
+
         /**
          * Ha rossz parancsot adtunk meg.
          */
