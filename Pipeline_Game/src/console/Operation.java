@@ -77,6 +77,50 @@ public class Operation
             }
     }
 
+    public static void printWaterMap(ArrayList<ContainerPos> containerPosList){
+
+        int maxX = -1;
+        int maxY = -1;
+
+        // Find the maximum x and y values
+        for (ContainerPos containerPos : containerPosList) {
+            if (containerPos.getPosX() > maxX) {
+                maxX = containerPos.getPosX();
+            }
+            if (containerPos.getPosY() > maxY) {
+                maxY = containerPos.getPosY();
+            }
+        }
+
+        // Create a 2D grid to store the container symbols
+        String[][] grid = new String[maxX + 1][maxY + 1];
+
+        // Fill the grid with ' ' (empty spaces)
+        for (int i = 0; i <= maxX; i++) {
+            for (int j = 0; j <= maxY; j++) {
+                grid[i][j] = " \t";
+            }
+        }
+
+        // Place the container symbols in the grid
+        for (ContainerPos containerPos : containerPosList) {
+            if(containerPos.getContainer().isWaterFlowing()) {
+                int x = containerPos.getPosX();
+                int y = containerPos.getPosY();
+                Container c = containerPos.getContainer();
+                grid[x][y] = c.consolePrint();
+            }
+        }
+
+        // Print the grid
+        for (int y = 0; y <= maxY; y++) {
+            for (int x = 0; x <= maxX; x++) {
+                System.out.print(grid[x][y]);
+            }
+            System.out.println();
+        }
+    }
+
     /**
      * A parancsok feldolgozása itt történik.
      * @param command - A parancs String formában.
