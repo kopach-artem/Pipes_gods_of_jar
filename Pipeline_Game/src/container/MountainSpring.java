@@ -185,7 +185,6 @@ public class MountainSpring extends Container implements Serializable {
 	 * És legvégül az outputján lévő Pipe-ra meghívjuk a setInputState-et
 	 */
 	public void eval() {
-		System.out.println("Before: "+ this.writeInputState());
 		if(waterCapac != 0) {
 			decreaseWaterAm();
 			this.setInputState();
@@ -199,7 +198,6 @@ public class MountainSpring extends Container implements Serializable {
 	public void setInputState() {
 		inputState[0] = true;
 		inputState[1] = true;
-		System.out.println("After: "+ this.writeInputState() + " " + "Water remaining in Mountain Spring: " + waterCapac);
 	}
 
 	
