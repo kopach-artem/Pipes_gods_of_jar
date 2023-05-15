@@ -20,8 +20,7 @@ public class Manual
      * parancsok feldolgozása
      * @param command - A parancs String formában
      */
-    public static void manual(String command)
-    {
+    public static void manual(String command) throws InterruptedException {
         if(command.startsWith("manualCreateContainer")) //manualCreateContainer <Containertype>
         {
             /**
@@ -186,27 +185,28 @@ public class Manual
         }
         else if(command.startsWith("manualFlowWaterTillTurn"))
         {
-            boolean allDigit=true;
-            String newcmd=command.substring(23);
-            if(newcmd.length()<3)
-            {
-                for(int i=0; i<newcmd.length(); i++)
-                {
-                    if(!StrFunctions.isDigit(newcmd.charAt(i)))
-                    {
-                        allDigit=false;
+            if(!Map.getInstance().getGameMap().isEmpty()) {
+                boolean allDigit = true;
+                String newcmd = command.substring(23);
+                if (newcmd.length() < 3) {
+                    for (int i = 0; i < newcmd.length(); i++) {
+                        if (!StrFunctions.isDigit(newcmd.charAt(i))) {
+                            allDigit = false;
+                        }
                     }
                 }
-            }
 
-            if(allDigit  && newcmd.length()>0 && newcmd.length()<3)
-            {
-                for(int i = 0; i < Integer.parseInt(newcmd); i++){
-                    Controller.getInstance().waterFlow();
-                }
+                if (allDigit && newcmd.length() > 0 && newcmd.length() < 3) {
+                    for (int i = 0; i < Integer.parseInt(newcmd); i++) {
+                        Controller.getInstance().waterFlow();
+                        Operation.printWaterMap(Map.getInstance().getGameMap());
+                        Thread.sleep(1500);
+                    }
+                } else
+                    System.out.println("Give a valid turn. The interval is 0..50");
             }
             else
-                System.out.println("Give a valid turn. The interval is 0..50");
+                System.out.println("MAp is not initialized");
         }
         /**
          * Ha a parancs manualTeleportPlayer, akkor a kívánt játékost
