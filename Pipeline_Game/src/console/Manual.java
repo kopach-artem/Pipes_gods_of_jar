@@ -1,5 +1,6 @@
 package console;
 
+import container.Container;
 import container.ContainerPos;
 import container.Pipe;
 import container.Pump;
@@ -182,6 +183,63 @@ public class Manual
             {
                 System.out.println("Invalid use of command");
             }
+        }
+        else if(command.startsWith("manualFlowWaterTillTurn"))
+        {
+            boolean allDigit=true;
+            String newcmd=command.substring(23);
+            if(newcmd.length()<3)
+            {
+                for(int i=0; i<newcmd.length(); i++)
+                {
+                    if(!StrFunctions.isDigit(newcmd.charAt(i)))
+                    {
+                        allDigit=false;
+                    }
+                }
+            }
+
+            if(allDigit  && newcmd.length()>0 && newcmd.length()<3)
+            {
+                for(int i = 0; i < Integer.parseInt(newcmd); i++){
+                    Controller.getInstance().waterFlow();
+                }
+            }
+            else
+                System.out.println("Give a valid turn. The interval is 0..50");
+        }
+        else if(command.startsWith("cisternQuery")){
+            int collectedWater = 0;
+            if(!Map.getInstance().getGameMap().isEmpty()) {
+                for (Container container : Map.getInstance().getContainers()) {
+                    if (container.queryCistern() > -1) {
+                        collectedWater = container.queryCistern();
+                    }
+                }
+                System.out.println("The collected water amount in cistern is " + collectedWater);
+            }
+            else
+                System.out.println("Query couldn't be made due to Map not being initialized");
+        }
+        else if(command.startsWith("mountainSpringQuery")){
+            int source = 0;
+            if(!Map.getInstance().getGameMap().isEmpty()) {
+                for (Container container : Map.getInstance().getContainers()) {
+                    if (container.mountainSpringQuery() > -1) {
+                        source = container.mountainSpringQuery();
+                    }
+                }
+                System.out.println("The remaining water amount in Mountain Spring is " + source);
+            }
+            else
+                System.out.println("Query couldn't be made due to Map not being initialized");
+        }
+        else if(command.startsWith("leakedWaterQuery")){
+            if(Map.getInstance() != null){
+                System.out.println("The leaked water amount is" + Map.getLeakedWater());
+            }
+            else
+                System.out.println("Query couldn't be made due to Map not being initialized");
         }
 
         /**

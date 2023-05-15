@@ -243,4 +243,8 @@ public abstract class Container implements Serializable {
 	public abstract Container getOutput();
 
 	public abstract void setBreakOff(int rng);
+
+	public abstract int queryCistern();
+
+	public abstract int mountainSpringQuery();
 }

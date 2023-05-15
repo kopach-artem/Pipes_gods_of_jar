@@ -357,4 +357,14 @@ public class Cistern extends Container implements Serializable {
 	public void setBreakOff(int rng) {
 		
 	}
+
+	@Override
+	public int queryCistern() {
+		return collectedWater;
+	}
+
+	@Override
+	public int mountainSpringQuery() {
+		return -1;
+	}
 }
