@@ -588,6 +588,41 @@ public class List
                 else
                     System.out.println("Invalid use of command");
             }
+            else if(command.equals("listCisternQuery")){
+                int collectedWater = 0;
+                if(!Map.getInstance().getGameMap().isEmpty()) {
+                    for (Container container : Map.getInstance().getContainers()) {
+                        if (container.queryCistern() > -1) {
+                            collectedWater = container.queryCistern();
+                        }
+                    }
+                    System.out.println("The collected water amount in cistern is " + collectedWater);
+                }
+                else
+                    System.out.println("Query couldn't be made due to Map not being initialized");
+            }
+            else if(command.startsWith("listMountainSpringQuery")){
+                int source = 0;
+                if(!Map.getInstance().getGameMap().isEmpty()) {
+                    for (Container container : Map.getInstance().getContainers()) {
+                        if (container.mountainSpringQuery() > -1) {
+                            source = container.mountainSpringQuery();
+                        }
+                    }
+                    System.out.println("The remaining water amount in Mountain Spring is " + source);
+                }
+                else
+                    System.out.println("Query couldn't be made due to Map not being initialized");
+            }
+            else if(command.startsWith("listLeakedWaterQuery")){
+                if(Map.getInstance() != null){
+                    System.out.println("The leaked water amount is" + Map.getLeakedWater());
+                }
+                else
+                    System.out.println("Query couldn't be made due to Map not being initialized");
+            }
+
+
             /**
              * Ha érvénytelen parancsot adtunk meg.
              */
