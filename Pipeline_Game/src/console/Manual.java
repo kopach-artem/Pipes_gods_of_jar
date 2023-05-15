@@ -245,6 +245,32 @@ public class Manual
             }
         }
         /**
+         * Víz folyatása
+         */
+        else if(command.startsWith("manualFlowWaterTillTurn"))
+        {
+            boolean allDigit=true;
+            String newcmd=command.substring(23);
+            if(newcmd.length()<3)
+            {
+                for(int i=0; i<newcmd.length(); i++)
+                {
+                    if(!StrFunctions.isDigit(newcmd.charAt(i)))
+                    {
+                        allDigit=false;
+                    }
+                }
+            }
+
+            if(allDigit  && newcmd.length()>0 && newcmd.length()<3)
+            {
+                //TODO
+                System.out.println(newcmd);
+            }
+            else
+                System.out.println("Give a valid turn. The interval is 0..50");
+        }
+        /**
          * Ha érvénytelen parancsot adtunk meg.
          */
         else
