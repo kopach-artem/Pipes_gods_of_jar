@@ -448,7 +448,6 @@ public class Pipe extends Container implements Serializable {
 			}
 
 			if (!isLeaked && (output != null)) {
-				System.out.println("Before: "+ this.writeInputState());
 				output.setInputState();
 			} else if(isLeaked)
 				Map.increaseLeakedWater();
@@ -464,7 +463,6 @@ public class Pipe extends Container implements Serializable {
 	public void setInputState(){
 
 		inputState[1] = true;
-		System.out.println("After: "+ this.writeInputState());
 
 	}
 

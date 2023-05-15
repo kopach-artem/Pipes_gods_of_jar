@@ -109,7 +109,6 @@ public class Cistern extends Container implements Serializable {
 	public void eval() {
 
 		if(inputState[0]){
-			System.out.println("Before: "+ this.writeInputState() + "Collected water amount: " + collectedWater);
 			increaseCollectedWater();
 		}
 
@@ -227,7 +226,6 @@ public class Cistern extends Container implements Serializable {
 	 */
 	public void setInputState() {
 		inputState[1] = true;
-		System.out.println("After: " + this.writeInputState());
 	}
 
 	
