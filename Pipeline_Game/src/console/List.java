@@ -573,15 +573,24 @@ public class List
                                 }
                             }
                         }
+                        /**
+                         * Üres a pálya.
+                         */
                         if(sum==0)
                             System.out.println("The map is empty");
                         else if(sum2==0)
                             System.out.println("There are no pumps on the map");
                     }
                 }
+                /**
+                 * Ha érvénytelenül adtuk meg a parancs paramétereit
+                 */
                 else
                     System.out.println("Invalid use of command");
             }
+            /**
+             * Ha érvénytelen parancsot adtunk meg.
+             */
             else
                 System.out.println("Unknown command");
         }

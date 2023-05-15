@@ -280,19 +280,31 @@ public class Manual
                             }
                         }
                     }
+                    /**
+                     * Ha rosszul adtuk meg a parancsa paramétereit.
+                     */
                     else
                     {
                         System.out.println("Invalid use of command");
                     }
                 }
+                /**
+                 * Ha rossz játékos id-t adtunk meg.
+                 */
                 else
                     System.out.println("Give a valid integer for player's number");
             }
+            /**
+             * Ha rosszul adtuk meg a parancsa paramétereit.
+             */
             else
             {
                 System.out.println("Invalid use of command");
             }
         }
+        /**
+         * Ha érvénytelen parancsot adtunk meg.
+         */
         else
         {
             System.out.println("Unknown command");

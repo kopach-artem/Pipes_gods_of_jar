@@ -14,6 +14,9 @@ import map.Map;
 
 import java.util.ArrayList;
 
+/**
+ * Controller osztály, ez felelős a játékmenet vezérléséért.
+ */
 public class Controller {
 
 	private Map map;
@@ -52,7 +55,8 @@ public class Controller {
 	}
 
 	
-	/** 
+	/**
+	 * Visszatér a turnCount változó értékével.
 	 * @return int
 	 */
 	public static int getTurnCount(){
@@ -60,7 +64,8 @@ public class Controller {
 	}
 
 	
-	/** 
+	/**
+	 * Beállítja a turnCount változó értékét.
 	 * @param tC
 	 */
 	public void setTurnCount(int tC){

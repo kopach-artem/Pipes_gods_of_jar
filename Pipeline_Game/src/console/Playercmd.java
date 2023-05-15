@@ -7,6 +7,10 @@ import map.Map;
 import player.Player;
 import player.Type;
 
+/**
+ * Enumeráció, a játékban lehetséges irányokat adja meg.
+ * Mivel 2D-ben dolgozunk, ezért 4 irány lesz (+invalid)
+ */
 enum Directions{
     Left,
     Right,
@@ -21,8 +25,8 @@ public class Playercmd
     /** 
      * @param command
      * @throws MyException
-     * a player irányításáért felelős düggvény amely a bemeneti kommandokat olvasva
-     * dönti el, hogy a játékos merre mezogjon, illetve milyen tevékenységet vigyen végbe(DetachPipe, AdjustPump, stb...)
+     * A player irányításáért felelős függvény amely a bemeneti commandokat olvasva
+     * dönti el, hogy a játékos merre mozogjon, illetve milyen tevékenységet vigyen végbe(DetachPipe, AdjustPump, stb...)
      */
     public static void player(String command) throws MyException {
         if(command.startsWith("player"))
@@ -33,11 +37,16 @@ public class Playercmd
                 {
                     int playernumber=Character.getNumericValue(command.charAt(6)); //<Player>
                     String newcmd=command.substring(7);
+                    /**
+                     * Ha a parancs moveTo, akkor valamerre mozgatni akarjuk a játékost.
+                     */
                     if(newcmd.startsWith("moveTo")) //player <Player> moveTo <Direction>
                     {
                         String direction=newcmd.substring(6); // <Direction>
                         Directions dir = Directions.Invalid;
-
+                        /**
+                         * Balra, jobbra, fel vagy le.
+                         */
                         if(direction.equals("Left"))
                             dir=Directions.Left;
                         else if(direction.equals("Right"))
@@ -46,6 +55,9 @@ public class Playercmd
                             dir = Directions.Up;
                         else if(direction.equals("Down"))
                             dir = Directions.Down;
+                        /**
+                         * Ha rossz irányt adtunk meg.
+                         */
                         else
                         {
                             System.out.println("Invalid direction");
@@ -65,6 +77,9 @@ public class Playercmd
                             }
                         }
 
+                        /**
+                         * Megadott iránytól függően megtörténik a mozgatás.
+                         */
                         switch(dir){
                             case Left :{
                                 for(ContainerPos containerPos : Map.getInstance().getGameMap()){
@@ -103,6 +118,9 @@ public class Playercmd
                             }
                         }
                     }
+                    /**
+                     * Ha a parancs AdjustPumpOutputTo, akkor átállítjuk a Pump output-ját.
+                     */
                     else if(newcmd.startsWith("AdjustPumpOutputTo")) //player <Player> AdjustPumpTo <Direction>
                     {
                         String direction=newcmd.substring(18); // <Direction>
@@ -115,6 +133,9 @@ public class Playercmd
                             dir = Directions.Up;
                         else if(direction.equals("Down"))
                             dir = Directions.Down;
+                        /**
+                         * Invalid irány :(
+                         */
                         else
                         {
                             System.out.println("Invalid direction");
@@ -134,6 +155,9 @@ public class Playercmd
                             }
                         }
 
+                        /**
+                         * Na itt történik a mozgatás igazából.
+                         */
                         switch(dir) {
                             case Left: {
                                 for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
@@ -172,6 +196,9 @@ public class Playercmd
                             }
                         }
                     }
+                    /**
+                     * Itt ugyanaz, mint az előbb, csak itt a Pump Input-ját állítjuk át.
+                     */
                     else if(newcmd.startsWith("AdjustPumpInputTo")) //player <Player> AdjustPumpTo <Direction>
                     {
                         String direction = newcmd.substring(17); // <Direction>
@@ -202,6 +229,9 @@ public class Playercmd
                             }
                         }
 
+                        /**
+                         * Az átállítás itt történik.
+                         */
                         switch (dir) {
                             case Left: {
                                 for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
@@ -242,6 +272,9 @@ public class Playercmd
                         }
                     }
 
+                    /**
+                     * Itt szépen kilyukasztjuk a csövet.
+                     */
                     //Cső kilyukasztása
                     else if(newcmd.equals("LeakPipe")) //player <Player> LeakPipe
                     {
@@ -252,6 +285,9 @@ public class Playercmd
                         }
                     }
 
+                    /**
+                     * Itt a csövet csatlakoztatjuk egy Pump-hoz.
+                     */
                     //Cső csatlakoztatása pumpához
                     else if(newcmd.startsWith("AttachPipeTo")) //player <Player> AttachPipeTo<PosX>_<PosY> //TODO vmiért nemlehet minden irányba illeszteni lásd lejjebb
                     {
@@ -281,6 +317,9 @@ public class Playercmd
                             }
                         }
                     }
+                    /**
+                     * Leszedjük a csövet a pumpáról.
+                     */
                     else if(newcmd.startsWith("DetachPipeAt")) //player <Player> DetachPipe <PosX>_<PosY>
                     {
                         String new2cmd=newcmd.substring(10); //<PosX>_<PosY>
@@ -344,21 +383,33 @@ public class Playercmd
                             }
                         }
                     }
+                    /**
+                     * Ha rossz parancsot adtunk meg.
+                     */
                     else
                     {
                         System.out.println("Unknown command");
                     }
                 }
+                /**
+                 * Ha nem adtunk meg számot a player id-jának.
+                 */
                 else
                 {
                     System.out.println("You must give a player's number");
                 }
             }
+            /**
+             * Ha rosszul paramétereztük a parancsot
+             */
             else
             {
                 System.out.println("Invalid use of command");
             }
         }
+        /**
+         * Ha rossz parancsot adtunk meg.
+         */
         else
         {
             System.out.println("Unknown command");
