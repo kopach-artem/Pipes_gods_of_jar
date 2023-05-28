@@ -1,0 +1,22 @@
+.choice-box {
+    -fx-background-color: #D3BFA0;
+    -fx-text-fill: #4b1c21;
+    -fx-font-size: 14px;
+    -fx-pref-width: 200px;
+}
+
+.choice-box .arrow-button {
+    -fx-background-color: #D3BFA0, #D3BFA0, #D3BFA0, #D3BFA0;
+    -fx-background-insets: 0, 0, 0, 0;
+    -fx-background-radius: 0, 0, 0, 0;
+    -fx-padding: 0.25em 0.333em 0.25em 0.333em;
+    -fx-text-fill: #4b1c21;
+}
+
+.choice-box:hover {
+    -fx-border-color: #4b1c21;
+}
+
+.choice-box .arrow-button:hover {
+    -fx-background-color: #4b1c21;
+}

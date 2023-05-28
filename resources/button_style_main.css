@@ -1,0 +1,20 @@
+@font-face {
+    font-family: "Blox";
+    src: url('Blox2.ttf');
+}
+
+.button {
+    -fx-background-color: #D2B48C;
+    -fx-text-fill: #0C2340;
+    -fx-font-family: "Blox", Arial;
+    -fx-font-size: 20px;
+    -fx-padding: 10px 20px;
+}
+
+.button:hover {
+    -fx-background-color: #C1A278;
+}
+
+.button:pressed {
+    -fx-background-color: #B09468;
+}

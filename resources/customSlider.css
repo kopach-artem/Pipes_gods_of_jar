@@ -1,0 +1,25 @@
+.slider {
+    -fx-background-color: transparent;
+    -fx-pref-width: 200px;
+}
+
+.slider .thumb {
+    -fx-background-color: #4b1c21;
+    -fx-background-radius: 0;
+    -fx-padding: 2px;
+}
+
+.slider .track {
+    -fx-background-color: #D3BFA0;
+    -fx-background-insets: 0;
+}
+
+.slider .track-background {
+    -fx-background-color: #D3BFA0;
+    -fx-background-insets: 0;
+}
+
+.slider .track-fill {
+    -fx-background-color: #4b1c21;
+    -fx-background-insets: 0;
+}

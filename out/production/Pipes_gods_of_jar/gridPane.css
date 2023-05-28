@@ -1,0 +1,15 @@
+/* GridPane */
+.grid-pane {
+    -fx-background-color: #D2B48C; /* Set the background color to a desert-inspired color */
+    -fx-border-color: #0C2340; /* Set the border color to a contrasting color */
+    -fx-border-width: 5px; /* Set the border width */
+    -fx-border-style: dashed; /* Set the border style to dashed */
+    -fx-padding: 10px; /* Set the padding inside the GridPane */
+}
+
+/* GridPane cells */
+.grid-pane .grid-cell {
+    -fx-background-color: #D2B48C; /* Set the cell background color to a desert-inspired color */
+    -fx-border-color: #0C2340; /* Set the cell border color to a contrasting color */
+    -fx-border-width: 1px; /* Set the cell border width */
+}

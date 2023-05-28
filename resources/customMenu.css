@@ -1,0 +1,27 @@
+
+
+.menu-bar {
+    -fx-background-color: #D2B48C; /* Set the background color to a desert-inspired color */
+}
+
+.menu {
+    -fx-background-color: #D2B48C; /* Set the background color to a desert-inspired color */
+    -fx-text-fill: #0C2340; /* Set the text color to white for good contrast */
+}
+
+.menu:hover {
+    -fx-background-color: #C1A278; /* Set a slightly darker color when hovering over the menu */
+}
+
+.menu-item {
+    -fx-text-fill: #0C2340; /* Set the text color to white for good contrast */
+}
+
+.menu-item:hover {
+    -fx-background-color: #C1A278; /* Set a slightly darker color when hovering over the menu item */
+}
+
+.menu-item:armed,
+.menu-item:selected {
+    -fx-background-color: #B09468; /* Set a darker color when the menu item is armed or selected */
+}
