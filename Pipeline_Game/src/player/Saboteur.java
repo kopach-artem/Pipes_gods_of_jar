@@ -20,6 +20,10 @@ public class Saboteur extends Player implements Serializable {
 		super(position);
 	}
 
+	public Saboteur(){
+
+	}
+
 	/**
 	 * A szabotőrhöz tartozó metódus amely segítségével egy csövet (amelyen éppen áll) csúszóssá tud tenni
 	 */
@@ -27,5 +31,5 @@ public class Saboteur extends Player implements Serializable {
 		this.position.pipeGetsSlippery();
 	}
 
-	public String consolePrint(){ return "SA\t";}
+	public String consolePrint(){ return "SA" + id;}
 }

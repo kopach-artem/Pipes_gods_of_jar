@@ -134,8 +134,8 @@ public class Pump extends Container implements Serializable {
 	public void pipeGetsSticky() {
 	}
 
-	
-	/** 
+
+	/**
 	 * @return boolean
 	 */
 	@Override
@@ -212,8 +212,7 @@ public class Pump extends Container implements Serializable {
 					Map.getInstance().getContainers().remove(cp.getContainer());
 				}
 			}
-		}
-		else
+		} else
 			System.out.println("Got'cha little man! You thought you could detach something other than a Pipe?");
 	}
 
@@ -298,8 +297,8 @@ public class Pump extends Container implements Serializable {
 			output.setInputState();
 	}
 
-	
-	/** 
+
+	/**
 	 * @return String
 	 */
 	@Override
@@ -312,8 +311,8 @@ public class Pump extends Container implements Serializable {
 		this.isDamaged = true;
 	}
 
-	
-	/** 
+
+	/**
 	 * @return boolean
 	 */
 	@Override
@@ -406,8 +405,8 @@ public class Pump extends Container implements Serializable {
 		this.input = input;
 	}
 
-	
-	/** 
+
+	/**
 	 * @return boolean
 	 */
 	@Override
@@ -431,8 +430,6 @@ public class Pump extends Container implements Serializable {
 		return isDamaged;
 	}
 
-	
-
 
 	@Override
 	public void setBreakOff(int rng) {
@@ -447,5 +444,37 @@ public class Pump extends Container implements Serializable {
 	@Override
 	public int mountainSpringQuery() {
 		return -1;
+	}
+
+	@Override
+	public String myIconPath() {
+		if(maxPipeAmount == 2){
+			if(isDamaged){
+				return "file:resources/container_components/pumpdmg1.png";
+			} else if(isVerticallyConnected()){
+				return  "file:resources/container_components/pumpturn2.png";
+			}
+			else{
+				return "file:resources/container_components/pumlr1.png";
+			}
+		} else if(maxPipeAmount == 4) {
+			return "file:resources/container_components/pumpall.png";
+		}
+		return null;
+	}
+
+	public boolean isVerticallyConnected(){
+		if(Map.getInstance().getGameMap() != null){
+			for(ContainerPos cp : Map.getInstance().getGameMap()){
+				if(cp.getContainer().equals(this)){
+					if(Map.getContainerAt(cp.getPosX(), cp.getPosY() + 1) != null) {
+						if (cp.getContainer().seeifNeighbors(Map.getContainerAt(cp.getPosX(), cp.getPosY() + 1).getContainer())) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

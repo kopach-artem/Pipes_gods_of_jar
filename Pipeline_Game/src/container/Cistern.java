@@ -365,4 +365,9 @@ public class Cistern extends Container implements Serializable {
 	public int mountainSpringQuery() {
 		return -1;
 	}
+
+	@Override
+	public String myIconPath() {
+		return "file:resources/container_components/cistern1.png";
+	}
 }

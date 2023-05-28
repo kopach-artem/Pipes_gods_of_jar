@@ -21,13 +21,12 @@ public class Controller {
 
 	private Map map = Map.getInstance();
 	private static Controller controller;
-	private static int turnCount = 0;
 
 	private Controller(){
 	}
 
-	
-	/** 
+
+	/**
 	 * @return Controller
 	 */
 	public static Controller getInstance() {
@@ -43,33 +42,8 @@ public class Controller {
 	 */
 	public void evaluateCycles(){
 		for(Container c : map.getContainers()){
-			c.lifeCycle(Controller.getInstance().getTurnCount());
+			c.lifeCycle(Game.getInstance().getTurnCount());
 		}
-		Controller.getInstance().increaseTurnCount();
-	}
-
-
-	public void increaseTurnCount(){
-		turnCount++;
-
-	}
-
-	
-	/**
-	 * Visszatér a turnCount változó értékével.
-	 * @return int
-	 */
-	public static int getTurnCount(){
-		return turnCount;
-	}
-
-	
-	/**
-	 * Beállítja a turnCount változó értékét.
-	 * @param tC
-	 */
-	public void setTurnCount(int tC){
-		turnCount = tC;
 	}
 
 	/**

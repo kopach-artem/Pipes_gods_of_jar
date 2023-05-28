@@ -17,6 +17,8 @@ public class Mechanic extends Player implements Serializable {
 	public Mechanic(Container position) {
 		super(position);
 	}
+	public Mechanic() {
+	}
 
 	
 	/**
@@ -33,5 +35,5 @@ public class Mechanic extends Player implements Serializable {
 		this.getPosition().mendPump();
 	}
 
-	public String consolePrint(){ return "ME\t";}
+	public String consolePrint(){ return "ME" + id;}
 }

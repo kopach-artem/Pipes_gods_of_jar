@@ -1,6 +1,7 @@
 package container;
 
 import controller.Controller;
+import controller.Game;
 import map.Map;
 import player.*;
 import exception.*;
@@ -103,7 +104,7 @@ public class Pipe extends Container implements Serializable {
 			if(this.canBeLeaked) {
 				this.setLeaked(true);
 				this.randomInterval = (int)(Math.random() * 10);
-				this.leakedTimer = Controller.getTurnCount();
+				this.leakedTimer = Game.getInstance().getTurnCount();
 				this.canBeLeaked = false;
 			} else{
 				throw new MyException("Pipe cannot be leaked due to: Pipe leaking is on cooldown");
@@ -112,8 +113,8 @@ public class Pipe extends Container implements Serializable {
 			throw new MyException("It was already damaged");
 	}
 
-	
-	/** 
+
+	/**
 	 * @return boolean
 	 */
 	public boolean isVertical(){
@@ -193,8 +194,7 @@ public class Pipe extends Container implements Serializable {
 				newPump.getNeighbors().add(newPipe);
 				newPipe.getNeighbors().add(newPump);
 				newPipe.getNeighbors().add(nextContainer.getContainer());
-			}
-			else{
+			} else{
 				for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
 					if ((containerPos.getPosX() == cp.getPosX()) && (containerPos.getPosY() - 1 == cp.getPosY())) {
 						nextContainer = containerPos;
@@ -257,7 +257,7 @@ public class Pipe extends Container implements Serializable {
 	 */
 	@Override
 	public void pipeGetsSlippery() {
-		this.slipperyTimer = Controller.getTurnCount();
+		this.slipperyTimer = Game.getInstance().getTurnCount();
 		if(this.isSticky){
 			this.isSticky = false;
 		}
@@ -275,7 +275,7 @@ public class Pipe extends Container implements Serializable {
 
 	@Override
 	public void pipeGetsSticky() {
-		this.stickyTimer = Controller.getTurnCount();
+		this.stickyTimer = Game.getInstance().getTurnCount();
 		if(this.isSlippery){
 			this.isSlippery = false;
 		}
@@ -291,8 +291,8 @@ public class Pipe extends Container implements Serializable {
 		return isSticky;
 	}
 
-	
-	/** 
+
+	/**
 	 * @param b
 	 */
 	public void setSticky(boolean b){
@@ -361,8 +361,7 @@ public class Pipe extends Container implements Serializable {
 	}
 
 
-	
-	/** 
+	/**
 	 * @param pipe
 	 */
 	@Override
@@ -554,5 +553,22 @@ public class Pipe extends Container implements Serializable {
 	@Override
 	public int mountainSpringQuery() {
 		return -1;
+	}
+
+	@Override
+	public String myIconPath() {
+		if(isSlippery){
+			return "file:resources/container_components/slipperypipe.png";
+		} else if(isLeaked){
+			return "file:resources/container_components/pipeturn2dmg.png";
+		} else if(isSticky){
+			return "file:resources/container_components/stickypipe.png";
+		} else{
+			if(isVertical()){
+				return "file:resources/container_components/pipeud.png";
+			} else {
+				return "file:resources/container_components/pipelr.png";
+			}
+		}
 	}
 }

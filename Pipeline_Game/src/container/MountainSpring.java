@@ -273,4 +273,9 @@ public class MountainSpring extends Container implements Serializable {
 	public int mountainSpringQuery() {
 		return waterCapac;
 	}
+
+	@Override
+	public String myIconPath() {
+		return "file:resources/container_components/ms.png";
+	}
 }

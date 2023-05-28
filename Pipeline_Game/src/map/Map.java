@@ -25,8 +25,6 @@ public class Map implements Serializable{
 	 * A pályán lévő játékosok ArrayList-je.
 	 */
 
-	private static ArrayList<Player> players = new ArrayList<Player>();
-
 	/**
 	 * A pályán lévő Containerek ArrayList-je.
 	 */
@@ -102,203 +100,11 @@ public class Map implements Serializable{
 	 * Visszatér a player attribútum értékével.
 	 * @return ArrayList - A playerek
 	 */
-	public ArrayList<Player> getPlayers() {
-		return players;
-	}
 
 	/**
 	 * Beállítja a player attribútumot a paraméterként kapottra
 	 * @param players - A beállítani kívánt ArrayList
 	 */
-	public void setPlayers(ArrayList<Player> players) {
-		this.players = players;
-	}
-
-	
-	/** 
-	 * @param filePath
-	 * @return String[]
-	 */
-	public static String[] readFromFile(String filePath) {
-		File file = new File("maps/" + filePath);
-		if (!file.exists()) {
-			System.err.println("File not found: " + filePath);
-			return null;
-		}
-
-		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-			List<String> lines = new ArrayList<>();
-			String line;
-			while ((line = br.readLine()) != null) {
-				lines.add(line);
-			}
-			return lines.toArray(new String[0]);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	
-	/** 
-	 * @param filePath
-	 */
-	public static void saveToFile(String filePath) {
-		try (BufferedWriter bw = new BufferedWriter (new FileWriter("maps/" + filePath)))
-		{
-			int maxX = -1;
-			int maxY = -1;
-
-			// Find the maximum x and y values
-			for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
-				if (containerPos.getPosX() > maxX) {
-					maxX = containerPos.getPosX();
-				}
-				if (containerPos.getPosY() > maxY) {
-					maxY = containerPos.getPosY();
-				}
-			}
-
-			// Create a 2D grid to store the containers
-			Container[][] grid = new Container[maxX + 1][maxY + 1];
-
-			// Fill the grid with null
-			for (int i = 0; i <= maxX; i++) {
-				for (int j = 0; j <= maxY; j++) {
-					grid[i][j] =null;
-				}
-			}
-
-			// Place the containers in the grid
-			for (ContainerPos containerPos : getInstance().getGameMap()) {
-				int x = containerPos.getPosX();
-				int y = containerPos.getPosY();
-				grid[x][y] = containerPos.getContainer();
-			}
-
-			//Make commands to create containers
-			for (int y = 0; y <= maxY; y++)
-			{
-				for (int x = 0; x <= maxX; x++)
-				{
-					if(grid[x][y]!=null)
-					{
-						if(grid[x][y].consolePrint().equals("CS\t"))
-						{
-							bw.write("operationCreateContainerCisternAt"+x+'_'+y);
-							bw.newLine();
-						}
-						else if(grid[x][y].consolePrint().equals("MS\t"))
-						{
-							bw.write("operationCreateContainerMountainSpringAt"+x+'_'+y);
-							bw.newLine();
-						}
-						else if(grid[x][y].consolePrint().equals("PI\t"))
-						{
-							bw.write("operationCreateContainerPipeAt"+x+'_'+y);
-							bw.newLine();
-						}
-						else if(grid[x][y].consolePrint().equals("PU\t"))
-						{
-							bw.write("operationCreateContainerPumpAt"+x+'_'+y);
-							bw.newLine();
-						}
-					}
-				}
-			}
-
-			//Make commands to create connections between containers
-			for (int y = 0; y <= maxY; y++)
-			{
-				for (int x = 0; x <= maxX; x++)
-				{
-					if(grid[x][y]!=null)
-					{
-						if(grid[x][y].consolePrint().equals("CS\t"))
-						{
-							for(ContainerPos con: getInstance().getGameMap())
-							{
-								if(grid[x][y].seeifNeighbors(con.getContainer()) && grid[x][y]!=con.getContainer())
-								{
-									bw.write("operationConnectContainerAt"+x+'_'+y+"ToContainerAt"+con.getPosX()+'_'+con.getPosY());
-									bw.newLine();
-								}
-							}
-						}
-						else if(grid[x][y].consolePrint().equals("MS\t"))
-						{
-							for(ContainerPos con: getInstance().getGameMap())
-							{
-								if(grid[x][y].seeifNeighbors(con.getContainer()) && grid[x][y]!=con.getContainer())
-								{
-									bw.write("operationConnectContainerAt"+x+'_'+y+"ToContainerAt"+con.getPosX()+'_'+con.getPosY());
-									bw.newLine();
-								}
-							}
-						}
-						else if(grid[x][y].consolePrint().equals("PI\t"))
-						{
-							for(ContainerPos con: getInstance().getGameMap())
-							{
-								if(grid[x][y].seeifNeighbors(con.getContainer()) && grid[x][y]!=con.getContainer())
-								{
-									bw.write("operationConnectContainerAt"+x+'_'+y+"ToContainerAt"+con.getPosX()+'_'+con.getPosY());
-									bw.newLine();
-								}
-							}
-						}
-						else if(grid[x][y].consolePrint().equals("PU\t"))
-						{
-							for(ContainerPos con: getInstance().getGameMap())
-							{
-								if(grid[x][y].seeifNeighbors(con.getContainer()) && grid[x][y]!=con.getContainer())
-								{
-									bw.write("operationConnectContainerAt"+x+'_'+y+"ToContainerAt"+con.getPosX()+'_'+con.getPosY());
-									bw.newLine();
-								}
-							}
-						}
-					}
-				}
-			}
-
-			//Make commands to create players
-			for (int y = 0; y <= maxY; y++)
-			{
-				for (int x = 0; x <= maxX; x++)
-				{
-					if(grid[x][y]!=null)
-					{
-
-						for(int i=0; i<players.size(); i++)
-						{
-							if(players.get(i).consolePrint().equals("ME\t"))
-							{
-								if(grid[x][y]==players.get(i).getPosition())
-								{
-									bw.write("operationCreatePlayerMechanicAt"+x+'_'+y);
-									bw.newLine();
-								}
-							}
-							else if(players.get(i).consolePrint().equals("SA\t"))
-							{
-								if(grid[x][y]==players.get(i).getPosition())
-								{
-									bw.write("operationCreatePlayerSaboteurAt"+x+'_'+y);
-									bw.newLine();
-								}
-							}
-						}
-					}
-				}
-			}
-
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
 	
 	/** 
 	 * @param cp
@@ -329,6 +135,12 @@ public class Map implements Serializable{
 		}
 	}
 
+	public static void addAllNeighbors(){
+		for(ContainerPos cp : gameMap){
+			addNeighbors(cp);
+		}
+	}
+
 	public static int getLeakedWater() {
 		return leakedWater;
 	}
@@ -336,4 +148,43 @@ public class Map implements Serializable{
 	public ArrayList<ContainerPos> getGameMap(){
 		return gameMap;
 	}
+
+	public static void makeMap(){
+
+		Pipe p1 = new Pipe();
+		Pump pu1 = new Pump(2);
+		Pipe p2 = new Pipe();
+		Pump pu2 = new Pump(2);
+		Pipe p3 = new Pipe();
+		Cistern cs = new Cistern(p3);
+		MountainSpring ms = new MountainSpring(p1);
+
+		containers.add(ms);
+		containers.add(p1);
+		containers.add(pu1);
+		containers.add(p2);
+		containers.add(pu2);
+		containers.add(p3);
+		containers.add(cs);
+
+		gameMap.add(new ContainerPos(ms, 0,0));
+		gameMap.add(new ContainerPos(p1, 1,0));
+		gameMap.add(new ContainerPos(pu1, 2,0));
+		gameMap.add(new ContainerPos(p2, 3,0));
+		gameMap.add(new ContainerPos(pu2, 4,0));
+		gameMap.add(new ContainerPos(p3, 4,1));
+		gameMap.add(new ContainerPos(cs, 4,2));
+
+		addAllNeighbors();
+	}
+
+	public static ContainerPos getContainerAt(int x, int y){
+		for(ContainerPos containerPos : gameMap){
+			if(containerPos.getPosX() == x && containerPos.getPosY() == y){
+				return containerPos;
+			}
+		}
+		return null;
+	}
+
 }

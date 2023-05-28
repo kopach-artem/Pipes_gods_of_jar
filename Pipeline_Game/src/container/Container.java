@@ -53,26 +53,6 @@ public abstract class Container implements Serializable {
 
 	}
 
-	
-	
-	
-	
-	
-	/** 
-	 * @param c
-	 */
-	/** 
-	 * @param c
-	 */
-	/** 
-	 * @param c
-	 */
-	/** 
-	 * @param c
-	 */
-	/** 
-	 * @param c
-	 */
 	/**
 	 * Ezt a függvényt implementálja a Pump és Cistern osztályok
 	 * A függvény azért felelős, hogy egy adott idő után megtörténjen valami a container objektumunkkal
@@ -251,4 +231,6 @@ public abstract class Container implements Serializable {
 	public abstract int queryCistern();
 
 	public abstract int mountainSpringQuery();
+
+	public abstract String myIconPath();
 }
