@@ -1,6 +1,5 @@
 package container;
 
-import exception.MyException;
 import player.Player;
 import player.Type;
 
@@ -19,7 +18,7 @@ public class MountainSpring extends Container implements Serializable {
 	/**
 	 * A hegyi forrásvíz kapacitása, azaz mennyi vizet képes tárolni a hegyi forrás
 	 */
-	private int waterCapac = 50000;
+	private int waterCapac = 50;
 
 	public MountainSpring(Pipe output){
 		this.output = output;
@@ -83,6 +82,11 @@ public class MountainSpring extends Container implements Serializable {
 
 	}
 
+	@Override
+	public void getsOccupied() {
+
+	}
+
 	/**
 	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
 	 */
@@ -95,7 +99,7 @@ public class MountainSpring extends Container implements Serializable {
 	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
 	 */
 	@Override
-	public void alterPump(Player player, Pipe pi, Type t) {
+	public void alterPump(int x, int y, Type t) {
 
 	}
 
@@ -169,7 +173,17 @@ public class MountainSpring extends Container implements Serializable {
 
 	}
 
-	
+	@Override
+	public void takePipeFromCs(Player player) {
+
+	}
+
+	@Override
+	public void takePumpFromCs(Player player) {
+
+	}
+
+
 	/** 
 	 * @return boolean
 	 */
@@ -195,6 +209,16 @@ public class MountainSpring extends Container implements Serializable {
 			inputState[0] = false;
 			inputState[1] = false;
 		}
+	}
+
+	@Override
+	public int hasPipes() {
+		return -1;
+	}
+
+	@Override
+	public boolean hasPump() {
+		return false;
 	}
 
 	/**

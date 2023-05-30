@@ -48,7 +48,6 @@ public class Pump extends Container implements Serializable {
 	 */
 	public Pump(int maxPipeAmount) {
 		if(maxPipeAmount > 4){
-			System.out.println("Pump can only be connected to 4 or less pipes");
 			this.maxPipeAmount = 4;
 		} else
 			this.maxPipeAmount=maxPipeAmount;
@@ -103,11 +102,11 @@ public class Pump extends Container implements Serializable {
 				}
 			}
 			if(!isAllConnected() && cp.isOnNeighboringTile(xCord, yCord)){
-				this.getNeighbors().add(player.getCarriedPipes().get(0));
-				player.getCarriedPipes().get(0).getNeighbors().add(0, this);
 
 				Map.getInstance().getContainers().add(player.getCarriedPipes().get(0));
 				Map.getInstance().getGameMap().add(new ContainerPos(player.getCarriedPipes().get(0), xCord, yCord));
+
+				Map.addAllNeighbors();
 
 				player.getCarriedPipes().remove(player.getCarriedPipes().get(0));
 			}
@@ -135,6 +134,16 @@ public class Pump extends Container implements Serializable {
 	public void pipeGetsSticky() {
 	}
 
+	@Override
+	public void takePipeFromCs(Player player) {
+
+	}
+
+	@Override
+	public void takePumpFromCs(Player player) {
+
+	}
+
 
 	/**
 	 * @return boolean
@@ -153,22 +162,32 @@ public class Pump extends Container implements Serializable {
 	 * @param pi
 	 * @param t
 	 */
-	public void alterPump(Player player, Pipe pi, Type t) {
+	public void alterPump(int x, int y, Type t) {
 
-		if(this.seeifNeighbors(pi)){
-			if(t == Type.Input){
-				if(this.getOutput() != pi){
-					this.setInput(pi);
-				} else
-					MyAlert.showInvalidMoveAlert("Input pipe cannot be changed once water is flowing through it");
+		Pipe pi = new Pipe();
+
+		for(ContainerPos containerPos : Map.getInstance().getGameMap()){
+			if(containerPos.getPosX() == x && containerPos.getPosY() == y){
+				pi = (Pipe) containerPos.getContainer();
 			}
-			if(t == Type.Output){
+		}
+		if(this.seeifNeighbors(pi)){
+			if(t == Type.Input) {
+				if (this.getOutput() != pi) {
+					this.setInput(pi);
+				}
+				else
+					MyAlert.showInvalidMoveAlert("Input pipe cannot be changed to be the output pipe of the pump");
+			}
+			else if(t == Type.Output){
 				if(this.getInput() != pi)
 					this.setOutput(pi);
 				else
 					MyAlert.showInvalidMoveAlert("Input pipe cannot be changed to be the output pipe of the pump");
 			}
 		}
+		else
+			MyAlert.showInvalidMoveAlert("Target Pipe doesn't neigbour your position");
 	}
 
 	/**
@@ -211,8 +230,7 @@ public class Pump extends Container implements Serializable {
 					player.getCarriedPipes().add(cp.getContainer());
 					Map.getInstance().getGameMap().remove(cp);
 					Map.getInstance().getContainers().remove(cp.getContainer());
-				}
-				else{
+				} else{
 					cp.getContainer().getNeighbors().remove(this);
 
 					Pump pump = (Pump) cp.getContainer().getNeighbors().get(0);
@@ -302,10 +320,14 @@ public class Pump extends Container implements Serializable {
 	public boolean amInput(Container c){
 		if(input != null){
 			return this.input.equals(c);
-		}
-		else{
+		} else{
 			return false;
 		}
+	}
+
+	@Override
+	public void getsOccupied() {
+
 	}
 
 	/**
@@ -321,6 +343,16 @@ public class Pump extends Container implements Serializable {
 	 */
 	public void eval() {
 
+	}
+
+	@Override
+	public int hasPipes() {
+		return -1;
+	}
+
+	@Override
+	public boolean hasPump() {
+		return false;
 	}
 
 	/**
@@ -488,32 +520,204 @@ public class Pump extends Container implements Serializable {
 
 	@Override
 	public String myIconPath() {
-		if(maxPipeAmount == 2){
-			if(isDamaged){
-				if(isVerticallyConnected()){
-					return  "file:resources/container_components/PumpDownToLeft_Damaged.png";
-				} else{
-					return "file:resources/container_components/PumpLeftRight_UpSide_Damaged.png";
-				}
-			} else{
-				if(isVerticallyConnected()){
-					return "file:resources/container_components/PumpDownToLeft.png";
-				} else{
-					return "file:resources/container_components/PumpLeftRight_UpSide.png";
-				}
-			}
-		}else if(maxPipeAmount == 3){
-			if(isDamaged){
-				return "file:resources/container_components/PumpAllway_LeftDownSide_Damaged.png";
-			}
-			else{
-				return "file:resources/container_components/PumpAllway_LeftDownSide.png";
+
+		//Get the current position of the element
+		ContainerPos cp = new ContainerPos();
+		for(ContainerPos containerPos : Map.getInstance().getGameMap()){
+			if(containerPos.getContainer().equals(this)){
+				cp = containerPos;
 			}
 		}
-		else if(maxPipeAmount == 4) {
-			return "file:resources/container_components/pumpall.png";
+
+		int maxX = -1;
+		int maxY = -1;
+
+		// Find the maximum x and y values
+		for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+			if (containerPos.getPosX() > maxX) {
+				maxX = containerPos.getPosX();
+			}
+			if (containerPos.getPosY() > maxY) {
+				maxY = containerPos.getPosY();
+			}
 		}
-		return null;
+
+		Container[][] grid = new Container[maxX+1][maxY+1];
+
+		// Place the containers in the grid
+		for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+			int x = containerPos.getPosX();
+			int y = containerPos.getPosY();
+			grid[x][y] = containerPos.getContainer();
+		}
+		if(maxPipeAmount == 2)
+		{
+			for(ContainerPos containerPos : Map.getInstance().getGameMap())
+			{
+				int x = cp.getPosX();
+				int y = cp.getPosY();
+				if(grid[x][y]==containerPos.getContainer())
+				{
+					if(isDamaged)
+					{
+						if (x - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x - 1][y])) {
+							// DownToLeft
+							if (y + 1 < grid[x].length && containerPos.getContainer().seeifNeighbors(grid[x][y + 1])) {
+								return "file:resources/container_components/PumpDownToLeft_Damaged.png";
+							}
+
+							// UpToLeft
+							if (y - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x][y - 1])) {
+								return "file:resources/container_components/PumpUpToLeft_Damaged.png";
+							}
+
+							// Vertical
+							if (x + 1 < grid.length && containerPos.getContainer().seeifNeighbors(grid[x + 1][y])) {
+								return "file:resources/container_components/PumpLeftRight_UpSide_Damaged.png";
+							}
+						}
+
+						if (x + 1 < grid.length && containerPos.getContainer().seeifNeighbors(grid[x + 1][y]))
+						{
+							// DownToRight
+							if (y + 1 < grid[x].length && containerPos.getContainer().seeifNeighbors(grid[x][y + 1])) {
+								return "file:resources/container_components/PumpDownToRight_Damaged.png";
+							}
+
+							// UpToRight
+							if (y - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x][y - 1])) {
+								return "file:resources/container_components/PumpUpToRight_Damaged.png";
+							}
+
+							// Vertical
+							if (x - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x - 1][y])) {
+								return "file:resources/container_components/PumpLeftRight_UpSide_Damaged.png";
+							}
+						}
+						//Horizontal
+						if (y + 1 < grid[x].length && y - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x][y + 1]) && containerPos.getContainer().seeifNeighbors(grid[x][y - 1]))
+						{
+							return "file:resources/container_components/PumpUpDown_RightSide_Damaged.png";
+						}
+					}
+					else
+					{
+						if (x - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x - 1][y])) {
+							// DownToLeft
+							if (y + 1 < grid[x].length && containerPos.getContainer().seeifNeighbors(grid[x][y + 1])) {
+								return "file:resources/container_components/PumpDownToLeft.png";
+							}
+
+							// UpToLeft
+							if (y - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x][y - 1])) {
+								return "file:resources/container_components/PumpUpToLeft.png";
+							}
+
+							// Vertical
+							if (x + 1 < grid.length && containerPos.getContainer().seeifNeighbors(grid[x + 1][y])) {
+								return "file:resources/container_components/PumpLeftRight_UpSide.png";
+							}
+						}
+
+						if (x + 1 < grid.length && containerPos.getContainer().seeifNeighbors(grid[x + 1][y]))
+						{
+							// DownToRight
+							if (y + 1 < grid[x].length && containerPos.getContainer().seeifNeighbors(grid[x][y + 1])) {
+								return "file:resources/container_components/PumpDownToRight.png";
+							}
+
+							// UpToRight
+							if (y - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x][y - 1])) {
+								return "file:resources/container_components/PumpUpToRight.png";
+							}
+
+							// Vertical
+							if (x - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x - 1][y])) {
+								return "file:resources/container_components/PumpLeftRight_UpSide.png";
+							}
+						}
+						//Horizontal
+						if (y + 1 < grid[x].length && y - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x][y + 1]) && containerPos.getContainer().seeifNeighbors(grid[x][y - 1]))
+						{
+							return "file:resources/container_components/PumpUpDown_RightSide.png";
+						}
+					}
+					return "";
+				}
+
+			}
+		}else if(maxPipeAmount == 3)
+		{
+			for(ContainerPos containerPos : Map.getInstance().getGameMap())
+			{
+				int x = cp.getPosX();
+				int y = cp.getPosY();
+				if(grid[x][y]==containerPos.getContainer())
+				{
+					if(isDamaged)
+					{
+						if (y + 1 < grid[x].length && y - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x][y + 1]) && containerPos.getContainer().seeifNeighbors(grid[x][y - 1])) {
+							// 3WayLeft
+							if (x - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x - 1][y])) {
+								return "file:resources/container_components/Pump3WayLeft_Damaged.png";
+							}
+
+							// 3WayRight
+							if (x + 1 < grid.length && containerPos.getContainer().seeifNeighbors(grid[x + 1][y])) {
+								return "file:resources/container_components/Pump3WayRight_Damaged.png";
+							}
+						}
+
+						if (x - 1 >= 0 && x + 1 < grid.length && containerPos.getContainer().seeifNeighbors(grid[x - 1][y]) && containerPos.getContainer().seeifNeighbors(grid[x + 1][y])) {
+							// 3WayDown
+							if (y + 1 < grid[x].length && containerPos.getContainer().seeifNeighbors(grid[x][y + 1])) {
+								return "file:resources/container_components/Pump3WayDown_Damaged.png";
+							}
+
+							// 3WayUp
+							if (y - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x][y - 1])) {
+								return "file:resources/container_components/Pump3WayUp_Damaged.png";
+							}
+						}
+					}
+					else
+					{
+						if (y + 1 < grid[x].length && y - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x][y + 1]) && containerPos.getContainer().seeifNeighbors(grid[x][y - 1])) {
+							// 3WayLeft
+							if (x - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x - 1][y])) {
+								return "file:resources/container_components/Pump3WayLeft.png";
+							}
+
+							// 3WayRight
+							if (x + 1 < grid.length && containerPos.getContainer().seeifNeighbors(grid[x + 1][y])) {
+								return "file:resources/container_components/Pump3WayRight.png";
+							}
+						}
+
+						if (x - 1 >= 0 && x + 1 < grid.length && containerPos.getContainer().seeifNeighbors(grid[x - 1][y]) && containerPos.getContainer().seeifNeighbors(grid[x + 1][y])) {
+							// 3WayDown
+							if (y + 1 < grid[x].length && containerPos.getContainer().seeifNeighbors(grid[x][y + 1])) {
+								return "file:resources/container_components/Pump3WayDown.png";
+							}
+
+							// 3WayUp
+							if (y - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x][y - 1])) {
+								return "file:resources/container_components/Pump3WayUp.png";
+							}
+						}
+					}
+					return "file:resources/container_components/Pump3WayRight.png";
+				}
+			}
+		}
+		else if(maxPipeAmount == 4)
+		{
+			if(isDamaged)
+				return "file:resources/container_components/PumpAll_Damaged.png";
+			else
+				return "file:resources/container_components/PumpAll.png";
+		}
+		return "";
 	}
 
 	public boolean isVerticallyConnected(){

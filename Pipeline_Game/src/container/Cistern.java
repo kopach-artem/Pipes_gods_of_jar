@@ -2,7 +2,7 @@ package container;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import exception.MyException;
+
 import player.Player;
 import player.Type;
 
@@ -75,11 +75,12 @@ public class Cistern extends Container implements Serializable {
 	 */
 	public void lifeCycle(int turnCount)
 	{
-		if(turnCount%3==0)
-			madePipes.add(new Pipe());
-		if(turnCount%5 == 0){
-			freePump = new Pump(4);
-		}
+		if(turnCount != 0)
+			if(turnCount%8==0)
+				madePipes.add(new Pipe());
+			if(turnCount%15 == 0){
+				freePump = new Pump(4);
+			}
 	}
 
 	
@@ -112,6 +113,19 @@ public class Cistern extends Container implements Serializable {
 		}
 	}
 
+	@Override
+	public int hasPipes() {
+		return madePipes.size();
+	}
+
+	@Override
+	public boolean hasPump() {
+		if(freePump != null){
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Azt mondja meg ez a függvény, hogy a paraméterében kapott Container megegyezik-e a ciszterna inputjával-e
 	 * @param c
@@ -120,6 +134,11 @@ public class Cistern extends Container implements Serializable {
 	public boolean amInput(Container c){
 
 		return this.input.equals(c);
+
+	}
+
+	@Override
+	public void getsOccupied() {
 
 	}
 
@@ -135,7 +154,7 @@ public class Cistern extends Container implements Serializable {
 	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
 	 */
 	@Override
-	public void alterPump(Player player, Pipe pi, Type t) {
+	public void alterPump(int x, int y, Type t) {
 
 	}
 
@@ -209,7 +228,21 @@ public class Cistern extends Container implements Serializable {
 
 	}
 
-	
+	@Override
+	public void takePipeFromCs(Player player) {
+		if(madePipes != null){
+			player.getCarriedPipes().add(madePipes.remove(0));
+		}
+	}
+
+	@Override
+	public void takePumpFromCs(Player player) {
+		if(freePump != null){
+			player.setCarriedPump(freePump);
+			freePump = null;
+		}
+	}
+
 	/** 
 	 * @return boolean
 	 */

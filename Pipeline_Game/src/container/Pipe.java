@@ -1,11 +1,9 @@
 package container;
 
-import controller.Controller;
 import controller.Game;
 import map.Map;
 import menu.MyAlert;
 import player.*;
-import exception.*;
 
 import java.io.Serializable;
 
@@ -48,7 +46,6 @@ public class Pipe extends Container implements Serializable {
 	public boolean steppable() {
 
 		if(!isOccupied){
-			this.setOccupied(true);
 			return true;
 		} else
 			return false;
@@ -59,7 +56,7 @@ public class Pipe extends Container implements Serializable {
 	 * Ez a függvény valósítja azt meg, hogy a cső amelyről a játékos ellépet átállítsa azt, hogy a cső már nem foglalt
 	 * @return
 	 */
-	public void movedFrom(){
+	public void movedFrom() {
 		setOccupied(false);
 	}
 
@@ -68,7 +65,7 @@ public class Pipe extends Container implements Serializable {
 	 * A Pipe nem valósítja meg ezt a függvényt, ezért erről nem is beszélek többet
 	 */
 	@Override
-	public void alterPump(Player player, Pipe pi, Type t) {
+	public void alterPump(int x, int y, Type t) {
 
 	}
 
@@ -190,8 +187,7 @@ public class Pipe extends Container implements Serializable {
 					nextContainer.getContainer().getNeighbors().remove(this);
 
 					Map.addAllNeighbors();
-				}
-				else {
+				} else {
 					if (cp.getPosX() - 2 >= 0) {
 						for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
 							if (containerPos.getContainer().seeifNeighbors(cp.getContainer())) {
@@ -204,8 +200,7 @@ public class Pipe extends Container implements Serializable {
 
 						if(nextContainer.getPosX() == cp.getPosX() - 1){
 							left = true;
-						}
-						else{
+						} else{
 							right = true;
 						}
 
@@ -334,6 +329,16 @@ public class Pipe extends Container implements Serializable {
 		this.isSticky = true;
 	}
 
+	@Override
+	public void takePipeFromCs(Player player) {
+
+	}
+
+	@Override
+	public void takePumpFromCs(Player player) {
+
+	}
+
 
 	/**
 	 * @return boolean
@@ -402,6 +407,11 @@ public class Pipe extends Container implements Serializable {
 
 	}
 
+	@Override
+	public void getsOccupied() {
+		isOccupied = true;
+	}
+
 
 	/**
 	 * Ez a függvény a gerince a víz mozgatásának
@@ -442,6 +452,16 @@ public class Pipe extends Container implements Serializable {
 				Map.increaseLeakedWater();
 
 		}
+	}
+
+	@Override
+	public int hasPipes() {
+		return -1;
+	}
+
+	@Override
+	public boolean hasPump() {
+		return false;
 	}
 
 
@@ -544,6 +564,7 @@ public class Pipe extends Container implements Serializable {
 	public int mountainSpringQuery() {
 		return -1;
 	}
+
 	public void setStateofInput(boolean first, boolean second){
 		inputState[0] = first;
 		inputState[1] = second;
@@ -552,7 +573,7 @@ public class Pipe extends Container implements Serializable {
 	@Override
 	public String myIconPath() {
 		String basePath = "file:resources/container_components/";
-		String orientation = isVertical() ? "PipeUpDown_RightSide" : "PipeLeftRight_UpSide";
+		String orientation = getOrientation();
 		String leakStatus = isLeaked ? "_Damaged" : "";
 		String waterStatus = inputState[0] || inputState[1] ? "_Water" : "";
 		String stickyStatus = isSticky ? "_Sticky" : "";
@@ -560,11 +581,90 @@ public class Pipe extends Container implements Serializable {
 
 		if(leakStatus.equals("") && waterStatus.equals("") && stickyStatus.equals("") && slipperyStatus.equals("")){
 			return basePath + orientation + ".png";
-		}
-		else
+		} else
 			return basePath + orientation + leakStatus + waterStatus + stickyStatus + slipperyStatus + ".png";
 
-		//PipeUpDown_RightSide_DamagedWater
-		//PipeLeftRight_UpSide
 	}
+	public String getOrientation()
+	{
+		//Get the current position of the element
+		ContainerPos cp = new ContainerPos();
+		for(ContainerPos containerPos : Map.getInstance().getGameMap()){
+			if(containerPos.getContainer().equals(this)){
+				cp = containerPos;
+			}
+		}
+
+		int maxX = -1;
+		int maxY = -1;
+
+		// Find the maximum x and y values
+		for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+			if (containerPos.getPosX() > maxX) {
+				maxX = containerPos.getPosX();
+			}
+			if (containerPos.getPosY() > maxY) {
+				maxY = containerPos.getPosY();
+			}
+		}
+
+		Container[][] grid = new Container[maxX+1][maxY+1];
+
+		// Place the containers in the grid
+		for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+			int x = containerPos.getPosX();
+			int y = containerPos.getPosY();
+			grid[x][y] = containerPos.getContainer();
+		}
+
+		for(ContainerPos containerPos : Map.getInstance().getGameMap())
+		{
+			int x = cp.getPosX();
+			int y = cp.getPosY();
+			if(grid[x][y]==containerPos.getContainer())
+			{
+				if (x > 0 && containerPos.getContainer().seeifNeighbors(grid[x - 1][y]))
+				{
+					// DownToLeft
+					if (y < grid[x].length - 1 && containerPos.getContainer().seeifNeighbors(grid[x][y + 1]))
+						return "PipeDownToLeft";
+
+					// UpToLeft
+					if (y > 0 && containerPos.getContainer().seeifNeighbors(grid[x][y - 1]))
+						return "PipeUpToLeft";
+
+					// Vertical
+					if (x < grid.length - 1 && containerPos.getContainer().seeifNeighbors(grid[x + 1][y]))
+						return "PipeLeftRight_UpSide";
+
+					return "PipeLeftRight_UpSide";
+				}
+
+				if (x + 1 < grid.length && containerPos.getContainer().seeifNeighbors(grid[x + 1][y]))
+				{
+
+					// DownToRight
+					if (y + 1 < grid[x].length && containerPos.getContainer().seeifNeighbors(grid[x][y + 1]))
+						return "PipeDownToRight";
+
+					// UpToRight
+					if (y - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x][y - 1]))
+						return "PipeUpToRight";
+
+					// Vertical
+					if (x - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x - 1][y]))
+						return "PipeLeftRight_UpSide";
+
+					return "PipeLeftRight_UpSide";
+				}
+
+				if (y + 1 < grid[x].length && y - 1 >= 0 && containerPos.getContainer().seeifNeighbors(grid[x][y + 1]) && containerPos.getContainer().seeifNeighbors(grid[x][y - 1])) {
+					return "PipeUpDown_RightSide";
+				}
+				return "";
+			}
+		}
+		return "";
+	}
+
 }

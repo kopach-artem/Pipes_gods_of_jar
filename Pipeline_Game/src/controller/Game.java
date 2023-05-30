@@ -14,7 +14,6 @@ import static menu.Game_Window.updateGameScene;
 public class Game implements Serializable{
 
     private static Game instance;
-    private Map gameMap = Map.getInstance();
 
     private Player currentPlayer;
     private ArrayList<Player> players = new ArrayList<>();
@@ -35,12 +34,6 @@ public class Game implements Serializable{
 
     public static void destroyInstance(){
         instance = null;
-    }
-
-    public void playerAction(Player player){
-
-        //TODO
-
     }
 
     public void switchToNextPlayer(){
@@ -83,8 +76,8 @@ public class Game implements Serializable{
                 Controller.getInstance().waterFlow();
                 Controller.getInstance().evaluateCycles();
                 checkForSticky();
-                turnCount++;
                 updateGameScene();
+                turnCount++;
             }
             MyAlert.setTurnWasWasted(false);
         }

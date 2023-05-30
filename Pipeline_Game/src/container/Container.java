@@ -70,6 +70,8 @@ public abstract class Container implements Serializable {
 		return false;
 	}
 
+	public abstract void getsOccupied();
+
 	/**
 	 *  Ezt a függvényt implementálja a Pipe osztály
 	 *	A függvény azt a feladatot látja el, hogy amikor a játékos ellép egy Container-ről (Pipe-ról), beállítsa, hogy a Pipe nem occupied
@@ -84,7 +86,7 @@ public abstract class Container implements Serializable {
 	 * @param t
 	 * @throws MyException
 	 */
-	public abstract void alterPump(Player player, Pipe pi, Type t);
+	public abstract void alterPump(int x, int y, Type t);
 
 	/**
 	 * Ezt a függvényt a Pipe osztály valósítja meg
@@ -157,6 +159,9 @@ public abstract class Container implements Serializable {
 	 */
 	public abstract void pipeGetsSticky();
 
+	public abstract void takePipeFromCs(Player player);
+
+	public abstract void takePumpFromCs(Player player);
 	/*
 	 * Ezt a függvényt a Pipe osztály valósítja meg.
 	 *  Ez a függvény felelős visszaadni ragadóssá-e Pipe (getter)
@@ -177,6 +182,10 @@ public abstract class Container implements Serializable {
 	 * Ez a függvény felelős a víz mozgásáért való kiértékelésekért
 	 */
 	public abstract void eval();
+
+	public abstract int hasPipes();
+
+	public abstract boolean hasPump();
 
 	/**
 	 * Ezt a függvényt megvalósítja a Pump, Pipe, Cistern illetve MountaiSpring osztályok

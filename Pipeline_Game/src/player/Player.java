@@ -79,8 +79,37 @@ public class Player implements Serializable {
 	 * @param pi - Ezt a csövet szeretnénk beállítani
 	 * @param t - Ez alapján dönti el a metódus, hogy a be- vagy kimenetet szeretnénk átállítani
 	 */
-	public void adjustPump(Pipe pi, Type t){
-		this.position.alterPump(this, pi, t);
+	public void adjustPump(int x, int y, Type t){
+		this.position.alterPump(x, y , t);
+	}
+
+	public void playerAdjustsPump(Direction direction, Type type){
+
+		ContainerPos cp = new ContainerPos();
+
+		for(ContainerPos containerPos : Map.getInstance().getGameMap()){
+			if(containerPos.getContainer().equals(this.position)){
+				cp = containerPos;
+			}
+		}
+		switch (direction){
+			case Up : {
+				this.adjustPump(cp.getPosX(), cp.getPosY() - 1, type);
+				break;
+			}
+			case Down : {
+				this.adjustPump(cp.getPosX(), cp.getPosY() + 1, type);
+				break;
+			}
+			case Left : {
+				this.adjustPump(cp.getPosX() - 1, cp.getPosY(), type);
+				break;
+			}
+			case Right : {
+				this.adjustPump(cp.getPosX() + 1, cp.getPosY(), type);
+				break;
+			}
+		}
 	}
 
 	/*
@@ -128,8 +157,6 @@ public class Player implements Serializable {
 			neighbors.add(container);
 		}
 
-		System.out.println(neighbors);
-
 		if(getSticky){
 			MyAlert.showStickyMoveAlert("Sticky");
 			return;
@@ -151,9 +178,10 @@ public class Player implements Serializable {
 						MyAlert.showInvalidMoveAlert("There is no neighboring steppable container");
 				}
 			}
-			else if (c.steppable()) {
+			else if (c.steppable() && !c.getIsSlippery()) {
 				this.position.movedFrom();
 				this.setPosition(c);
+				this.getPosition().getsOccupied();
 				if(position.getIsSticky()){
 					getReallySticky();
 				}
@@ -259,13 +287,8 @@ public class Player implements Serializable {
 	 * akkor ez függvény tud adni új csöt carriedPipes List-be.
 	 * @param c - A Cistern
 	 */
-	public void takePipe(Cistern c) {
-		if(position==c) {
-			if(!c.getMadePipes().isEmpty()) {
-				carriedPipes.add(c.getMadePipes().get(0));
-				c.getMadePipes().remove(0);
-			}
-		}
+	public void takePipe() {
+		this.position.takePipeFromCs(this);
 	}
 
 	/**
@@ -283,13 +306,8 @@ public class Player implements Serializable {
 	 * Elveszi a Cisterntől a szabad Pumpot
 	 * @param c - A Cistern.
 	 */
-	public void takePump(Cistern c) {
-		if(position==c) {
-			if(c.getFreePump()!=null) {
-				carriedPump=c.getFreePump();
-				c.setFreePump(null);
-			}
-		}
+	public void takePump() {
+		this.position.takePumpFromCs(this);
 	}
 
 	/**

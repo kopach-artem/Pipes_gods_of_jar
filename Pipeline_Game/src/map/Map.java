@@ -138,12 +138,14 @@ public class Map implements Serializable{
 
 	public static void makeMap(){
 
+		map = new Map();
+
 		Pipe p1 = new Pipe();
 		Pump pu1 = new Pump(2);
 		Pipe p2 = new Pipe();
 		Pump pu2 = new Pump(2);
 		Pipe p3 = new Pipe();
-		Pump pu3 = new Pump(4);
+		Pump pu3 = new Pump(3);
 		Pipe p4 = new Pipe();
 		Cistern cs = new Cistern(p4);
 		MountainSpring ms = new MountainSpring(p1);
@@ -164,6 +166,48 @@ public class Map implements Serializable{
 		gameMap.add(new ContainerPos(p2, 3,0));
 		gameMap.add(new ContainerPos(pu2, 4,0));
 		gameMap.add(new ContainerPos(p3, 4,1));
+		gameMap.add(new ContainerPos(pu3, 4,2));
+		gameMap.add(new ContainerPos(p4, 4,3));
+		gameMap.add(new ContainerPos(cs, 4,4));
+
+		pu1.setInput(p1);
+		pu1.setOutput(p2);
+		pu2.setInput(p2);
+		pu2.setOutput(p3);
+		pu3.setInput(p3);
+		pu3.setOutput(p4);
+
+		addAllNeighbors();
+	}
+
+	public static void makeOrientationMap(){
+
+		Pipe p1 = new Pipe();
+		Pump pu1 = new Pump(2);
+		Pipe p2 = new Pipe();
+		Pump pu2 = new Pump(2);
+		Pipe p3 = new Pipe();
+		Pump pu3 = new Pump(3);
+		Pipe p4 = new Pipe();
+		Cistern cs = new Cistern(p4);
+		MountainSpring ms = new MountainSpring(p1);
+
+		containers.add(ms);
+		containers.add(p1);
+		containers.add(pu1);
+		containers.add(p2);
+		containers.add(pu2);
+		containers.add(p3);
+		containers.add(pu3);
+		containers.add(p4);
+		containers.add(cs);
+
+		gameMap.add(new ContainerPos(ms, 0,0));
+		gameMap.add(new ContainerPos(p1, 1,0));
+		gameMap.add(new ContainerPos(pu1, 2,0));
+		gameMap.add(new ContainerPos(p2, 3,0));
+		gameMap.add(new ContainerPos(pu2, 3,1));
+		gameMap.add(new ContainerPos(p3, 3,2));
 		gameMap.add(new ContainerPos(pu3, 4,2));
 		gameMap.add(new ContainerPos(p4, 4,3));
 		gameMap.add(new ContainerPos(cs, 4,4));
