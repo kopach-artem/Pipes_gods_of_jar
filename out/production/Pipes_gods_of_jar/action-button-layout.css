@@ -1,0 +1,13 @@
+.action-button-layout .button {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-background-color: #D2B48C; /* Sand color */
+    -fx-text-fill: #8B4513; /* Brown color */
+    -fx-border-color: #8B4513; /* Brown color */
+    -fx-border-width: 2px;
+}
+
+.action-button-layout .button:hover {
+    -fx-background-color: #8B4513; /* Brown color */
+    -fx-text-fill: #D2B48C; /* Sand color */
+}

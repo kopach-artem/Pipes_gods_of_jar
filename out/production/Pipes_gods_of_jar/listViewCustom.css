@@ -1,0 +1,18 @@
+.list-view {
+    -fx-background-color: #F5DEB3; /* Beige */
+    -fx-padding: 10;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #F4A460; /* Sandy Brown */
+    -fx-text-fill: #000000; /* Black */
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #D2B48C; /* Tan */
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #8B4513; /* Saddle Brown */
+    -fx-text-fill: #FFFFFF; /* White */
+}
