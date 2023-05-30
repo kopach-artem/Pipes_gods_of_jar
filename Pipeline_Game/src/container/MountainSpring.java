@@ -19,7 +19,7 @@ public class MountainSpring extends Container implements Serializable {
 	/**
 	 * A hegyi forrásvíz kapacitása, azaz mennyi vizet képes tárolni a hegyi forrás
 	 */
-	private int waterCapac = 50;
+	private int waterCapac = 50000;
 
 	public MountainSpring(Pipe output){
 		this.output = output;
@@ -95,7 +95,7 @@ public class MountainSpring extends Container implements Serializable {
 	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
 	 */
 	@Override
-	public void alterPump(Player player, Pipe pi, Type t) throws MyException {
+	public void alterPump(Player player, Pipe pi, Type t) {
 
 	}
 
@@ -103,7 +103,7 @@ public class MountainSpring extends Container implements Serializable {
 	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
 	 */
 	@Override
-	public void mendPipe() throws MyException {
+	public void mendPipe() {
 
 	}
 
@@ -111,7 +111,7 @@ public class MountainSpring extends Container implements Serializable {
 	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
 	 */
 	@Override
-	public void mendPump() throws MyException {
+	public void mendPump() {
 
 	}
 
@@ -119,7 +119,7 @@ public class MountainSpring extends Container implements Serializable {
 	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
 	 */
 	@Override
-	public void puncturePipe() throws MyException {
+	public void puncturePipe() {
 
 	}
 
@@ -127,7 +127,7 @@ public class MountainSpring extends Container implements Serializable {
 	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
 	 */
 	@Override
-	public void insertPump(Player player) throws MyException {
+	public void insertPump(Player player) {
 
 	}
 
@@ -135,7 +135,7 @@ public class MountainSpring extends Container implements Serializable {
 	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
 	 */
 	@Override
-	public void extractPipe(Player player, int xCord, int yCord) throws MyException {
+	public void extractPipe(Player player, int xCord, int yCord) {
 
 	}
 
@@ -143,7 +143,7 @@ public class MountainSpring extends Container implements Serializable {
 	 * A Mountain Spring ezt a függvényt nem valósítja meg, úgyhogy erről többet nem is beszélek
 	 */
 	@Override
-	public void insertPipe(Player player, int xCord, int yCord) throws MyException {
+	public void insertPipe(Player player, int xCord, int yCord) {
 
 	}
 
@@ -188,7 +188,12 @@ public class MountainSpring extends Container implements Serializable {
 		if(waterCapac != 0) {
 			decreaseWaterAm();
 			this.setInputState();
-			output.setInputState();
+			if(output != null)
+				output.setInputState();
+		}
+		else{
+			inputState[0] = false;
+			inputState[1] = false;
 		}
 	}
 

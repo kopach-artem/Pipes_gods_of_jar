@@ -25,3 +25,55 @@
 .menu-item:selected {
     -fx-background-color: #B09468; /* Set a darker color when the menu item is armed or selected */
 }
+
+@font-face {
+    font-family: "Blox";
+    src: url('Blox2.ttf');
+}
+
+.button {
+    -fx-background-color: #D2B48C;
+    -fx-text-fill: #0C2340;
+    -fx-font-family: "Blox", Arial;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+}
+
+.button:hover {
+    -fx-background-color: #C1A278;
+}
+
+.button:pressed {
+    -fx-background-color: #B09468;
+}
+
+.choice-box {
+    -fx-background-color: #D3BFA0;
+    -fx-text-fill: #4b1c21;
+    -fx-font-size: 14px;
+    -fx-pref-width: 200px;
+}
+
+.choice-box .arrow-button {
+    -fx-background-color: #D3BFA0, #D3BFA0, #D3BFA0, #D3BFA0;
+    -fx-background-insets: 0, 0, 0, 0;
+    -fx-background-radius: 0, 0, 0, 0;
+    -fx-padding: 0.25em 0.333em 0.25em 0.333em;
+    -fx-text-fill: #4b1c21;
+}
+
+.choice-box:hover {
+    -fx-border-color: #4b1c21;
+}
+
+.choice-box .arrow-button:hover {
+    -fx-background-color: #4b1c21;
+}
+
+.text-desert {
+    -fx-font-family: "Arial";
+    -fx-font-size: 16px;
+    -fx-fill: #D2B48C; /* Sand color */
+    -fx-stroke: #8B4513; /* Brown color */
+    -fx-stroke-width: 1px;
+}

@@ -35,15 +35,14 @@ public class Main_Menu extends Application {
     Duration savedTime;
     boolean musicPlaying = true;
     Stage window;
-    Scene mainScene, newGameScene, gameScene;
+    public static Scene mainScene, newGameScene;
     public static MediaPlayer mediaPlayer;
-    Game game;
 
     public static void main(String[] args){
         launch(args);
     }
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage){
 
         window = primaryStage;
         window.setTitle("Pipeline Game");
@@ -182,7 +181,7 @@ public class Main_Menu extends Application {
                 playerNumber = 4;
             }
             if(playerNumber != 0){
-                newGameWindow(playerNumber, window, mainScene);
+                newGameWindow(playerNumber, window);
                 mediaPlayer.stop();
                 window.close();
             }
@@ -219,7 +218,7 @@ public class Main_Menu extends Application {
     public void initMainScene(){
         BorderPane root = new BorderPane();
 
-        Image backgroundImage = new Image("file:resources/f6fe01bc451088065d21ddb805ed1a9e.gif");
+        Image backgroundImage = new Image("file:resources/v2.gif");
 
         // Create an ImageView to display the image
         BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true));

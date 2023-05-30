@@ -12,12 +12,13 @@ package controller;
 import container.*;
 import map.Map;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Controller osztály, ez felelős a játékmenet vezérléséért.
  */
-public class Controller {
+public class Controller implements Serializable {
 
 	private Map map = Map.getInstance();
 	private static Controller controller;

@@ -3,6 +3,7 @@ package container;
 import controller.Controller;
 import controller.Game;
 import map.Map;
+import menu.MyAlert;
 import player.*;
 import exception.*;
 
@@ -36,8 +37,8 @@ public class Pipe extends Container implements Serializable {
 	private boolean isSticky;
 	private int stickyTimer;
 
-	final int STICKY_TIMER = 2;
-	final int SLIPPERY_TIMER = 2;
+	final int STICKY_TIMER = 3;
+	final int SLIPPERY_TIMER = 3;
 
 
 	/**
@@ -67,7 +68,7 @@ public class Pipe extends Container implements Serializable {
 	 * A Pipe nem valósítja meg ezt a függvényt, ezért erről nem is beszélek többet
 	 */
 	@Override
-	public void alterPump(Player player, Pipe pi, Type t) throws MyException {
+	public void alterPump(Player player, Pipe pi, Type t) {
 
 	}
 
@@ -75,13 +76,12 @@ public class Pipe extends Container implements Serializable {
 	/**
 	 * Ez a függvény a cső megjavításáért felelős függvény
 	 * Ha a cső ki van lyukasztva akkor javítjuk más esetben kivételt dobunk
-	 * @throws MyException
 	 */
-	public void mendPipe() throws MyException {
+	public void mendPipe() {
 		if(this.isLeaked){
 			this.setLeaked(false);
 		} else
-			throw new MyException("It wasn't damaged to begin with");
+			MyAlert.showInvalidMoveAlert("It wasn't damaged to begin with");
 	}
 
 
@@ -89,7 +89,7 @@ public class Pipe extends Container implements Serializable {
 	 * A Pipe nem valósítja meg ezt a függvényt, ezért erről nem is beszélek többet
 	 */
 	@Override
-	public void mendPump() throws MyException {
+	public void mendPump() {
 
 	}
 
@@ -99,7 +99,7 @@ public class Pipe extends Container implements Serializable {
 	 * Megnézzük, hogy a cső lyukas-e ha nem kilyukasztjuk (beállítjuk az isLeaked attribútumát true-ra)
 	 * Ha pedig ki volt már lyukasztva kivételt dobunk
 	 */
-	public void puncturePipe() throws MyException {
+	public void puncturePipe() {
 		if(!this.isLeaked){
 			if(this.canBeLeaked) {
 				this.setLeaked(true);
@@ -107,10 +107,10 @@ public class Pipe extends Container implements Serializable {
 				this.leakedTimer = Game.getInstance().getTurnCount();
 				this.canBeLeaked = false;
 			} else{
-				throw new MyException("Pipe cannot be leaked due to: Pipe leaking is on cooldown");
+				MyAlert.showInvalidMoveAlert("Pipe cannot be leaked due to: Pipe leaking is on cooldown");
 			}
 		} else
-			throw new MyException("It was already damaged");
+			MyAlert.showInvalidMoveAlert("It was already damaged");
 	}
 
 
@@ -137,9 +137,8 @@ public class Pipe extends Container implements Serializable {
 	/**
 	 * A csőhöz csatlakoztatja hozzá a paraméterként kapott játékos által hordozott pumpát.
 	 * @param player - A játékos
-	 * @throws MyException
 	 */
-	public void insertPump(Player player) throws MyException{
+	public void insertPump(Player player) {
 
 		if(player.getCarriedPump() != null) {
 
@@ -158,42 +157,95 @@ public class Pipe extends Container implements Serializable {
 				}
 			}
 			if(!isVertical()) {
-				for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
-					if ((containerPos.getPosX() - 1 == cp.getPosX()) && (containerPos.getPosY() == cp.getPosY())) {
-						nextContainer = containerPos;
+				if(!isLooseEnd()) {
+					for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+						if ((containerPos.getPosX() == cp.getPosX() + 1) && (containerPos.getPosY() == cp.getPosY())) {
+							nextContainer = containerPos;
+						}
+					}
+
+					//If pipe was input
+					if (nextContainer.getContainer().amInput(this)) {
+						nextContainer.getContainer().setInput(newPipe);
+						newPump.setInput(this);
+						newPump.setOutput(newPipe);
+					}
+
+					//Shift everything by X = 2
+					for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+						if (containerPos.getPosX() > cp.getPosX()) {
+							int x = containerPos.getPosX() + 2;
+							containerPos.setPosX(x);
+						}
+					}
+
+					//Adding everything to map
+					Map.getInstance().getContainers().add(newPump);
+					Map.getInstance().getContainers().add(newPipe);
+					Map.getInstance().getGameMap().add(new ContainerPos(newPump, cp.getPosX() + 1, cp.getPosY()));
+					Map.getInstance().getGameMap().add(new ContainerPos(newPipe, cp.getPosX() + 2, cp.getPosY()));
+
+					//Remove the next Container from Pipe's neigbors
+					this.getNeighbors().remove(nextContainer.getContainer());
+					nextContainer.getContainer().getNeighbors().remove(this);
+
+					Map.addAllNeighbors();
+				}
+				else {
+					if (cp.getPosX() - 2 >= 0) {
+						for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+							if (containerPos.getContainer().seeifNeighbors(cp.getContainer())) {
+								nextContainer = containerPos;
+							}
+						}
+
+						boolean left = false;
+						boolean right = false;
+
+						if(nextContainer.getPosX() == cp.getPosX() - 1){
+							left = true;
+						}
+						else{
+							right = true;
+						}
+
+						//If pipe was input
+						if (nextContainer.getContainer().amInput(this)) {
+							nextContainer.getContainer().setInput(newPipe);
+							newPump.setInput(this);
+							newPump.setOutput(newPipe);
+						}
+
+						//Adding everything to map
+						Map.getInstance().getContainers().add(newPump);
+						Map.getInstance().getContainers().add(newPipe);
+
+						if(right){
+							Map.getInstance().getGameMap().add(new ContainerPos(newPump, cp.getPosX() - 1, cp.getPosY()));
+							Map.getInstance().getGameMap().add(new ContainerPos(newPipe, cp.getPosX() - 2, cp.getPosY()));
+						}
+						if(left){
+							for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
+								if (containerPos.getPosX() > cp.getPosX()) {
+									int x = containerPos.getPosX() + 2;
+									containerPos.setPosX(x);
+								}
+							}
+
+							Map.getInstance().getGameMap().add(new ContainerPos(newPump, cp.getPosX() + 1, cp.getPosY()));
+							Map.getInstance().getGameMap().add(new ContainerPos(newPipe, cp.getPosX() + 2, cp.getPosY()));
+						}
+
+
+						//Remove the next Container from Pipe's neigbors
+						this.getNeighbors().remove(nextContainer.getContainer());
+						nextContainer.getContainer().getNeighbors().remove(this);
+
+						Map.addAllNeighbors();
+					} else {
+						MyAlert.showInvalidMoveAlert("Can't expand more towards that direction");
 					}
 				}
-
-				//If pipe was input
-				if (amInput(nextContainer.getContainer())) {
-					nextContainer.getContainer().setInput(newPipe);
-					newPump.setInput(this);
-					newPump.setOutput(newPipe);
-				}
-
-				//Shift everything by X = 2
-				for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
-					if (containerPos.getPosX() > cp.getPosX()) {
-						int x = containerPos.getPosX() + 2;
-						containerPos.setPosX(x);
-					}
-				}
-
-				//Adding everything to map
-				Map.getInstance().getContainers().add(newPump);
-				Map.getInstance().getContainers().add(newPipe);
-				Map.getInstance().getGameMap().add(new ContainerPos(newPump, cp.getPosX() + 1, cp.getPosY()));
-				Map.getInstance().getGameMap().add(new ContainerPos(newPipe, cp.getPosX() + 2, cp.getPosY()));
-
-				//Remove the next Container from Pipe's neigbors
-				this.getNeighbors().remove(nextContainer.getContainer());
-				nextContainer.getContainer().getNeighbors().remove(this);
-
-				this.getNeighbors().add(newPump);
-				newPump.getNeighbors().add(this);
-				newPump.getNeighbors().add(newPipe);
-				newPipe.getNeighbors().add(newPump);
-				newPipe.getNeighbors().add(nextContainer.getContainer());
 			} else{
 				for (ContainerPos containerPos : Map.getInstance().getGameMap()) {
 					if ((containerPos.getPosX() == cp.getPosX()) && (containerPos.getPosY() - 1 == cp.getPosY())) {
@@ -202,7 +254,7 @@ public class Pipe extends Container implements Serializable {
 				}
 
 				//If pipe was input
-				if (amInput(nextContainer.getContainer())) {
+				if (nextContainer.getContainer().amInput(this)) {
 					nextContainer.getContainer().setInput(newPipe);
 					newPump.setInput(this);
 					newPump.setOutput(newPipe);
@@ -216,6 +268,8 @@ public class Pipe extends Container implements Serializable {
 					}
 				}
 
+				newPipe.setStateofInput(this.inputState[0], this.inputState[1]);
+
 				//Adding everything to map
 				Map.getInstance().getContainers().add(newPump);
 				Map.getInstance().getContainers().add(newPipe);
@@ -226,21 +280,17 @@ public class Pipe extends Container implements Serializable {
 				this.getNeighbors().remove(nextContainer.getContainer());
 				nextContainer.getContainer().getNeighbors().remove(this);
 
-				this.getNeighbors().add(newPump);
-				newPump.getNeighbors().add(this);
-				newPump.getNeighbors().add(newPipe);
-				newPipe.getNeighbors().add(newPump);
-				newPipe.getNeighbors().add(nextContainer.getContainer());
+				Map.addAllNeighbors();
 			}
 		} else
-			System.out.println("Player has no pumps at his disposal");
+			MyAlert.showInvalidMoveAlert("Player has no pumps at his disposal");
 	}
 
 	/**
 	 * A Pipe nem valósítja meg ezt a függvényt, ezért erről nem is beszélek többet
 	 */
 	@Override
-	public void extractPipe(Player player, int xCord, int yCord) throws MyException {
+	public void extractPipe(Player player, int xCord, int yCord) {
 
 	}
 
@@ -248,7 +298,9 @@ public class Pipe extends Container implements Serializable {
 	 * A Pipe nem valósítja meg ezt a függvényt, ezért erről nem is beszélek többet
 	 */
 	@Override
-	public void insertPipe(Player player, int xCord, int yCord) throws MyException {
+	public void insertPipe(Player player, int xCord, int yCord) {
+
+		MyAlert.showInvalidMoveAlert("Bruh, it's not possible");
 
 	}
 
@@ -257,7 +309,7 @@ public class Pipe extends Container implements Serializable {
 	 */
 	@Override
 	public void pipeGetsSlippery() {
-		this.slipperyTimer = Game.getInstance().getTurnCount();
+		this.slipperyTimer = Game.getInstance().getTurnCount() + SLIPPERY_TIMER;
 		if(this.isSticky){
 			this.isSticky = false;
 		}
@@ -275,7 +327,7 @@ public class Pipe extends Container implements Serializable {
 
 	@Override
 	public void pipeGetsSticky() {
-		this.stickyTimer = Game.getInstance().getTurnCount();
+		this.stickyTimer = Game.getInstance().getTurnCount() + STICKY_TIMER;
 		if(this.isSlippery){
 			this.isSlippery = false;
 		}
@@ -298,68 +350,6 @@ public class Pipe extends Container implements Serializable {
 	public void setSticky(boolean b){
 		this.isSticky = b;
 	}
-
-	/**
-	 * A csőhöz csatlakoztatott pumpák listájához újabb pumpa hozzáadását megvalósító függvény
-	 * @param pu - Ezt a pumpát akarjuk hozzáadni
-	 * @param index - Erre a helyre akarjuk berakni a pumpát
-	 * @throws MyException
-	 */
-	public void addPump(Pump pu, int index) throws MyException {
-
-		if(index > 1 || index < 0){
-			throw new MyException("Invalid index");
-		}
-
-		if(!(this.neighbors.size() == 2))
-			this.neighbors.add(index, pu);
-		else
-			throw new MyException("Add pump failed");
-	}
-
-	/**
-	 * A csőhöz csatlakoztatott pumpák listájához újabb pumpa hozzáadását megvalósító függvény
-	 * @param pu - Ezt a pumpát akarjuk hozzáadni
-	 * @throws MyException
-	 */
-	public void addPump(Pump pu) throws MyException {
-
-		if(!(this.neighbors.size() == 2))
-			this.neighbors.add(pu);
-		else
-			throw new MyException("Add pump failed");
-	}
-
-	/**
-	 * A csőhöz csatlakoztatott pumpák listájából kitöröl egy megadott pumpát
-	 * @param index - A törölni kívánt pumpa indexe
-	 * @throws MyException
-	 */
-	public void removePump(int index) throws MyException {
-
-		if(index > 1 || index < 0){
-			throw new MyException("Invalid index");
-		}
-
-		if(!(this.neighbors.isEmpty()))
-			this.neighbors.remove(index);
-		else
-			throw new MyException("Remove Pump failed");
-	}
-
-	/**
-	 * A csőhöz csatlakoztatott pumpák listájából kitöröl egy megadott pumpát
-	 * @param pu - A törlésre szánt pumpa
-	 * @throws MyException
-	 */
-	public void removePump(Pump pu) throws MyException {
-
-		if(!(this.neighbors.isEmpty()))
-			this.neighbors.remove(pu);
-		else
-			throw new MyException("Remove Pump failed");
-	}
-
 
 	/**
 	 * @param pipe
@@ -554,21 +544,27 @@ public class Pipe extends Container implements Serializable {
 	public int mountainSpringQuery() {
 		return -1;
 	}
+	public void setStateofInput(boolean first, boolean second){
+		inputState[0] = first;
+		inputState[1] = second;
+	}
 
 	@Override
 	public String myIconPath() {
-		if(isSlippery){
-			return "file:resources/container_components/slipperypipe.png";
-		} else if(isLeaked){
-			return "file:resources/container_components/pipeturn2dmg.png";
-		} else if(isSticky){
-			return "file:resources/container_components/stickypipe.png";
-		} else{
-			if(isVertical()){
-				return "file:resources/container_components/pipeud.png";
-			} else {
-				return "file:resources/container_components/pipelr.png";
-			}
+		String basePath = "file:resources/container_components/";
+		String orientation = isVertical() ? "PipeUpDown_RightSide" : "PipeLeftRight_UpSide";
+		String leakStatus = isLeaked ? "_Damaged" : "";
+		String waterStatus = inputState[0] || inputState[1] ? "_Water" : "";
+		String stickyStatus = isSticky ? "_Sticky" : "";
+		String slipperyStatus = isSlippery ? "_Slippery" : "";
+
+		if(leakStatus.equals("") && waterStatus.equals("") && stickyStatus.equals("") && slipperyStatus.equals("")){
+			return basePath + orientation + ".png";
 		}
+		else
+			return basePath + orientation + leakStatus + waterStatus + stickyStatus + slipperyStatus + ".png";
+
+		//PipeUpDown_RightSide_DamagedWater
+		//PipeLeftRight_UpSide
 	}
 }

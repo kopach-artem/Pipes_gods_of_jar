@@ -107,12 +107,9 @@ public class Cistern extends Container implements Serializable {
 	 * Amennyiben folyik bele víz (inputState[0]) növeljük a belekerült víz mennyiségét
 	 */
 	public void eval() {
-
 		if(inputState[0]){
 			increaseCollectedWater();
 		}
-
-
 	}
 
 	/**
@@ -138,7 +135,7 @@ public class Cistern extends Container implements Serializable {
 	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
 	 */
 	@Override
-	public void alterPump(Player player, Pipe pi, Type t) throws MyException {
+	public void alterPump(Player player, Pipe pi, Type t) {
 
 	}
 
@@ -146,7 +143,7 @@ public class Cistern extends Container implements Serializable {
 	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
 	 */
 	@Override
-	public void mendPipe() throws MyException {
+	public void mendPipe() {
 
 	}
 
@@ -154,7 +151,7 @@ public class Cistern extends Container implements Serializable {
 	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
 	 */
 	@Override
-	public void mendPump() throws MyException {
+	public void mendPump() {
 
 	}
 
@@ -162,7 +159,7 @@ public class Cistern extends Container implements Serializable {
 	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
 	 */
 	@Override
-	public void puncturePipe() throws MyException {
+	public void puncturePipe() {
 
 	}
 
@@ -170,7 +167,7 @@ public class Cistern extends Container implements Serializable {
 	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
 	 */
 	@Override
-	public void insertPump(Player player) throws MyException {
+	public void insertPump(Player player) {
 
 	}
 
@@ -178,7 +175,7 @@ public class Cistern extends Container implements Serializable {
 	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
 	 */
 	@Override
-	public void extractPipe(Player player, int xCord, int yCord) throws MyException {
+	public void extractPipe(Player player, int xCord, int yCord) {
 
 	}
 
@@ -186,7 +183,7 @@ public class Cistern extends Container implements Serializable {
 	 * A Cistern osztály nem valósítja meg ezt a függvényt ezért erről tőbbet nem is beszélek
 	 */
 	@Override
-	public void insertPipe(Player player, int xCord, int yCord) throws MyException {
+	public void insertPipe(Player player, int xCord, int yCord) {
 
 	}
 
@@ -242,7 +239,6 @@ public class Cistern extends Container implements Serializable {
 
 	}
 
-	
 	/** 
 	 * @return boolean
 	 */
@@ -368,6 +364,6 @@ public class Cistern extends Container implements Serializable {
 
 	@Override
 	public String myIconPath() {
-		return "file:resources/container_components/cistern1.png";
+		return "file:resources/container_components/cistern.png";
 	}
 }

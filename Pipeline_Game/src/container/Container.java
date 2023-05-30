@@ -84,28 +84,28 @@ public abstract class Container implements Serializable {
 	 * @param t
 	 * @throws MyException
 	 */
-	public abstract void alterPump(Player player, Pipe pi, Type t) throws MyException;
+	public abstract void alterPump(Player player, Pipe pi, Type t);
 
 	/**
 	 * Ezt a függvényt a Pipe osztály valósítja meg
 	 * Ez a függvény felelős a cső megjavításáért
 	 * @throws MyException
 	 */
-	public abstract void mendPipe() throws MyException;
+	public abstract void mendPipe();
 
 	/**
 	 * Ezt a függvényt a Pump osztály valósítja meg
 	 * Ez a függvény felelős a pumpa megjavításáért
 	 * @throws MyException
 	 */
-	public abstract void mendPump() throws MyException;
+	public abstract void mendPump();
 
 	/**
 	 * Ezt a függvényt a Pipe osztály valósítja meg
 	 * Ez a függvény felelős a cső meglékeléséért
 	 * @throws MyException
 	 */
-	public abstract void puncturePipe() throws MyException;
+	public abstract void puncturePipe();
 
 	/**
 	 * Ezt az függvényt a Pipe osztály valósítja meg
@@ -113,7 +113,7 @@ public abstract class Container implements Serializable {
 	 * @param player
 	 * @throws MyException
 	 */
-	public abstract void insertPump(Player player) throws MyException;
+	public abstract void insertPump(Player player);
 
 	/**
 	 * Ezt a függvényt a Pump osztály valósítja meg
@@ -122,7 +122,7 @@ public abstract class Container implements Serializable {
 	 * @param pi
 	 * @throws MyException
 	 */
-	public abstract void extractPipe(Player player, int xCord, int yCord) throws MyException;
+	public abstract void extractPipe(Player player, int xCord, int yCord);
 
 	/**
 	 * Ezt a függvényt a Pump osztály valósítja meg
@@ -133,7 +133,7 @@ public abstract class Container implements Serializable {
 	 * @param yCord
 	 * @throws MyException
 	 */
-	public abstract void insertPipe(Player player, int xCord, int yCord) throws MyException;
+	public abstract void insertPipe(Player player, int xCord, int yCord);
 
 	/**
 	 * Ezt a függvényt a Pipe osztály valósítja meg. Ez a függvény felelős a cső csúszóssá válik
@@ -224,6 +224,14 @@ public abstract class Container implements Serializable {
 	public abstract boolean isDamaged();
 
 	public abstract Container getInput();
+	public boolean isEmpty(){
+		if(!inputState[0] && !inputState[1]){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 	public abstract Container getOutput();
 
 	public abstract void setBreakOff(int rng);

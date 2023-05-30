@@ -2,6 +2,7 @@
 package player;
 
 import container.*;
+import javafx.scene.control.ChoiceBox;
 
 import java.io.Serializable;
 
@@ -32,4 +33,12 @@ public class Saboteur extends Player implements Serializable {
 	}
 
 	public String consolePrint(){ return "SA" + id;}
+
+	public ChoiceBox<String> getChoiceBox(){
+		ChoiceBox<String> choiceBox = new ChoiceBox<>();
+
+		choiceBox.getItems().addAll("Make Pipe Slippery");
+
+		return choiceBox;
+	}
 }

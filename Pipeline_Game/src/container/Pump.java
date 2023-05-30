@@ -1,6 +1,8 @@
 package container;
+import controller.Game;
 import exception.MyException;
 import map.Map;
+import menu.MyAlert;
 import player.Player;
 import player.Type;
 
@@ -59,20 +61,19 @@ public class Pump extends Container implements Serializable {
 	/**
 	 * Ez a függvény valósítja meg a pumpa megjavítását
 	 * Megnézzük, hogy a pumpa el van-e romolva amennyiben igen elvégezzük a javítást más esetben kivételt dobunk
-	 * @throws MyException
 	 */
-	public void mendPump() throws MyException {
+	public void mendPump() {
 		if(this.isDamaged){
 			this.setDamaged(false);
 		} else
-			throw new MyException("Wasn't even a scratch on it");
+			MyAlert.showInvalidMoveAlert("Wasn't even a scratch on it");
 	}
 
 	/**
 	 * A Pump nem valósítja meg ezt a függvényt, ezért többet nem is írok róla
 	 */
 	@Override
-	public void puncturePipe() throws MyException {
+	public void puncturePipe() {
 
 	}
 
@@ -80,7 +81,7 @@ public class Pump extends Container implements Serializable {
 	 * A Pump nem valósítja meg ezt a függvényt, ezért többet nem is írok róla
 	 */
 	@Override
-	public void insertPump(Player player) throws MyException {
+	public void insertPump(Player player) {
 
 	}
 
@@ -89,7 +90,7 @@ public class Pump extends Container implements Serializable {
 	 * @param player - A játékos
 	 * @throws MyException
 	 */
-	public void insertPipe(Player player, int xCord, int yCord) throws MyException{
+	public void insertPipe(Player player, int xCord, int yCord){
 
 		if(!Map.getInstance().getGameMap().isEmpty()){
 
@@ -152,20 +153,20 @@ public class Pump extends Container implements Serializable {
 	 * @param pi
 	 * @param t
 	 */
-	public void alterPump(Player player, Pipe pi, Type t) throws MyException {
+	public void alterPump(Player player, Pipe pi, Type t) {
 
 		if(this.seeifNeighbors(pi)){
 			if(t == Type.Input){
 				if(this.getOutput() != pi){
 					this.setInput(pi);
 				} else
-					throw new MyException("Input pipe cannot be changed once water is flowing through it");
+					MyAlert.showInvalidMoveAlert("Input pipe cannot be changed once water is flowing through it");
 			}
 			if(t == Type.Output){
 				if(this.getInput() != pi)
 					this.setOutput(pi);
 				else
-					throw new MyException("Input pipe cannot be changed to be the output pipe of the pump");
+					MyAlert.showInvalidMoveAlert("Input pipe cannot be changed to be the output pipe of the pump");
 			}
 		}
 	}
@@ -174,7 +175,7 @@ public class Pump extends Container implements Serializable {
 	 * A Pump nem valósítja meg ezt a függvényt, ezért többet nem is írok róla
 	 */
 	@Override
-	public void mendPipe() throws MyException {
+	public void mendPipe() {
 
 	}
 
@@ -185,7 +186,7 @@ public class Pump extends Container implements Serializable {
 	 * @param pi - Az elvételre kijelölt cső.
 	 * @throws MyException
 	 */
-	public void extractPipe(Player player, int xCord, int yCord) throws MyException {
+	public void extractPipe(Player player, int xCord, int yCord){
 		ContainerPos cp = new ContainerPos();
 		for(ContainerPos containerPos : Map.getInstance().getGameMap()){
 			if(containerPos.getPosX() == xCord && containerPos.getPosY() == yCord){
@@ -211,9 +212,39 @@ public class Pump extends Container implements Serializable {
 					Map.getInstance().getGameMap().remove(cp);
 					Map.getInstance().getContainers().remove(cp.getContainer());
 				}
+				else{
+					cp.getContainer().getNeighbors().remove(this);
+
+					Pump pump = (Pump) cp.getContainer().getNeighbors().get(0);
+
+					//------Handling Input and Output Problems------//
+					if(this.getInput() != null || pump.getInput() != null){
+						if (this.getInput().equals(cp.getContainer())) {
+							this.setInput(null);
+						}
+						if (pump.getInput().equals(cp.getContainer())) {
+							pump.setInput(null);
+						}
+					}
+					if(this.getOutput() != null || pump.getOutput() != null){
+						if(this.getOutput().equals((cp.getContainer()))){
+							this.setOutput(null);
+						}
+						if(pump.getOutput().equals((cp.getContainer()))){
+							pump.setOutput(null);
+						}
+					}
+					this.getNeighbors().remove(cp.getContainer());
+					pump.getNeighbors().remove(cp.getContainer());
+					cp.getContainer().getNeighbors().remove(pump);
+
+					player.getCarriedPipes().add(cp.getContainer());
+					Map.getInstance().getGameMap().remove(cp);
+					Map.getInstance().getContainers().remove(cp.getContainer());
+				}
 			}
 		} else
-			System.out.println("Got'cha little man! You thought you could detach something other than a Pipe?");
+			MyAlert.showInvalidMoveAlert("Got'cha little man! You thought you could detach something other than a Pipe?");
 	}
 
 
@@ -234,6 +265,8 @@ public class Pump extends Container implements Serializable {
 		if(turnCount == this.randomDamageValue && !this.isDamaged){
 			System.out.println("Naww this pump got damaged: " + this);
 			this.isDamaged = true;
+			Random rand = new Random();
+			this.randomDamageValue =  rand.nextInt(10) + Game.getInstance().getTurnCount();
 		}
 	}
 
@@ -267,8 +300,12 @@ public class Pump extends Container implements Serializable {
 	 * @return
 	 */
 	public boolean amInput(Container c){
-
-		return this.input.equals(c);
+		if(input != null){
+			return this.input.equals(c);
+		}
+		else{
+			return false;
+		}
 	}
 
 	/**
@@ -293,8 +330,11 @@ public class Pump extends Container implements Serializable {
 	 */
 	@Override
 	public void setInputState() {
-		if(!this.isDamaged)
-			output.setInputState();
+		if(!this.isDamaged){
+			if(output != null){
+				output.setInputState();
+			}
+		}
 	}
 
 
@@ -450,14 +490,27 @@ public class Pump extends Container implements Serializable {
 	public String myIconPath() {
 		if(maxPipeAmount == 2){
 			if(isDamaged){
-				return "file:resources/container_components/pumpdmg1.png";
-			} else if(isVerticallyConnected()){
-				return  "file:resources/container_components/pumpturn2.png";
+				if(isVerticallyConnected()){
+					return  "file:resources/container_components/PumpDownToLeft_Damaged.png";
+				} else{
+					return "file:resources/container_components/PumpLeftRight_UpSide_Damaged.png";
+				}
+			} else{
+				if(isVerticallyConnected()){
+					return "file:resources/container_components/PumpDownToLeft.png";
+				} else{
+					return "file:resources/container_components/PumpLeftRight_UpSide.png";
+				}
+			}
+		}else if(maxPipeAmount == 3){
+			if(isDamaged){
+				return "file:resources/container_components/PumpAllway_LeftDownSide_Damaged.png";
 			}
 			else{
-				return "file:resources/container_components/pumlr1.png";
+				return "file:resources/container_components/PumpAllway_LeftDownSide.png";
 			}
-		} else if(maxPipeAmount == 4) {
+		}
+		else if(maxPipeAmount == 4) {
 			return "file:resources/container_components/pumpall.png";
 		}
 		return null;
